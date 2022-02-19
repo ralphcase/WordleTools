@@ -53,7 +53,6 @@ public class Solver {
 //			System.out.println("Guesses: " + guesses);
 		}
 		System.out.println("["+guesses.size()+"] "+possible.size() + " possible: \t" + possible);
-
 		System.out.println("Guesses: " + guesses);
 		System.out.println("Solved in "+guesses.size()+" turns! ");
 	}
@@ -64,18 +63,18 @@ public class Solver {
 //		possible.addAll(allWords);
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 		
-		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "green")))));
-		guesses.add(new Guess(new Position("ELUDE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "yellow", "green")))));
-//		guesses.add(new Guess(new Position("SHAPE"), new Report(new ArrayList<String>(List.of("green", "green", "green", "gray", "green")))));
+		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "yellow", "gray")))));
+		guesses.add(new Guess(new Position("STINK"), new Report(new ArrayList<String>(List.of("green", "gray", "green", "gray", "gray")))));
+		guesses.add(new Guess(new Position("SPILL"), new Report(new ArrayList<String>(List.of("green", "gray", "green", "green", "green")))));
 //		guesses.add(new Guess(new Position("BLUER"), new Report(new ArrayList<String>(List.of("gray", "green", "yellow", "green", "green")))));
 
 		removeImpossible(possible, guesses);
-		System.out.println(guesses);
-		System.out.println(possible.size() + " possible: \t" + possible);
-		System.out.println(bestTurn(possible, guesses, allWords));
-		
+		System.out.println("["+guesses.size()+"] "+possible.size() + " possible: \t" + possible);
+		System.out.println("Guesses: " + guesses);
+		System.out.println(bestTurn(possible, guesses, allWords));	
 	}
 
+	
 	/*
 	 * Given a list of possible Positions and a list of guesses already made,
 	 * return the best next guess. "Best" is the guess that would reduce the
