@@ -52,8 +52,8 @@ public class Solver {
 			guesses.add(new Guess(turn, goal.guess(turn)));
 //			System.out.println("Guesses: " + guesses);
 		}
-		System.out.println("["+guesses.size()+"] "+possible.size() + " possible: \t" + possible);
-		System.out.println("Guesses: " + guesses);
+		System.out.println(guesses.size()+" " + "guesses: " + guesses);
+		System.out.println(possible.size() + " possible: \t" + possible);
 		System.out.println("Solved in "+guesses.size()+" turns! ");
 	}
 	
@@ -63,14 +63,14 @@ public class Solver {
 //		possible.addAll(allWords);
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 		
-		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "yellow", "gray")))));
-		guesses.add(new Guess(new Position("STINK"), new Report(new ArrayList<String>(List.of("green", "gray", "green", "gray", "gray")))));
-		guesses.add(new Guess(new Position("SPILL"), new Report(new ArrayList<String>(List.of("green", "gray", "green", "green", "green")))));
+		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("yellow", "gray", "gray", "gray", "yellow")))));
+		guesses.add(new Guess(new Position("DETER"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "green", "green")))));
+		guesses.add(new Guess(new Position("TOWER"), new Report(new ArrayList<String>(List.of("yellow", "yellow", "gray", "green", "green")))));
 //		guesses.add(new Guess(new Position("BLUER"), new Report(new ArrayList<String>(List.of("gray", "green", "yellow", "green", "green")))));
 
 		removeImpossible(possible, guesses);
-		System.out.println("["+guesses.size()+"] "+possible.size() + " possible: \t" + possible);
-		System.out.println("Guesses: " + guesses);
+		System.out.println(guesses.size()+" " + "guesses: " + guesses);
+		System.out.println(possible.size() + " possible: \t" + possible);
 		System.out.println(bestTurn(possible, guesses, allWords));	
 	}
 
