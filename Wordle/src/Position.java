@@ -63,34 +63,36 @@ public class Position {
 	private static List<Position> AllPositions(String datafile) {
 		List<Position> result;
 		Set<Position> wordlist = new HashSet<Position>();
-	    String word = "";
-	    try {
-            FileReader reader = new FileReader(datafile);
-            int character;
-            while ((character = reader.read()) != -1) {
-                char letter = Character.toUpperCase((char) character);
-                if (LETTERS.indexOf(letter)>=0)
-                	word += letter;
-                else {
+		String word = "";
+		try {
+			FileReader reader = new FileReader(datafile);
+			int character;
+			while ((character = reader.read()) != -1) {
+				char letter = Character.toUpperCase((char) character);
+				if (LETTERS.indexOf(letter) >= 0)
+					word += letter;
+				else {
 //                	System.out.println("word: |"+ word+"|");
-                	try {
+					try {
 //                		if (1 == roll(10))
-                		wordlist.add(new Position(word));
-                	} catch (IllegalArgumentException e) {}
-                	word = "";
-                }
-            }
-            reader.close();
- 
-        } catch (IOException e) {
-        	System.out.println("word: |"+ word+"|");
-            e.printStackTrace();
-        }
-	    result = new ArrayList<Position>(wordlist);
-	    System.out.println(result.size() + " words in dictionary "+datafile);
+						wordlist.add(new Position(word));
+					} catch (IllegalArgumentException e) {
+						// ignore invalid words in the file.
+					}
+					word = "";
+				}
+			}
+			reader.close();
+
+		} catch (IOException e) {
+			System.out.println("word: |" + word + "|");
+			e.printStackTrace();
+		}
+		result = new ArrayList<Position>(wordlist);
+		System.out.println(result.size() + " words in dictionary " + datafile);
 		return result;
 	}
-	
+
 	/* 
 	 * Remove words that have a letter repeated somewhere in the word.
 	 */
