@@ -7,6 +7,11 @@ public class Guess {
 		this.p = p;
 		this.score = s;
 	}
+	
+	public Guess(Position p, Position g) {
+		this.p = p;
+		this.score = p.guess(g);
+	}
 
 	public Position getPos() {
 		return p;
