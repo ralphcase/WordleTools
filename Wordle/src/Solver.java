@@ -64,15 +64,9 @@ public class Solver {
 //		possible.addAll(allWords);
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 		
-<<<<<<< Upstream, based on main
 		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "gray", "gray")))));
 		guesses.add(new Guess(new Position("MINTY"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "gray", "gray")))));
 //		guesses.add(new Guess(new Position("LIPID"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "green", "green")))));
-=======
-		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "yellow", "gray")))));
-		guesses.add(new Guess(new Position("STINK"), new Report(new ArrayList<String>(List.of("green", "gray", "green", "gray", "gray")))));
-//		guesses.add(new Guess(new Position("SPILL"), new Report(new ArrayList<String>(List.of("green", "gray", "green", "green", "green")))));
->>>>>>> 454503b Add unit tests
 //		guesses.add(new Guess(new Position("BLUER"), new Report(new ArrayList<String>(List.of("gray", "green", "yellow", "green", "green")))));
 
 		removeImpossible(possible, guesses);
