@@ -34,6 +34,14 @@ public class ReportTest {
 		expected = new Report(new ArrayList<String>(List.of("gray", "green", "green", "green", "green")));
 		Assert.assertTrue(expected.equals(result));
 
+		result = new Report(new Position("HUTCH"), new Position("HUNCH"));
+		expected = new Report(new ArrayList<String>(List.of("green", "green", "gray", "green", "green")));
+		Assert.assertTrue(expected.equals(result));
+
+		result = new Report(new Position("HUTCH"), new Position("LOOPY"));
+		expected = new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")));
+		Assert.assertTrue(expected.equals(result));
+
 	}
 
 	

@@ -18,7 +18,7 @@ public class Solver {
 	private static void example()
 	{
 		Position turn;
-		Position goal = new Position();
+		Position goal = new Position("HUTCH");
 		allWords = Position.getALLWORDS();
 		possible = Position.getGOALWORDS();
 //		System.out.println(possible.size() + " possible: \t" + possible);
@@ -45,7 +45,7 @@ public class Solver {
 				System.out.print(possible);
 			System.out.println();
 			// Shorten the list of possibilities based on the new results.
-			removeImpossible(possible, guesses);
+			possible = removeImpossible(possible, guesses);
 
 			// Choose a guess for this turn.
 			turn = bestTurn(possible, guesses, allWords);
@@ -64,12 +64,12 @@ public class Solver {
 //		possible.addAll(allWords);
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 		
-		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "gray", "gray")))));
-		guesses.add(new Guess(new Position("MINTY"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "gray", "gray")))));
-//		guesses.add(new Guess(new Position("LIPID"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "green", "green")))));
+		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "yellow", "gray")))));
+		guesses.add(new Guess(new Position("STINK"), new Report(new ArrayList<String>(List.of("green", "gray", "green", "gray", "gray")))));
+//		guesses.add(new Guess(new Position("SPILL"), new Report(new ArrayList<String>(List.of("green", "gray", "green", "green", "green")))));
 //		guesses.add(new Guess(new Position("BLUER"), new Report(new ArrayList<String>(List.of("gray", "green", "yellow", "green", "green")))));
 
-		removeImpossible(possible, guesses);
+		possible = removeImpossible(possible, guesses);
 		System.out.println("["+guesses.size()+"] "+possible.size() + " possible: \t" + possible);
 		System.out.println("Guesses: " + guesses);
 		System.out.println(bestTurn(possible, guesses, allWords));	
@@ -144,10 +144,10 @@ public class Solver {
 	
 	private static int deepPossibleSize(List<Position> possible, List<Guess> guesses, Guess nextGuess) {
 		guesses.add(nextGuess);
-		int count = countPossible(possible, guesses); 
+		int count = countPossible(possible, guesses);
 		if (count > 1) {
 			List<Position> thisPossible = new ArrayList<Position>(possible);
-			removeImpossible(thisPossible, guesses);
+			thisPossible = removeImpossible(thisPossible, guesses);
 			int minTotal = Integer.MAX_VALUE;
 			int total = 0;
 			for (Position pos: thisPossible) {
@@ -177,17 +177,18 @@ public class Solver {
 	 * Remove Positions from the list if they are impossible given the data in
 	 * the guesses.
 	 */
-	private static void removeImpossible(List<Position> possible, List<Guess> allGuesses) {
-		for (int i = 0; i < possible.size(); i++) {
+	private static List<Position> removeImpossible(List<Position> possible, List<Guess> allGuesses) {
+		List<Position> result = new ArrayList<Position>();
+		for (Position p: possible) {
 			for (Guess g : allGuesses) {
-				Report hint = possible.get(i).guess(g.getPos());
-				if (!hint.equals(g.getScore())) {
-					possible.remove(i);
-					i--;
+				Report hint = p.guess(g.getPos());
+				if (hint.equals(g.getScore())) {
+					result.add(p);
 					break;
 				}
 			}
 		}
+		return result;
 	}
 	
 	/*
@@ -204,6 +205,8 @@ public class Solver {
 				}
 			}
 		}
+		if (possible.size() == count)
+			throw new RuntimeException("possible: "+possible.toString()+ ", allGuesses: "+allGuesses.toString());
 		return possible.size()-count;
 	}
 }
