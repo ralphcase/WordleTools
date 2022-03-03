@@ -18,7 +18,8 @@ public class Solver {
 	private static void example()
 	{
 		Position turn;
-		Position goal = new Position("HUTCH");
+//		Position goal = new Position("HUTCH");
+		Position goal = new Position("NASTY");
 		allWords = Position.getALLWORDS();
 		possible = Position.getGOALWORDS();
 //		System.out.println(possible.size() + " possible: \t" + possible);
