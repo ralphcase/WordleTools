@@ -64,9 +64,9 @@ public class Solver {
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 		
 		
-		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("yellow", "gray", "gray", "gray", "gray")))));
-		guesses.add(new Guess(new Position("COURT"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "green", "gray")))));
-		guesses.add(new Guess(new Position("GOURD"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "green", "gray")))));
+		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "yellow")))));
+		guesses.add(new Guess(new Position("LEANT"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "gray", "gray")))));
+//		guesses.add(new Guess(new Position("GOURD"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "green", "gray")))));
 //		guesses.add(new Guess(new Position("HASTY"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "green", "green")))));
 //		guesses.add(new Guess(new Position("QUERY"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "gray", "gray")))));
 //		guesses.add(new Guess(new Position("DEBAR"), new Report(new ArrayList<String>(List.of("green", "green", "gray", "gray", "gray")))));
