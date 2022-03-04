@@ -110,8 +110,8 @@ public class Solver {
 			}
 		return best;
 	}
-	
-	
+
+		
 	private static Position deepBestTurn(List<Position> possible, List<Guess> guesses, List<Position> trialList) {
 		
 		// For each possible next move, see which reduces the possible list the
@@ -123,13 +123,9 @@ public class Solver {
 		for (Position trial : trialList) {
 		
 				int total = 0;
-				for (Position pos : possible) {
-//					System.out.println("best: "+best+", checking "+pos+" with "+trial);
-					total += deepPossibleSize(possible, guesses, new Guess(pos, trial.guess(pos)));
-					if (total >= minTotal)
-						break;
-				}
-
+				guesses.add(new Guess(trial))
+				total = maxDepth()
+				
 				if (total < minTotal) {
 					// Save the new best.
 					minTotal = total;
