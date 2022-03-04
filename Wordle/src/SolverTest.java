@@ -32,6 +32,18 @@ public class SolverTest {
 		Assert.assertEquals(3, Solver.countPossible(possible, guesses));
 		
 	}
+	
+	@Test
+	public void testMaxDepth() {
+		List<Position> allWords = Position.getALLWORDS();
+		List<Position> possible = new ArrayList<Position>();
+		possible.add(new Position("HELLO"));
+		ArrayList<Guess> guesses = new ArrayList<Guess>();
+		
+		
+		Assert.assertEquals(1, Solver.maxDepth(possible, guesses, allWords));
+		
+	}
 
 	
 	

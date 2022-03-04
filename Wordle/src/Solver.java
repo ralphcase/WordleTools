@@ -112,52 +112,45 @@ public class Solver {
 	}
 
 		
-	private static Position deepBestTurn(List<Position> possible, List<Guess> guesses, List<Position> trialList) {
+	static int maxDepth(List<Position> possible, List<Guess> guesses, List<Position> trialList) {
 		
 		// For each possible next move, see which reduces the possible list the
 		// most on average.
-		if (trialList.size() == 1) return trialList.get(0);
+		if (possible.size() == 1) return 1;
 		
-		int minTotal = Integer.MAX_VALUE;
-		Position best = possible.get(0);
+		int depth = 0;
+		
 		for (Position trial : trialList) {
 		
-				int total = 0;
-				guesses.add(new Guess(trial))
-				total = maxDepth()
-				
-				if (total < minTotal) {
-					// Save the new best.
-					minTotal = total;
-					best = trial;
-
+				for (Position pos: possible) {
+					guesses.add(new Guess(pos, trial));
+					depth = Math.max(depth, maxDepth(removeImpossible(possible, guesses), guesses, trialList));
+					guesses.remove(guesses.size()-1);
+				}
 			}
-//			System.out.println(count + ": " + found + " " + minTotal + " " + best + " - " + total + " " + pos);
-//			System.out.println(count + ": " + minTotal + " " + best + " - " + total + " " + pos);
-		}
-		return best;
+		return depth+1;
 	}
 
 	
-	private static int deepPossibleSize(List<Position> possible, List<Guess> guesses, Guess nextGuess) {
-		guesses.add(nextGuess);
-		int count = countPossible(possible, guesses);
-		if (count > 1) {
-			List<Position> thisPossible = new ArrayList<Position>(possible);
-			thisPossible = removeImpossible(thisPossible, guesses);
-			int minTotal = Integer.MAX_VALUE;
-			int total = 0;
-			for (Position pos: thisPossible) {
-				total = deepPossibleSize(thisPossible, guesses, new Guess(pos, deepBestTurn(thisPossible, guesses, thisPossible).guess(pos)));
-				if (total < minTotal) {
-					minTotal = total;
-				}
-			count = minTotal;	
-			}
-		}
-		guesses.remove(nextGuess);
-		return count;
-	}
+//	private static int deepPossibleSize(List<Position> possible, List<Guess> guesses, Guess nextGuess) {
+//		guesses.add(nextGuess);
+//		int count = countPossible(possible, guesses);
+//		if (count > 1) {
+//			List<Position> thisPossible = new ArrayList<Position>(possible);
+//			thisPossible = removeImpossible(thisPossible, guesses);
+//			int minTotal = Integer.MAX_VALUE;
+//			int total = 0;
+//			for (Position pos: thisPossible) {
+//				total = deepPossibleSize(thisPossible, guesses, new Guess(pos, deepBestTurn(thisPossible, guesses, thisPossible).guess(pos)));
+//				if (total < minTotal) {
+//					minTotal = total;
+//				}
+//			count = minTotal;	
+//			}
+//		}
+//		guesses.remove(nextGuess);
+//		return count;
+//	}
 
 	/*
 	 * Return the size of possible positions given the previous guesses and the
