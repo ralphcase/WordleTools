@@ -36,12 +36,21 @@ public class SolverTest {
 	@Test
 	public void testMaxDepth() {
 		List<Position> allWords = Position.getALLWORDS();
+		
 		List<Position> possible = new ArrayList<Position>();
 		possible.add(new Position("HELLO"));
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
-		
-		
 		Assert.assertEquals(1, Solver.maxDepth(possible, guesses, allWords));
+		
+		possible = new ArrayList<Position>();
+		possible.add(new Position("CHEAP"));
+		possible.add(new Position("AHEAD"));
+		possible.add(new Position("ABBEY"));
+		possible.add(new Position("OMEGA"));
+		guesses = new ArrayList<Guess>();
+		guesses.add(new Guess(new Position("RAISE"), new Position("AHEAD")));
+		guesses.add(new Guess(new Position("LEANT"), new Position("AHEAD")));
+		Assert.assertEquals(2, Solver.maxDepth(possible, guesses, allWords));
 		
 	}
 

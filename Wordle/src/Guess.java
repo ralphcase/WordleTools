@@ -1,7 +1,7 @@
 
 public class Guess {
-	private Position p;
-	private Report score;
+	private Position p;	// This guess
+	private Report score; // How well it matches the target.
 
 	public Guess(Position p, Report s) {
 		this.p = p;
@@ -10,7 +10,7 @@ public class Guess {
 	
 	public Guess(Position p, Position g) {
 		this.p = p;
-		this.score = p.guess(g);
+		this.score = g.guess(p);
 	}
 
 	public Position getPos() {

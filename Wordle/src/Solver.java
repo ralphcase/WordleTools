@@ -121,10 +121,11 @@ public class Solver {
 		int depth = 0;
 		
 		for (Position trial : trialList) {
-		
 				for (Position pos: possible) {
-					guesses.add(new Guess(pos, trial));
-					depth = Math.max(depth, maxDepth(removeImpossible(possible, guesses), guesses, trialList));
+					List<Position> remaining = new ArrayList<Position>(trialList);
+					remaining.remove(trial);
+					guesses.add(new Guess(trial, pos));
+					depth = Math.max(depth, maxDepth(removeImpossible(possible, guesses), guesses, possible));
 					guesses.remove(guesses.size()-1);
 				}
 			}
@@ -170,13 +171,15 @@ public class Solver {
 	private static List<Position> removeImpossible(List<Position> possible, List<Guess> allGuesses) {
 		List<Position> result = new ArrayList<Position>();
 		for (Position p: possible) {
+			boolean keep = true;
 			for (Guess g : allGuesses) {
 				Report hint = p.guess(g.getPos());
-				if (hint.equals(g.getScore())) {
-					result.add(p);
+				if (!hint.equals(g.getScore())) {
+					keep = false;
 					break;
 				}
 			}
+			if (keep) result.add(p);
 		}
 		return result;
 	}
