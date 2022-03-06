@@ -8,8 +8,8 @@ public class Solver {
 	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
 		
-		solveHelper();
-//		example();
+//		solveHelper();
+		example();
 		
 		long endTime = System.currentTimeMillis();
 		System.out.println("It took " + (endTime - startTime) / 1000.0 + " seconds.");
@@ -18,7 +18,7 @@ public class Solver {
 	private static void example()
 	{
 		Position turn;
-		Position goal = new Position("AROMA");
+		Position goal = new Position("SHADE");
 		allWords = Position.getALLWORDS();
 		possible = Position.getGOALWORDS();
 //		System.out.println(possible.size() + " possible: \t" + possible);
@@ -64,10 +64,10 @@ public class Solver {
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 		
 		
-		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "yellow")))));
-		guesses.add(new Guess(new Position("LEANT"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "gray", "gray")))));
-//		guesses.add(new Guess(new Position("GOURD"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "green", "gray")))));
-//		guesses.add(new Guess(new Position("HASTY"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "green", "green")))));
+		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
+		guesses.add(new Guess(new Position("YOUTH"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "green", "green")))));
+//		guesses.add(new Guess(new Position("BRIDE"), new Report(new ArrayList<String>(List.of("green", "green", "green", "gray", "green")))));
+//		guesses.add(new Guess(new Position("BRIBE"), new Report(new ArrayList<String>(List.of("green", "green", "green", "gray", "green")))));
 //		guesses.add(new Guess(new Position("QUERY"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "gray", "gray")))));
 //		guesses.add(new Guess(new Position("DEBAR"), new Report(new ArrayList<String>(List.of("green", "green", "gray", "gray", "gray")))));
 				
