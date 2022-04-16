@@ -58,26 +58,35 @@ public class Solver {
 	
 	private static void solveHelper() {
 		List<Position> allWords = Position.getALLWORDS();
-		List<Position> antiWords = Position.getALLWORDS();
+		List<Position> antiWords = new ArrayList<Position>(allWords);
 		List<Position> possible = Position.getGOALWORDS();
 //		possible.addAll(allWords);
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 		
 		
-		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
-		guesses.add(new Guess(new Position("VIVID"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
-		guesses.add(new Guess(new Position("MAMMA"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "green", "gray")))));
-		guesses.add(new Guess(new Position("GNOME"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "green", "yellow")))));
-		guesses.add(new Guess(new Position("WEEMS"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "green", "green")))));
+//		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "yellow")))));
+//		guesses.add(new Guess(new Position("HOTEL"), new Report(new ArrayList<String>(List.of("yellow", "gray", "gray", "green", "gray")))));
+		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "gray")))));
+//		guesses.add(new Guess(new Position("VIVID"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "yellow")))));
+//
+		guesses.add(new Guess(new Position("KAWAU"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "yellow")))));
+		guesses.add(new Guess(new Position("UNPIN"), new Report(new ArrayList<String>(List.of("yellow", "gray", "gray", "gray", "gray")))));
+		guesses.add(new Guess(new Position("EXUDE"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "gray", "gray")))));
+		guesses.add(new Guess(new Position("HOUGH"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "green", "green")))));
+//		guesses.add(new Guess(new Position("MOMMY"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "gray", "green")))));
+//		guesses.add(new Guess(new Position("COVEY"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "gray", "green")))));
+//		guesses.add(new Guess(new Position("TOTTY"), new Report(new ArrayList<String>(List.of("green", "green", "gray", "gray", "green")))));
+//		guesses.add(new Guess(new Position("TOLLY"), new Report(new ArrayList<String>(List.of("green", "green", "gray", "gray", "green")))));
+//		guesses.add(new Guess(new Position("TOADY"), new Report(new ArrayList<String>(List.of("green", "green", "yellow", "yellow", "green")))));
 //		guesses.add(new Guess(new Position("MOUND"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "green", "green")))));
-////		guesses.add(new Guess(new Position("QUERY"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "gray", "gray")))));
+//		guesses.add(new Guess(new Position("QUERY"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "gray", "gray")))));
 //		guesses.add(new Guess(new Position("DEBAR"), new Report(new ArrayList<String>(List.of("green", "green", "gray", "gray", "gray")))));
 				
 		removeImpossible(possible, guesses);
 		removeImpossible(antiWords, guesses);
 		System.out.println("["+guesses.size()+"] "+possible.size() + " possible: \t" + possible);
 		System.out.println("Guesses: " + guesses);
-		System.out.println("best: "+bestTurn(possible, guesses, allWords));	
+//		System.out.println("best: "+bestTurn(possible, guesses, allWords));	
 		System.out.println("worst: "+worstTurn(antiWords, guesses, antiWords));	
 	}
 
@@ -125,8 +134,9 @@ public class Solver {
 		
 		int maxTotal = 0;
 		Position worst = possible.get(0);
+		int i = 0;
 		for (Position pos : possible) {
-
+				System.out.println(i++ + " " +pos +" "+ worst);
 				int total = 0;
 				for (Position trial : trialList) {
 					total += possibleSize(possible, guesses, new Guess(pos, trial.guess(pos)));
