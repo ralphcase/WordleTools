@@ -1,7 +1,13 @@
 import java.util.Arrays;
 import java.util.List;
 
+
 public class Report {
+
+	public enum Hint {
+		ABSENT, PRESENT, CORRECT
+	}
+
 	private Hint[] result = new Hint[Position.NUMBERCELLS];
 
 	public Report(Position target, Position guess) {
