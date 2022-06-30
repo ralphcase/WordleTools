@@ -66,26 +66,22 @@ public class Solver {
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 		
 		
-		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("yellow", "yellow", "gray", "green", "gray")))));
-		guesses.add(new Guess(new Position("BRASS"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "green", "gray")))));
-//		guesses.add(new Guess(new Position("TESTY"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "green", "green")))));
-//		guesses.add(new Guess(new Position("SHOWY"), new Report(new ArrayList<String>(List.of("green", "green", "green", "green", "gray")))));
-		
-//		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("yellow", "gray", "gray", "gray", "gray")))));
-//		guesses.add(new Guess(new Position("AFLAJ"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "gray", "gray")))));
-//		guesses.add(new Guess(new Position("KLOOF"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "red")))));
-//		guesses.add(new Guess(new Position("THELF"), new Report(new ArrayList<String>(List.of("gray", "red", "red", "red", "red")))));
-//		guesses.add(new Guess(new Position("COCCO"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "red", "gray")))));
-//		guesses.add(new Guess(new Position("SMOCK"), new Report(new ArrayList<String>(List.of("gray", "gray", "red", "red", "red")))));
-//		guesses.add(new Guess(new Position("BROCK"), new Report(new ArrayList<String>(List.of("red", "gray", "red", "red", "red")))));
-//		guesses.add(new Guess(new Position("GRABS"), new Report(new ArrayList<String>(List.of("red", "red", "red", "gray", "red")))));
+		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
+		guesses.add(new Guess(new Position("YOUTH"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "yellow", "green")))));
+		guesses.add(new Guess(new Position("BUTCH"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "green", "green")))));
+		guesses.add(new Guess(new Position("DUTCH"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "green", "green")))));
+			
+//		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
+//		guesses.add(new Guess(new Position("VIVID"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "red")))));
+//		guesses.add(new Guess(new Position("EGGED"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "red", "red")))));
+//		guesses.add(new Guess(new Position("TSKED"), new Report(new ArrayList<String>(List.of("gray", "gray", "red", "red", "red")))));
 				
 		removeImpossible(possible, guesses);
 		removeImpossible(antiWords, guesses);
 		System.out.println("["+guesses.size()+"] "+possible.size() + " possible: \t" + possible);
 		System.out.println("Guesses: " + guesses);
 		System.out.println("best: "+bestTurn(possible, guesses, allWords));	
-		System.out.println("worst: "+worstTurn(antiWords, guesses, antiWords));	
+//		System.out.println("worst: "+worstTurn(antiWords, guesses, antiWords));	
 	}
 
 	
