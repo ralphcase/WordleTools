@@ -16,8 +16,9 @@ public class Solver {
 	private static void example()
 	{
 		Position turn;
-		Position goal = new Position("SHADE");
+//		Position goal = new Position("SHADE");
 //		Position goal = new Position("HATCH");    // Hard case for first solver.
+		Position goal = new Position("TASTE");    // Hard case for first solver.
 		List<Position> allWords = Position.getALLWORDS();
 		List<Position> possible = Position.getGOALWORDS();
 //		System.out.println(possible.size() + " possible: \t" + possible);
@@ -66,10 +67,9 @@ public class Solver {
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 		
 		
-		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
-		guesses.add(new Guess(new Position("YOUTH"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "yellow", "green")))));
-		guesses.add(new Guess(new Position("BUTCH"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "green", "green")))));
-		guesses.add(new Guess(new Position("DUTCH"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "green", "green")))));
+		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "yellow")))));
+		guesses.add(new Guess(new Position("HOTEL"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "yellow", "gray")))));
+		guesses.add(new Guess(new Position("BEEFY"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "gray", "green")))));
 			
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
 //		guesses.add(new Guess(new Position("VIVID"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "red")))));
