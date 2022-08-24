@@ -37,21 +37,22 @@ public class Solver {
 	
 		System.out.println("Goal: " + goal);
 		turn = new Position("RAISE");		
-		Guess g = new Guess(turn, goal.guess(turn));
-		guesses.add(g);
+		guesses.add(new Guess(goal, turn));
 		
 		while (guesses.size() == 0 || !guesses.get(guesses.size()-1).isSolved()) {
 			System.out.print("["+guesses.size()+"] "+possible.size() + " possible: \t");
 			if (possible.size() < 100)
 				System.out.print(possible);
 			System.out.println();
+			
 			// Shorten the list of possibilities based on the new results.
 			removeImpossible(possible, guesses);
+			System.out.println(guesses);
 
 			// Choose a guess for this turn.
-			turn = worstTurn(possible, guesses, allWords);
+			turn = bestTurn(possible, guesses, allWords);
 //			turn = deepBestTurn(possible, guesses, allWords);
-			guesses.add(new Guess(turn, goal.guess(turn)));
+			guesses.add(new Guess(goal, turn));
 //			System.out.println("Guesses: " + guesses);
 		}
 		System.out.println("["+guesses.size()+"] "+possible.size() + " possible: \t" + possible);
@@ -67,9 +68,9 @@ public class Solver {
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 		
 		
-		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "yellow")))));
-		guesses.add(new Guess(new Position("HOTEL"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "yellow", "gray")))));
-		guesses.add(new Guess(new Position("BEEFY"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "gray", "green")))));
+//		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "yellow")))));
+//		guesses.add(new Guess(new Position("TEMPO"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "gray", "gray")))));
+//		guesses.add(new Guess(new Position("DEBUG"), new Report(new ArrayList<String>(List.of("yellow", "green", "gray", "gray", "gray")))));
 			
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
 //		guesses.add(new Guess(new Position("VIVID"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "red")))));
@@ -77,7 +78,7 @@ public class Solver {
 //		guesses.add(new Guess(new Position("TSKED"), new Report(new ArrayList<String>(List.of("gray", "gray", "red", "red", "red")))));
 				
 		removeImpossible(possible, guesses);
-		removeImpossible(antiWords, guesses);
+//		removeImpossible(antiWords, guesses);
 		System.out.println("["+guesses.size()+"] "+possible.size() + " possible: \t" + possible);
 		System.out.println("Guesses: " + guesses);
 		System.out.println("best: "+bestTurn(possible, guesses, allWords));	
@@ -101,7 +102,7 @@ public class Solver {
 				int total = 0;
 				for (Position trial : trialList) {
 //					System.out.println("best: "+best+", checking "+pos+" with "+trial);
-					total += possibleSize(possible, guesses, new Guess(pos, trial.guess(pos)));
+					total += possibleSize(possible, guesses, new Guess(pos, trial));
 					if (total >= minTotal)
 						break;
 				}
@@ -133,7 +134,7 @@ public class Solver {
 				System.out.println(i++ + " " +pos +" "+ worst);
 				int total = 0;
 				for (Position trial : trialList) {
-					total += possibleSize(possible, guesses, new Guess(pos, trial.guess(pos)));
+					total += possibleSize(possible, guesses, new Guess(pos, trial));
 				}
 				if (total > maxTotal) {
 					// Save the new worst.
@@ -158,7 +159,7 @@ public class Solver {
 				int total = 0;
 				for (Position trial : trialList) {
 //					System.out.println("best: "+best+", checking "+pos+" with "+trial);
-					total += deepPossibleSize(possible, guesses, new Guess(pos, trial.guess(pos)));
+					total += deepPossibleSize(possible, guesses, new Guess(pos, trial));
 					if (total >= minTotal)
 						break;
 				}
@@ -185,7 +186,7 @@ public class Solver {
 			int minTotal = Integer.MAX_VALUE;
 			int total = 0;
 			for (Position pos: thisPossible) {
-				total = deepPossibleSize(thisPossible, guesses, new Guess(pos, deepBestTurn(thisPossible, guesses, thisPossible).guess(pos)));
+				total = deepPossibleSize(thisPossible, guesses, new Guess(pos, deepBestTurn(thisPossible, guesses, thisPossible)));
 				if (total < minTotal) {
 					minTotal = total;
 				}
