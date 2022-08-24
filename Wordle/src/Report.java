@@ -12,6 +12,7 @@ public class Report {
 
 	public Report(Position target, Position guess) {
 		boolean[] matched = new boolean[Position.NUMBERCELLS];
+		
 		// Check for exact matches.
 		for (int i = 0; i < Position.NUMBERCELLS; i++)
 			if (target.getPos().charAt(i) == guess.getPos().charAt(i)) {
@@ -19,6 +20,7 @@ public class Report {
 				matched[i] = true;
 			}
 		
+		// Find present letters that aren't exact.
 		for (int i = 0; i < Position.NUMBERCELLS; i++)
 			// loop through letters in the guess.
 			for (int j = 0; j < Position.NUMBERCELLS; j++)
@@ -31,6 +33,8 @@ public class Report {
 					matched[j] = true;
 					break;
 				}
+		
+		// Anything else must be absent.
 		for (int i = 0; i < Position.NUMBERCELLS; i++) {
 			if (result[i] == null)
 				result[i] = Hint.ABSENT;
@@ -70,6 +74,9 @@ public class Report {
 		return true;
 	}
 
+	/*
+	 * True if all cells are CORRECT
+	 */
 	public boolean isSolved() {
 		for (int i = 0; i < Position.NUMBERCELLS; i++) {
 			if (result[i] != Hint.CORRECT)
