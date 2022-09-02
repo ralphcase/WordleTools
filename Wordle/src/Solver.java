@@ -1,7 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+
 
 public class Solver {
+	
+	static Logger logger = Logger.getLogger(Solver.class.getName());
 
 	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
@@ -37,6 +41,7 @@ public class Solver {
 	
 		System.out.println("Goal: " + goal);
 		turn = new Position("RAISE");		
+		turn = new Position("TORUS");		
 		guesses.add(new Guess(goal, turn));
 		
 		while (guesses.size() == 0 || !guesses.get(guesses.size()-1).isSolved()) {
@@ -62,15 +67,19 @@ public class Solver {
 	
 	private static void solveHelper() {
 		List<Position> allWords = Position.getALLWORDS();
-		List<Position> antiWords = new ArrayList<Position>(allWords);
+//		List<Position> antiWords = new ArrayList<Position>(allWords);
 		List<Position> possible = Position.getGOALWORDS();
 //		possible.addAll(allWords);
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 		
 		
-//		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "yellow")))));
-//		guesses.add(new Guess(new Position("TEMPO"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "gray", "gray")))));
-//		guesses.add(new Guess(new Position("DEBUG"), new Report(new ArrayList<String>(List.of("yellow", "green", "gray", "gray", "gray")))));
+		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("yellow", "yellow", "gray", "gray", "gray")))));
+//		guesses.add(new Guess(new Position("TRONC"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "yellow")))));
+//		guesses.add(new Guess(new Position("LOMED"), new Report(new ArrayList<String>(List.of("gray", "yellow", "green", "gray", "gray")))));
+//		guesses.add(new Guess(new Position("NASAL"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "gray")))));
+//		guesses.add(new Guess(new Position("THETA"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "gray", "yellow")))));
+//		guesses.add(new Guess(new Position("WHACK"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "yellow", "gray")))));
+//		guesses.add(new Guess(new Position("CHAMP"), new Report(new ArrayList<String>(List.of("green", "green", "green", "yellow", "gray")))));
 			
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
 //		guesses.add(new Guess(new Position("VIVID"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "red")))));
@@ -81,7 +90,7 @@ public class Solver {
 //		removeImpossible(antiWords, guesses);
 		System.out.println("["+guesses.size()+"] "+possible.size() + " possible: \t" + possible);
 		System.out.println("Guesses: " + guesses);
-		System.out.println("best: "+bestTurn(possible, guesses, allWords));	
+		System.out.println("best: "+bestTurn(possible, guesses, possible));	
 //		System.out.println("worst: "+worstTurn(antiWords, guesses, antiWords));	
 	}
 
@@ -97,24 +106,21 @@ public class Solver {
 		// most on average.
 		int minTotal = Integer.MAX_VALUE;
 		Position best = possible.get(0);
-		for (Position pos : possible) {
+		for (Position trial : trialList) {
 
 				int total = 0;
-				for (Position trial : trialList) {
-//					System.out.println("best: "+best+", checking "+pos+" with "+trial);
+				for (Position pos : possible) {
 					total += possibleSize(possible, guesses, new Guess(pos, trial));
 					if (total >= minTotal)
 						break;
 				}
-//				System.out.println("for guess "+pos+", the size is "+total);
+				logger.info("for guess "+trial+", the size is "+total);
 				if (total < minTotal) {
 					// Save the new best.
 					minTotal = total;
-					best = pos;
+					best = trial;
 
 			}
-//			System.out.println(count + ": " + found + " " + minTotal + " " + best + " - " + total + " " + pos);
-//			System.out.println(count + ": " + minTotal + " " + best + " - " + total + " " + pos);
 		}
 		return best;
 	}
