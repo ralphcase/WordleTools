@@ -132,7 +132,7 @@ public class Position {
 	 */
 	public static List<Position> getAnagrams(Position input) {
 		List<Position> result = new ArrayList<Position>();
-		for (Position word: ALLWORDS) {
+		for (Position word: getALLWORDS()) {
 			if (input.isAnagram(word))
 				result.add(word);
 		}
@@ -178,6 +178,10 @@ public class Position {
 	public String getPos() {
 		return pos;
 	}
+	
+	public boolean equals(Position other) {
+		return this.toString().equals(other.toString());
+	}
 
 
 	public static List<Position> getGOALWORDS() {
@@ -185,7 +189,12 @@ public class Position {
 	}
 
 	public static List<Position> getALLWORDS() {
-		return ALLWORDS;
+		// return ALLWORDS.addAll(GOALWORDS);
+		List<Position> result = ALLWORDS;
+		for (Position word : GOALWORDS) {
+			result.add(word);
+		}
+		return result;
 	}
 
 }

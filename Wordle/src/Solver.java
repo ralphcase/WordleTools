@@ -17,6 +17,7 @@ public class Solver {
 		System.out.println("It took " + (endTime - startTime) / 1000.0 + " seconds.");
 	}
 	
+	
 	private static void example()
 	{
 		Position turn;
@@ -41,7 +42,6 @@ public class Solver {
 	
 		System.out.println("Goal: " + goal);
 		turn = new Position("RAISE");		
-		turn = new Position("TORUS");		
 		guesses.add(new Guess(goal, turn));
 		
 		while (guesses.size() == 0 || !guesses.get(guesses.size()-1).isSolved()) {
@@ -56,7 +56,7 @@ public class Solver {
 
 			// Choose a guess for this turn.
 			turn = bestTurn(possible, guesses, allWords);
-//			turn = deepBestTurn(possible, guesses, allWords);
+//			turn = bestTurn(possible, guesses, possible);
 			guesses.add(new Guess(goal, turn));
 //			System.out.println("Guesses: " + guesses);
 		}
@@ -64,6 +64,7 @@ public class Solver {
 		System.out.println("Guesses: " + guesses);
 		System.out.println("Solved in "+guesses.size()+" turns! ");
 	}
+	
 	
 	private static void solveHelper() {
 		List<Position> allWords = Position.getALLWORDS();
@@ -73,13 +74,9 @@ public class Solver {
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 		
 		
-		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("yellow", "yellow", "gray", "gray", "gray")))));
-//		guesses.add(new Guess(new Position("TRONC"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "yellow")))));
-//		guesses.add(new Guess(new Position("LOMED"), new Report(new ArrayList<String>(List.of("gray", "yellow", "green", "gray", "gray")))));
-//		guesses.add(new Guess(new Position("NASAL"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "gray")))));
-//		guesses.add(new Guess(new Position("THETA"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "gray", "yellow")))));
-//		guesses.add(new Guess(new Position("WHACK"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "yellow", "gray")))));
-//		guesses.add(new Guess(new Position("CHAMP"), new Report(new ArrayList<String>(List.of("green", "green", "green", "yellow", "gray")))));
+//		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "yellow")))));
+//		guesses.add(new Guess(new Position("TEPAL"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "green", "green")))));
+//		guesses.add(new Guess(new Position("DECAL"), new Report(new ArrayList<String>(List.of("yellow", "green", "gray", "green", "green")))));
 			
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
 //		guesses.add(new Guess(new Position("VIVID"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "red")))));
@@ -90,7 +87,7 @@ public class Solver {
 //		removeImpossible(antiWords, guesses);
 		System.out.println("["+guesses.size()+"] "+possible.size() + " possible: \t" + possible);
 		System.out.println("Guesses: " + guesses);
-		System.out.println("best: "+bestTurn(possible, guesses, possible));	
+		System.out.println("best: "+bestTurn(possible, guesses, allWords));	
 //		System.out.println("worst: "+worstTurn(antiWords, guesses, antiWords));	
 	}
 
@@ -100,7 +97,7 @@ public class Solver {
 	 * return the best next guess. "Best" is the guess that would reduce the
 	 * number of possibilities the most.
 	 */
-	private static Position bestTurn(List<Position> possible, List<Guess> guesses, List<Position> trialList) {
+	static Position bestTurn(List<Position> possible, List<Guess> guesses, List<Position> trialList) {
 		
 		// For each possible next move, see which reduces the possible list the
 		// most on average.
@@ -110,12 +107,13 @@ public class Solver {
 
 				int total = 0;
 				for (Position pos : possible) {
-					total += possibleSize(possible, guesses, new Guess(pos, trial));
+					if (!pos.equals(trial)) 
+						total += possibleSize(possible, guesses, new Guess(pos, trial));
 					if (total >= minTotal)
 						break;
 				}
-				logger.info("for guess "+trial+", the size is "+total);
 				if (total < minTotal) {
+					logger.info("for guess "+trial+", the size is "+total);
 					// Save the new best.
 					minTotal = total;
 					best = trial;
@@ -202,18 +200,20 @@ public class Solver {
 		guesses.remove(nextGuess);
 		return count;
 	}
+	
 
 	/*
 	 * Return the size of possible positions given the previous guesses and the
 	 * next potential guess.
 	 */
-	private static int possibleSize(List<Position> possible, List<Guess> guesses, Guess nextGuess) {
+	static int possibleSize(List<Position> possible, List<Guess> guesses, Guess nextGuess) {
 		guesses.add(nextGuess);
 		int count = countPossible(possible, guesses);
 		guesses.remove(nextGuess);
 		return count;
 	}
 
+	
 	/*
 	 * Remove Positions from the list if they are impossible given the data in
 	 * the guesses.
@@ -230,6 +230,7 @@ public class Solver {
 			}
 		}
 	}
+	
 	
 	/*
 	 * Count the number of positions that are consistent with all the guesses.
