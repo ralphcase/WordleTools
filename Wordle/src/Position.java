@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -56,6 +55,7 @@ public class Position {
 		return new Report(this, input);
 	}
 	
+	
 	/*
 	 * Create a list of all possible positions.
 	 * Use words from the given data file.
@@ -72,9 +72,7 @@ public class Position {
 				if (LETTERS.indexOf(letter) >= 0)
 					word += letter;
 				else {
-//                	System.out.println("word: |"+ word+"|");
 					try {
-//                		if (1 == roll(10))
 						wordlist.add(new Position(word));
 					} catch (IllegalArgumentException e) {
 						// ignore invalid words in the file.
@@ -93,6 +91,7 @@ public class Position {
 		return result;
 	}
 
+	
 	/* 
 	 * Remove words that have a letter repeated somewhere in the word.
 	 */
@@ -109,6 +108,7 @@ public class Position {
 		}
 		return result;
 	}
+
 	
 	/*
 	 * Remove words that are an anagram of another word in the list.
@@ -126,6 +126,7 @@ public class Position {
 		}
 		return result;
 	}
+
 	
 	/*
 	 * Return a list of anagrams of the given word.
@@ -147,6 +148,7 @@ public class Position {
 		Arrays.sort(w2);
 		return new String(w1).equals(new String(w2));
 	}
+
 	
 	private char[] toCharArray() {
 		return this.pos.toCharArray();
@@ -157,10 +159,12 @@ public class Position {
 		return getPos();
 	}
 
+	
 	// Pick a number from 1 to num, inclusive
 	private static int roll(int num) {
 		return 1 + rand.nextInt(num);
 	}
+
 	
 	/*
 	 * Summarize all letters guessed in all guesses
@@ -175,9 +179,11 @@ public class Position {
 		return found;
 	}
 
+	
 	public String getPos() {
 		return pos;
 	}
+	
 	
 	public boolean equals(Position other) {
 		return this.toString().equals(other.toString());
@@ -188,6 +194,7 @@ public class Position {
 		return GOALWORDS;
 	}
 
+	
 	public static List<Position> getALLWORDS() {
 		// return ALLWORDS.addAll(GOALWORDS);
 		List<Position> result = ALLWORDS;

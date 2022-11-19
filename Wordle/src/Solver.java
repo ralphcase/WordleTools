@@ -70,14 +70,13 @@ public class Solver {
 		List<Position> allWords = Position.getALLWORDS();
 //		List<Position> antiWords = new ArrayList<Position>(allWords);
 		List<Position> possible = Position.getGOALWORDS();
-//		possible.addAll(allWords);
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 		
 		boolean hardMode = false;
 		
-		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "gray", "yellow")))));
-//		guesses.add(new Guess(new Position("NOTCH"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "gray", "gray")))));
-//		guesses.add(new Guess(new Position("DECAL"), new Report(new ArrayList<String>(List.of("yellow", "green", "gray", "green", "green")))));
+		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("yellow", "yellow", "gray", "gray", "yellow")))));
+		guesses.add(new Guess(new Position("BLEAT"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "yellow", "green")))));
+//		guesses.add(new Guess(new Position("LYMPH"), new Report(new ArrayList<String>(List.of("yellow", "yellow", "gray", "green", "green")))));
 			
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
 //		guesses.add(new Guess(new Position("VIVID"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "red")))));
