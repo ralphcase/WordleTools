@@ -72,11 +72,12 @@ public class Solver {
 		List<Position> possible = Position.getGOALWORDS();
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 		
+//		boolean hardMode = true;
 		boolean hardMode = false;
 		
-		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("yellow", "yellow", "gray", "gray", "yellow")))));
-		guesses.add(new Guess(new Position("BLEAT"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "yellow", "green")))));
-//		guesses.add(new Guess(new Position("LYMPH"), new Report(new ArrayList<String>(List.of("yellow", "yellow", "gray", "green", "green")))));
+		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("yellow", "gray", "green", "gray", "gray")))));
+		guesses.add(new Guess(new Position("TRONK"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "gray", "gray")))));
+		guesses.add(new Guess(new Position("GODLY"), new Report(new ArrayList<String>(List.of("green", "gray", "gray", "gray", "green")))));
 			
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
 //		guesses.add(new Guess(new Position("VIVID"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "red")))));
@@ -114,16 +115,18 @@ public class Solver {
 				for (Position pos : possible) {
 					if (!pos.equals(trial)) 
 						total += possibleSize(possible, guesses, new Guess(pos, trial));
-					if (total >= minTotal)
+					if (total > minTotal)
 						break;
 				}
+//				logger.info("for guess "+trial+", the size is "+total);
+//				if (total < minTotal || (total == minTotal && trial.equals(bestTurn(possible, guesses, possible)))) {
 				if (total < minTotal) {
 					logger.info("for guess "+trial+", the size is "+total);
 					// Save the new best.
 					minTotal = total;
 					best = trial;
 
-			}
+				}
 		}
 		return best;
 	}
