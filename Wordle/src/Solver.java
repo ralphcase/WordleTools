@@ -93,7 +93,7 @@ public class Solver {
 //		boolean hardMode = true;
 		boolean hardMode = false;
 		
-		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "yellow", "yellow")))));
+//		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "yellow", "yellow")))));
 //		guesses.add(new Guess(new Position("COOTY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "green")))));
 //		guesses.add(new Guess(new Position("GULPH"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "gray", "yellow")))));
 //		guesses.add(new Guess(new Position("FIXER"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "green", "green")))));

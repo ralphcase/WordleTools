@@ -28,7 +28,7 @@ public class Report {
 				if (!matched[j] 
 						&& result[i] != Hint.CORRECT
 						&& i != j 
-						&& target.toCharArray()[i] == guess.toCharArray()[i]) {
+						&& target.toCharArray()[j] == guess.toCharArray()[i]) {
 					result[i] = Hint.PRESENT;
 					matched[j] = true;
 					break;
