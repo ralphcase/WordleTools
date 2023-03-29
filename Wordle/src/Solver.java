@@ -227,7 +227,7 @@ public class Solver {
 	 * Remove Positions from the list if they are impossible given the data in
 	 * the guesses.
 	 */
-	private static void removeImpossible(List<Position> possible, List<Guess> allGuesses) {
+	static void removeImpossible(List<Position> possible, List<Guess> allGuesses) {
 		for (int i = 0; i < possible.size(); i++) {
 			for (Guess g : allGuesses) {
 				Report hint = possible.get(i).guess(g.getPos());
