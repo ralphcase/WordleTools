@@ -15,11 +15,13 @@ public class Position {
 //	private static final String DATAFILE = "5letterwords2.txt";
 //	private static final String DATAFILE = "sgb-words.txt";
 //	private static final String DATAFILE = "codedict.txt";
-	private static final String GOALFILE = "nytGoalList.txt";
-	private static final String ALLOWEDFILE = "nytAllowedList.txt";
+//	private static final String GOALFILE = "nytGoalList.txt";
+//	private static final String ALLOWEDFILE = "nytAllowedList.txt";
+	private static final String GOALFILE = "nytDictionary.txt";
+	private static final String ALLOWEDFILE = "nytDictionary.txt";
 
 	
-	private String pos;
+	private char[] pos;
 	private static Random rand = new Random();
 
 	private static List<Position> GOALWORDS = AllPositions(GOALFILE);
@@ -32,11 +34,11 @@ public class Position {
 	public Position(String word) {
 		if (word.length() != NUMBERCELLS)
 			throw new IllegalArgumentException();
-		for (char member : word.toCharArray()) {
+		pos = word.toCharArray();
+		for (char member : pos) {
 			if (LETTERS.indexOf(member) <0)
 				throw new IllegalArgumentException();
 		}
-		pos = word;
 	}
 	
 
@@ -142,21 +144,21 @@ public class Position {
 
 	
 	private boolean isAnagram(Position target) {
-		char[] w1 = this.getPos().toCharArray();
+		char[] w1 = this.getPos();
 		Arrays.sort(w1);
-		char[] w2 = target.getPos().toCharArray();
+		char[] w2 = target.getPos();
 		Arrays.sort(w2);
 		return new String(w1).equals(new String(w2));
 	}
 
 	
 	private char[] toCharArray() {
-		return this.pos.toCharArray();
+		return this.pos;
 	}
 
 
 	public String toString() {
-		return getPos();
+		return new String(getPos());
 	}
 
 	
@@ -172,7 +174,7 @@ public class Position {
 	public static Set<Character> allLettersGuessed(List<Guess> allGuesses) {
 		Set<Character> found = new HashSet<Character>();
 		for (Guess g: allGuesses) {
-			for (char letter: g.getPos().getPos().toCharArray())  {
+			for (char letter: g.getPos().getPos())  {
 				found.add(letter);
 			}
 		}
@@ -180,7 +182,7 @@ public class Position {
 	}
 
 	
-	public String getPos() {
+	public char[] getPos() {
 		return pos;
 	}
 	
@@ -202,6 +204,17 @@ public class Position {
 			result.add(word);
 		}
 		return result;
+	}
+	
+	public static void splitAllGoalWords() {
+//		int pivot = ALLWORDS.indexOf(new Position("ZYMIC"));
+		int pivot = ALLWORDS.indexOf(new Position("LUNCH"));
+		System.out.println(pivot);
+		System.out.println("ALLWORDS has "+ALLWORDS.size());
+		System.out.println("GOALWORDS has "+GOALWORDS.size());
+		
+		GOALWORDS = ALLWORDS.subList(pivot+1, ALLWORDS.size());
+		ALLWORDS = ALLWORDS.subList(0, pivot);
 	}
 
 }

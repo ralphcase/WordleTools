@@ -12,12 +12,29 @@ public class Solver {
 		
 		solveHelper();
 //		example();
+//		debug();
 		
 		long endTime = System.currentTimeMillis();
 		System.out.println("It took " + (endTime - startTime) / 1000.0 + " seconds.");
 	}
 	
 	
+	private static void debug() {
+		List<Guess> guesses = new ArrayList<Guess>();
+		Position.splitAllGoalWords();
+
+		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "gray")))));
+		guesses.add(new Guess(new Position("CLOAM"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "yellow", "gray")))));
+		guesses.add(new Guess(new Position("TONGA"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "yellow", "yellow")))));
+		
+		List<Position> words = new ArrayList<Position>();
+		words.add(new Position("AGONY"));
+		
+		removeImpossible(words, guesses);
+		
+	}
+
+
 	private static void example()
 	{
 		Position turn;
@@ -67,6 +84,7 @@ public class Solver {
 	
 	
 	private static void solveHelper() {
+//		Position.splitAllGoalWords();
 		List<Position> allWords = Position.getALLWORDS();
 //		List<Position> antiWords = new ArrayList<Position>(allWords);
 		List<Position> possible = Position.getGOALWORDS();
@@ -75,9 +93,9 @@ public class Solver {
 //		boolean hardMode = true;
 		boolean hardMode = false;
 		
-		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "yellow", "gray")))));
-		guesses.add(new Guess(new Position("STAIN"), new Report(new ArrayList<String>(List.of("green", "green", "green", "green", "gray")))));
-//		guesses.add(new Guess(new Position("MOUTH"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "yellow", "green")))));
+		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "yellow", "yellow")))));
+//		guesses.add(new Guess(new Position("COOTY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "green")))));
+//		guesses.add(new Guess(new Position("GULPH"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "gray", "yellow")))));
 //		guesses.add(new Guess(new Position("FIXER"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "green", "green")))));
 			
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
