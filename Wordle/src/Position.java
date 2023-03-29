@@ -15,8 +15,8 @@ public class Position {
 //	private static final String DATAFILE = "5letterwords2.txt";
 //	private static final String DATAFILE = "sgb-words.txt";
 //	private static final String DATAFILE = "codedict.txt";
-	private static final String GOALFILE = "nytGoalList.txt";
-	private static final String ALLOWEDFILE = "nytAllowedList.txt";
+	private static final String GOALFILE = "nytDictionary.txt";
+	private static final String ALLOWEDFILE = "nytDictionary.txt";
 
 	
 	private String pos;
