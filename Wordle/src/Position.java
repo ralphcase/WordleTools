@@ -15,10 +15,10 @@ public class Position {
 //	private static final String DATAFILE = "5letterwords2.txt";
 //	private static final String DATAFILE = "sgb-words.txt";
 //	private static final String DATAFILE = "codedict.txt";
-//	private static final String GOALFILE = "nytGoalList.txt";
-//	private static final String ALLOWEDFILE = "nytAllowedList.txt";
-	private static final String GOALFILE = "nytDictionary.txt";
-	private static final String ALLOWEDFILE = "nytDictionary.txt";
+	private static final String GOALFILE = "nytGoalList.txt";
+	private static final String ALLOWEDFILE = "nytAllowedList.txt";
+//	private static final String GOALFILE = "nytDictionary.txt";
+//	private static final String ALLOWEDFILE = "nytDictionary.txt";
 
 	
 	private char[] pos;
@@ -46,7 +46,7 @@ public class Position {
 	 * Create a random position.
 	 */
 	public Position() {
-		pos = GOALWORDS.get(roll(GOALWORDS.size())).getPos();
+		pos = GOALWORDS.get(roll(GOALWORDS.size())).toCharArray();
 	}
 
 	
@@ -144,21 +144,21 @@ public class Position {
 
 	
 	private boolean isAnagram(Position target) {
-		char[] w1 = this.getPos();
+		char[] w1 = this.toCharArray();
 		Arrays.sort(w1);
-		char[] w2 = target.getPos();
+		char[] w2 = target.toCharArray();
 		Arrays.sort(w2);
-		return new String(w1).equals(new String(w2));
+		return Arrays.equals(w1, w2);
 	}
 
 	
-	private char[] toCharArray() {
+	public char[] toCharArray() {
 		return this.pos;
 	}
 
 
 	public String toString() {
-		return new String(getPos());
+		return new String(pos);
 	}
 
 	
@@ -174,18 +174,13 @@ public class Position {
 	public static Set<Character> allLettersGuessed(List<Guess> allGuesses) {
 		Set<Character> found = new HashSet<Character>();
 		for (Guess g: allGuesses) {
-			for (char letter: g.getPos().getPos())  {
+			for (char letter: g.getPos().toCharArray())  {
 				found.add(letter);
 			}
 		}
 		return found;
 	}
 
-	
-	public char[] getPos() {
-		return pos;
-	}
-	
 	
 	public boolean equals(Position other) {
 		return this.toString().equals(other.toString());
