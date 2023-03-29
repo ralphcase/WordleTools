@@ -15,8 +15,10 @@ public class Position {
 //	private static final String DATAFILE = "5letterwords2.txt";
 //	private static final String DATAFILE = "sgb-words.txt";
 //	private static final String DATAFILE = "codedict.txt";
-	private static final String GOALFILE = "nytDictionary.txt";
-	private static final String ALLOWEDFILE = "nytDictionary.txt";
+	private static final String GOALFILE = "nytGoalList.txt";
+	private static final String ALLOWEDFILE = "nytAllowedList.txt";
+//	private static final String GOALFILE = "nytDictionary.txt";
+//	private static final String ALLOWEDFILE = "nytDictionary.txt";
 
 	
 	private String pos;
@@ -196,12 +198,11 @@ public class Position {
 
 	
 	public static List<Position> getALLWORDS() {
-		// return ALLWORDS.addAll(GOALWORDS);
-		List<Position> result = ALLWORDS;
+		Set<Position> result = new HashSet<Position>(ALLWORDS);
 		for (Position word : GOALWORDS) {
 			result.add(word);
 		}
-		return result;
+		return new ArrayList<Position>(result);
 	}
 
 }

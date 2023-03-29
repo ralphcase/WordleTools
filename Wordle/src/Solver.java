@@ -23,7 +23,8 @@ public class Solver {
 		Position turn;
 //		Position goal = new Position("SHADE");
 //		Position goal = new Position("HATCH");    // Hard case for first solver.
-		Position goal = new Position("TASTE");    // Hard case for first solver.
+//		Position goal = new Position("TASTE");    // Hard case for first solver.
+		Position goal = new Position();			// Random goal word.
 		List<Position> allWords = Position.getALLWORDS();
 		List<Position> possible = Position.getGOALWORDS();
 //		System.out.println(possible.size() + " possible: \t" + possible);
@@ -41,17 +42,17 @@ public class Solver {
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 	
 		System.out.println("Goal: " + goal);
-		turn = new Position("RAISE");		
+		turn = new Position("ROATE");		
 		guesses.add(new Guess(goal, turn));
 		
 		while (guesses.size() == 0 || !guesses.get(guesses.size()-1).isSolved()) {
+			// Shorten the list of possibilities based on the new results.
+			removeImpossible(possible, guesses);
 			System.out.print("["+guesses.size()+"] "+possible.size() + " possible: \t");
 			if (possible.size() < 100)
 				System.out.print(possible);
 			System.out.println();
 			
-			// Shorten the list of possibilities based on the new results.
-			removeImpossible(possible, guesses);
 			System.out.println(guesses);
 
 			// Choose a guess for this turn.
