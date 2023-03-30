@@ -40,7 +40,8 @@ public class Solver {
 		Position turn;
 //		Position goal = new Position("SHADE");
 //		Position goal = new Position("HATCH");    // Hard case for first solver.
-		Position goal = new Position("TASTE");    // Hard case for first solver.
+//		Position goal = new Position("TASTE");    // Hard case for first solver.
+		Position goal = new Position();			// Random goal word.
 		List<Position> allWords = Position.getALLWORDS();
 		List<Position> possible = Position.getGOALWORDS();
 //		System.out.println(possible.size() + " possible: \t" + possible);
@@ -58,17 +59,17 @@ public class Solver {
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 	
 		System.out.println("Goal: " + goal);
-		turn = new Position("RAISE");		
+		turn = new Position("ROATE");		
 		guesses.add(new Guess(goal, turn));
 		
 		while (guesses.size() == 0 || !guesses.get(guesses.size()-1).isSolved()) {
+			// Shorten the list of possibilities based on the new results.
+			removeImpossible(possible, guesses);
 			System.out.print("["+guesses.size()+"] "+possible.size() + " possible: \t");
 			if (possible.size() < 100)
 				System.out.print(possible);
 			System.out.println();
 			
-			// Shorten the list of possibilities based on the new results.
-			removeImpossible(possible, guesses);
 			System.out.println(guesses);
 
 			// Choose a guess for this turn.
@@ -94,8 +95,8 @@ public class Solver {
 		boolean hardMode = false;
 		
 //		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "yellow", "yellow")))));
-//		guesses.add(new Guess(new Position("COOTY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "green")))));
-//		guesses.add(new Guess(new Position("GULPH"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "gray", "yellow")))));
+//		guesses.add(new Guess(new Position("TELES"), new Report(new ArrayList<String>(List.of("yellow", "green", "gray", "green", "yellow")))));
+//		guesses.add(new Guess(new Position("MOUTH"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "yellow", "green")))));
 //		guesses.add(new Guess(new Position("FIXER"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "green", "green")))));
 			
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
@@ -245,7 +246,7 @@ public class Solver {
 	 * Remove Positions from the list if they are impossible given the data in
 	 * the guesses.
 	 */
-	private static void removeImpossible(List<Position> possible, List<Guess> allGuesses) {
+	static void removeImpossible(List<Position> possible, List<Guess> allGuesses) {
 		for (int i = 0; i < possible.size(); i++) {
 			for (Guess g : allGuesses) {
 				Report hint = possible.get(i).guess(g.getPos());

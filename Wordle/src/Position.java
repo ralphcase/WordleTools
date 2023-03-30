@@ -193,12 +193,11 @@ public class Position {
 
 	
 	public static List<Position> getALLWORDS() {
-		// return ALLWORDS.addAll(GOALWORDS);
-		List<Position> result = ALLWORDS;
+		Set<Position> result = new HashSet<Position>(ALLWORDS);
 		for (Position word : GOALWORDS) {
 			result.add(word);
 		}
-		return result;
+		return new ArrayList<Position>(result);
 	}
 	
 	public static void splitAllGoalWords() {
