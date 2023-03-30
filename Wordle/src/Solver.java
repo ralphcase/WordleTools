@@ -12,12 +12,29 @@ public class Solver {
 		
 		solveHelper();
 //		example();
+//		debug();
 		
 		long endTime = System.currentTimeMillis();
 		System.out.println("It took " + (endTime - startTime) / 1000.0 + " seconds.");
 	}
 	
 	
+	private static void debug() {
+		List<Guess> guesses = new ArrayList<Guess>();
+		Position.splitAllGoalWords();
+
+		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "gray")))));
+		guesses.add(new Guess(new Position("CLOAM"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "yellow", "gray")))));
+		guesses.add(new Guess(new Position("TONGA"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "yellow", "yellow")))));
+		
+		List<Position> words = new ArrayList<Position>();
+		words.add(new Position("AGONY"));
+		
+		removeImpossible(words, guesses);
+		
+	}
+
+
 	private static void example()
 	{
 		Position turn;
@@ -68,6 +85,7 @@ public class Solver {
 	
 	
 	private static void solveHelper() {
+//		Position.splitAllGoalWords();
 		List<Position> allWords = Position.getALLWORDS();
 //		List<Position> antiWords = new ArrayList<Position>(allWords);
 		List<Position> possible = Position.getGOALWORDS();

@@ -15,7 +15,7 @@ public class Report {
 		
 		// Check for exact matches.
 		for (int i = 0; i < Position.NUMBERCELLS; i++)
-			if (target.getPos().charAt(i) == guess.getPos().charAt(i)) {
+			if (target.toCharArray()[i] == guess.toCharArray()[i]) {
 				result[i] = Hint.CORRECT;
 				matched[i] = true;
 			}
@@ -28,7 +28,7 @@ public class Report {
 				if (!matched[j] 
 						&& result[i] != Hint.CORRECT
 						&& i != j 
-						&& target.getPos().charAt(j) == guess.getPos().charAt(i)) {
+						&& target.toCharArray()[j] == guess.toCharArray()[i]) {
 					result[i] = Hint.PRESENT;
 					matched[j] = true;
 					break;
@@ -68,10 +68,7 @@ public class Report {
 	}
 
 	public boolean equals(Report r) {
-		for (int i = 0; i < result.length; i++)
-			if (this.result[i] != r.result[i]) 
-				return false;
-		return true;
+		return Arrays.equals(this.result, r.result);
 	}
 
 	/*

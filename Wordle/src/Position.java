@@ -21,7 +21,7 @@ public class Position {
 //	private static final String ALLOWEDFILE = "nytDictionary.txt";
 
 	
-	private String pos;
+	private char[] pos;
 	private static Random rand = new Random();
 
 	private static List<Position> GOALWORDS = AllPositions(GOALFILE);
@@ -34,11 +34,11 @@ public class Position {
 	public Position(String word) {
 		if (word.length() != NUMBERCELLS)
 			throw new IllegalArgumentException();
-		for (char member : word.toCharArray()) {
+		pos = word.toCharArray();
+		for (char member : pos) {
 			if (LETTERS.indexOf(member) <0)
 				throw new IllegalArgumentException();
 		}
-		pos = word;
 	}
 	
 
@@ -46,7 +46,7 @@ public class Position {
 	 * Create a random position.
 	 */
 	public Position() {
-		pos = GOALWORDS.get(roll(GOALWORDS.size())).getPos();
+		pos = GOALWORDS.get(roll(GOALWORDS.size())).toCharArray();
 	}
 
 	
@@ -144,21 +144,21 @@ public class Position {
 
 	
 	private boolean isAnagram(Position target) {
-		char[] w1 = this.getPos().toCharArray();
+		char[] w1 = this.toCharArray();
 		Arrays.sort(w1);
-		char[] w2 = target.getPos().toCharArray();
+		char[] w2 = target.toCharArray();
 		Arrays.sort(w2);
-		return new String(w1).equals(new String(w2));
+		return Arrays.equals(w1, w2);
 	}
 
 	
-	private char[] toCharArray() {
-		return this.pos.toCharArray();
+	public char[] toCharArray() {
+		return this.pos;
 	}
 
 
 	public String toString() {
-		return getPos();
+		return new String(pos);
 	}
 
 	
@@ -174,18 +174,13 @@ public class Position {
 	public static Set<Character> allLettersGuessed(List<Guess> allGuesses) {
 		Set<Character> found = new HashSet<Character>();
 		for (Guess g: allGuesses) {
-			for (char letter: g.getPos().getPos().toCharArray())  {
+			for (char letter: g.getPos().toCharArray())  {
 				found.add(letter);
 			}
 		}
 		return found;
 	}
 
-	
-	public String getPos() {
-		return pos;
-	}
-	
 	
 	public boolean equals(Position other) {
 		return this.toString().equals(other.toString());
@@ -203,6 +198,17 @@ public class Position {
 			result.add(word);
 		}
 		return new ArrayList<Position>(result);
+	}
+	
+	public static void splitAllGoalWords() {
+//		int pivot = ALLWORDS.indexOf(new Position("ZYMIC"));
+		int pivot = ALLWORDS.indexOf(new Position("LUNCH"));
+		System.out.println(pivot);
+		System.out.println("ALLWORDS has "+ALLWORDS.size());
+		System.out.println("GOALWORDS has "+GOALWORDS.size());
+		
+		GOALWORDS = ALLWORDS.subList(pivot+1, ALLWORDS.size());
+		ALLWORDS = ALLWORDS.subList(0, pivot);
 	}
 
 }
