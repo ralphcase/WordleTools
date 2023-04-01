@@ -19,34 +19,6 @@ public class Solver {
 	}
 	
 	
-	private static void debug() {
-		Position.wordlists();
-//		List<Guess> guesses = new ArrayList<Guess>();
-//		Position.splitAllGoalWords();
-//		
-//		Position testWord = new Position("ECARD");
-//		System.out.println(testWord + " is in " + testWord.whichList());
-//		testWord = new Position("AREDD");
-//		System.out.println(testWord + " is in " + testWord.whichList());
-//		testWord = new Position("BREAD");
-//		System.out.println(testWord + " is in " + testWord.whichList());
-//		testWord = new Position("AREAD");
-//		System.out.println(testWord + " is in " + testWord.whichList());
-//		testWord = new Position("OREAD");
-//		System.out.println(testWord + " is in " + testWord.whichList());
-//
-//		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "gray")))));
-//		guesses.add(new Guess(new Position("CLOAM"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "yellow", "gray")))));
-//		guesses.add(new Guess(new Position("TONGA"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "yellow", "yellow")))));
-//		
-//		List<Position> words = new ArrayList<Position>();
-//		words.add(new Position("AGONY"));
-		
-//		removeImpossible(words, guesses);
-		
-	}
-
-
 	private static void example()
 	{
 		Position turn;
@@ -276,16 +248,46 @@ public class Solver {
 	 * Count the number of positions that are consistent with all the guesses.
 	 */
 	static int countPossible(List<Position> possible, List<Guess> allGuesses) {
-		int count = 0;
+		int result = possible.size();
 		for (Position p: possible) {
 			for (Guess g : allGuesses) {
 				Report hint = p.guess(g.getPos());
 				if (!hint.equals(g.getScore())) {
-					count++;
+					result--;
 					break;
 				}
 			}
 		}
-		return possible.size()-count;
+		return result;
 	}
+	
+	private static void debug() {
+		Position.wordlists();
+//		List<Guess> guesses = new ArrayList<Guess>();
+//		Position.splitAllGoalWords();
+//		
+//		Position testWord = new Position("ECARD");
+//		System.out.println(testWord + " is in " + testWord.whichList());
+//		testWord = new Position("AREDD");
+//		System.out.println(testWord + " is in " + testWord.whichList());
+//		testWord = new Position("BREAD");
+//		System.out.println(testWord + " is in " + testWord.whichList());
+//		testWord = new Position("AREAD");
+//		System.out.println(testWord + " is in " + testWord.whichList());
+//		testWord = new Position("OREAD");
+//		System.out.println(testWord + " is in " + testWord.whichList());
+//
+//		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "gray")))));
+//		guesses.add(new Guess(new Position("CLOAM"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "yellow", "gray")))));
+//		guesses.add(new Guess(new Position("TONGA"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "yellow", "yellow")))));
+//		
+//		List<Position> words = new ArrayList<Position>();
+//		words.add(new Position("AGONY"));
+		
+//		removeImpossible(words, guesses);
+		
+	}
+
+
+
 }
