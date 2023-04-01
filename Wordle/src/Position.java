@@ -15,10 +15,12 @@ public class Position {
 //	private static final String DATAFILE = "5letterwords2.txt";
 //	private static final String DATAFILE = "sgb-words.txt";
 //	private static final String DATAFILE = "codedict.txt";
-	private static final String GOALFILE = "nytGoalList.txt";
-	private static final String ALLOWEDFILE = "nytAllowedList.txt";
+//	private static final String GOALFILE = "nytGoalList.txt";
+//	private static final String ALLOWEDFILE = "nytAllowedList.txt";
 //	private static final String GOALFILE = "nytDictionary.txt";
 //	private static final String ALLOWEDFILE = "nytDictionary.txt";
+	private static final String GOALFILE = "possibleGoals.txt";
+	private static final String ALLOWEDFILE = "nonGoals.txt";
 
 	
 	private char[] pos;
@@ -39,6 +41,47 @@ public class Position {
 			if (LETTERS.indexOf(member) <0)
 				throw new IllegalArgumentException();
 		}
+	}
+	
+	public static void wordlists() {
+		Set<String> nytDictionary = new HashSet<String>(toStrings(AllPositions("nytDictionary.txt")));
+		Set<String> nytAllowedList = new HashSet<String>(toStrings(AllPositions("nytAllowedList.txt")));
+		Set<String> nytGoalList = new HashSet<String>(toStrings(AllPositions("nytGoalList.txt")));
+		Set<String> possibleGoals = new HashSet<String>(toStrings(AllPositions("possibleGoals.txt")));
+		
+		Set<String> oldDictionary = new HashSet<String>();
+		oldDictionary.addAll(nytAllowedList);
+		oldDictionary.addAll(nytGoalList);
+		System.out.println("oldDictionary: "+oldDictionary.size());
+		System.out.println("nytDictionary: "+nytDictionary.size());
+		
+//		nytDictionary.removeAll(oldDictionary);
+//		System.out.println("in new dictionary but not in old: " + nytDictionary.size());
+//		oldDictionary.removeAll(nytDictionary);
+//		System.out.println("in old dictionary but not in new: " + oldDictionary.size());
+
+		
+		
+//		nytGoalList.addAll(possibleGoals);
+//		System.out.println("new goals: "+nytGoalList.size());
+//		System.out.println(goals);
+		
+//		nytDictionary.addAll(nytAllowedList);
+		nytDictionary.removeAll(nytGoalList);
+		System.out.println("allowed words: "+nytDictionary.size());
+		
+//		nytDictionary.removeAll(nytAllowedList);
+		
+//		System.out.println("in dictionary but not in new allowed: " + nytDictionary.size());
+		System.out.println(nytDictionary);
+		
+		
+	}
+	private static List<String> toStrings(List<Position> input) {
+		ArrayList<String> result = new ArrayList<String>();
+		for (Position word : input) 
+			result.add(word.toString());
+		return result;
 	}
 	
 
@@ -180,10 +223,10 @@ public class Position {
 		}
 		return found;
 	}
-
+	
 	
 	public boolean equals(Position other) {
-		return this.toString().equals(other.toString());
+		return Arrays.equals(this.pos, other.pos);
 	}
 
 
@@ -201,14 +244,32 @@ public class Position {
 	}
 	
 	public static void splitAllGoalWords() {
-//		int pivot = ALLWORDS.indexOf(new Position("ZYMIC"));
-		int pivot = ALLWORDS.indexOf(new Position("LUNCH"));
+		Position target = new Position("ZYMIC");
+		int pivot = Position.indexOf(ALLWORDS, target);
 		System.out.println(pivot);
-		System.out.println("ALLWORDS has "+ALLWORDS.size());
-		System.out.println("GOALWORDS has "+GOALWORDS.size());
 		
 		GOALWORDS = ALLWORDS.subList(pivot+1, ALLWORDS.size());
 		ALLWORDS = ALLWORDS.subList(0, pivot);
+		System.out.println("ALLWORDS has "+ALLWORDS.size());
+		System.out.println("GOALWORDS has "+GOALWORDS.size());
+	}
+	
+	private static int indexOf(List<Position> dict, Position target) {
+		int pivot = -1;
+		for (int i = 0; i < dict.size(); i++) {
+			if (dict.get(i).equals(target)) {
+				pivot = i;
+				break;
+			}
+		}
+		return pivot;
+	}
+
+
+	public String whichList() {
+		if (Position.indexOf(ALLWORDS, this) >= 0) return "ALLWORDS";
+		if (Position.indexOf(GOALWORDS, this) >= 0) return "GOALWORDS";
+		return "none";
 	}
 
 }
