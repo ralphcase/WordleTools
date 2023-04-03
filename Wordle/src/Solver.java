@@ -43,10 +43,12 @@ public class Solver {
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 	
 		System.out.println("Goal: " + goal);
-		turn = new Position("ROATE");		
-		guesses.add(new Guess(goal, turn));
+//		turn = new Position("ROATE");		
+//		guesses.add(new Guess(goal, turn));
 		
 		while (guesses.size() == 0 || !guesses.get(guesses.size()-1).isSolved()) {
+			System.out.println("Guesses: " + guesses);
+
 			// Shorten the list of possibilities based on the new results.
 			removeImpossible(possible, guesses);
 			System.out.print("["+guesses.size()+"] "+possible.size() + " possible: \t");
@@ -54,15 +56,11 @@ public class Solver {
 				System.out.print(possible);
 			System.out.println();
 			
-			System.out.println(guesses);
 
 			// Choose a guess for this turn.
 			turn = bestTurn(possible, guesses, allWords);
-//			turn = bestTurn(possible, guesses, possible);
 			guesses.add(new Guess(goal, turn));
-//			System.out.println("Guesses: " + guesses);
 		}
-		System.out.println("["+guesses.size()+"] "+possible.size() + " possible: \t" + possible);
 		System.out.println("Guesses: " + guesses);
 		System.out.println("Solved in "+guesses.size()+" turns! ");
 	}
@@ -78,9 +76,9 @@ public class Solver {
 //		boolean hardMode = true;
 		boolean hardMode = false;
 		
-		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("yellow", "green", "gray", "gray", "gray")))));
-		guesses.add(new Guess(new Position("DORMY"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "yellow", "gray")))));
-//		guesses.add(new Guess(new Position("GULCH"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "green", "green")))));
+		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("yellow", "yellow", "gray", "gray", "gray")))));
+		guesses.add(new Guess(new Position("TRONC"), new Report(new ArrayList<String>(List.of("gray", "yellow", "green", "gray", "gray")))));
+//		guesses.add(new Guess(new Position("STOOL"), new Report(new ArrayList<String>(List.of("green", "green", "green", "gray", "gray")))));
 //		guesses.add(new Guess(new Position("BEVEL"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "yellow", "gray")))));
 			
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
@@ -103,38 +101,37 @@ public class Solver {
 
 	
 	/*
-	 * Given a list of possible Positions and a list of guesses already made,
-	 * return the best next guess. "Best" is the guess that would reduce the
-	 * number of possibilities the most.
+	 * Given a list of possible Positions and a list of guesses already made, return
+	 * the best next guess. "Best" is the guess that would reduce the number of
+	 * possibilities the most.
 	 */
 	static Position bestTurn(List<Position> possible, List<Guess> guesses, List<Position> trialList) {
-		
+
 		// For each possible next move, see which reduces the possible list the
-		// most on average.
+		// most on total.
 		int minTotal = Integer.MAX_VALUE;
 		Position best = possible.get(0);
 		for (Position trial : trialList) {
 
-				int total = 0;
-				for (Position pos : possible) {
-					if (!pos.equals(trial)) 
-						total += possibleSize(possible, guesses, new Guess(pos, trial));
-					if (total > minTotal)
-						break;
-				}
+			int total = 0;
+			for (Position pos : possible) {
+				if (!pos.equals(trial))
+					total += possibleSize(possible, guesses, new Guess(pos, trial));
+				if (total > minTotal)
+					break;
+			}
 //				logger.info("for guess "+trial+", the size is "+total);
 //				if (total < minTotal || (total == minTotal && trial.equals(bestTurn(possible, guesses, possible)))) {
-				if (total < minTotal) {
-					logger.info("for guess "+trial+", the size is "+total);
-					// Save the new best.
-					minTotal = total;
-					best = trial;
+			if (total < minTotal) {
+				logger.info("for guess " + trial + ", the size is " + total);
+				// Save the new best.
+				minTotal = total;
+				best = trial;
 
-				}
+			}
 		}
 		return best;
-	}
-	
+	}	
 	
 	/*
 	 * Given a list of possible Positions and a list of guesses already made,
@@ -260,6 +257,7 @@ public class Solver {
 		}
 		return result;
 	}
+	
 	
 	private static void debug() {
 		Position.wordlists();
