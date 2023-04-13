@@ -1,5 +1,7 @@
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 
 public class Report {
@@ -7,6 +9,16 @@ public class Report {
 	public enum Hint {
 		ABSENT, PRESENT, CORRECT
 	}
+	static final String ANSI_RESET = "\u001B[0m";
+	static final String ANSI_GREEN = "\u001B[32m";
+	static final String ANSI_YELLOW = "\u001B[33m";
+	static final String ANSI_BLACK = "\u001B[30m";
+	static final String ANSI_GRAY = "\u001B[90m";
+	static final Map<Hint, String> COLORMAP = Map.of(
+			Hint.ABSENT, ANSI_GRAY,
+			Hint.PRESENT, ANSI_YELLOW,
+			Hint.CORRECT, ANSI_GREEN
+			);
 
 	private Hint[] result = new Hint[Position.NUMBERCELLS];
 
@@ -63,8 +75,20 @@ public class Report {
 		}
 	}
 
+	// Return the values with ANSI colors.
 	public String toString() {
-		return Arrays.toString(result);
+		StringBuilder out = new StringBuilder();
+		out.append('[');
+		for (int i = 0; i < result.length; i++) {
+			Report.Hint clue = result[i];
+			out.append(COLORMAP.get(clue));
+			out.append(clue);
+			out.append(ANSI_RESET);
+			if (i < result.length - 1)
+				out.append(", ");
+		}
+		out.append(']');
+		return out.toString();
 	}
 
 	public boolean equals(Report r) {
