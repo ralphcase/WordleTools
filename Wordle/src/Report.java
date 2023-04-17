@@ -64,11 +64,15 @@ public class Report {
 
 	private void fillResult(String[] input) {
 		for (int i = 0; i < Position.NUMBERCELLS; i++) {
-			if (input[i].equalsIgnoreCase("gray") || input[i].equalsIgnoreCase("absent"))
+			if (input[i].equalsIgnoreCase("gray") 
+					|| input[i].equalsIgnoreCase("absent"))
 				result[i] = Hint.ABSENT;
-			else if (input[i].equalsIgnoreCase("green") || input[i].equalsIgnoreCase("red") || input[i].equalsIgnoreCase("correct"))
+			else if (input[i].equalsIgnoreCase("green") 
+					|| input[i].equalsIgnoreCase("red") 
+					|| input[i].equalsIgnoreCase("correct"))
 				result[i] = Hint.CORRECT;
-			else if (input[i].equalsIgnoreCase("yellow") || input[i].equalsIgnoreCase("present"))
+			else if (input[i].equalsIgnoreCase("yellow") 
+					|| input[i].equalsIgnoreCase("present"))
 				result[i] = Hint.PRESENT;
 			else
 				throw new IllegalArgumentException(input.toString());

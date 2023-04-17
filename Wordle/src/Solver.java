@@ -67,19 +67,21 @@ public class Solver {
 	
 	
 	private static void solveHelper() {
-//		Position.splitAllGoalWords();
 		List<Position> allWords = Position.getALLWORDS();
 //		List<Position> antiWords = new ArrayList<Position>(allWords);
 		List<Position> possible = Position.getGOALWORDS();
+//		List<Position> possible = Position.getALLWORDS();
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 		
 //		boolean hardMode = true;
 		boolean hardMode = false;
 		
-		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "green")))));
-		guesses.add(new Guess(new Position("NOULD"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "yellow", "yellow")))));
-//		guesses.add(new Guess(new Position("GULCH"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "yellow", "gray")))));
-//		guesses.add(new Guess(new Position("BEVEL"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "yellow", "gray")))));
+		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "gray", "gray")))));
+		guesses.add(new Guess(new Position("CLINT"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "gray", "gray")))));
+//		guesses.add(new Guess(new Position("OPIUM"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "gray", "gray")))));
+//		guesses.add(new Guess(new Position("DENET"), new Report(new ArrayList<String>(List.of("green", "yellow", "gray", "gray", "green")))));
+//		guesses.add(new Guess(new Position("LOWND"), new Report(new ArrayList<String>(List.of("yellow", "gray", "yellow", "gray", "yellow")))));
+//		guesses.add(new Guess(new Position("TETRI"), new Report(new ArrayList<String>(List.of("green", "yellow", "gray", "gray", "yellow")))));
 			
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
 //		guesses.add(new Guess(new Position("VIVID"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "red")))));
