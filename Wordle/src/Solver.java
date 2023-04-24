@@ -43,7 +43,7 @@ public class Solver {
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 	
 		System.out.println("Goal: " + goal);
-//		turn = new Position("ROATE");		
+//		turn = new Position("ROATE");	// 185459	
 //		guesses.add(new Guess(goal, turn));
 		
 		while (guesses.size() == 0 || !guesses.get(guesses.size()-1).isSolved()) {
@@ -76,10 +76,11 @@ public class Solver {
 //		boolean hardMode = true;
 		boolean hardMode = false;
 		
-		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "gray", "gray")))));
-		guesses.add(new Guess(new Position("CLINT"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "gray", "gray")))));
-//		guesses.add(new Guess(new Position("OPIUM"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "gray", "gray")))));
-//		guesses.add(new Guess(new Position("DENET"), new Report(new ArrayList<String>(List.of("green", "yellow", "gray", "gray", "green")))));
+		guesses.add(new Guess(new Position("STARE"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "gray")))));
+		guesses.add(new Guess(new Position("HOING"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "gray", "gray")))));
+		guesses.add(new Guess(new Position("PILOT"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "yellow", "yellow")))));
+//		guesses.add(new Guess(new Position("BUNTY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "yellow")))));
+//		guesses.add(new Guess(new Position("YAHOO"), new Report(new ArrayList<String>(List.of("yellow", "green", "gray", "gray", "gray")))));
 //		guesses.add(new Guess(new Position("LOWND"), new Report(new ArrayList<String>(List.of("yellow", "gray", "yellow", "gray", "yellow")))));
 //		guesses.add(new Guess(new Position("TETRI"), new Report(new ArrayList<String>(List.of("green", "yellow", "gray", "gray", "yellow")))));
 			
@@ -119,11 +120,22 @@ public class Solver {
 			for (Position pos : possible) {
 				if (!pos.equals(trial))
 					total += possibleSize(possible, guesses, new Guess(pos, trial));
+				
 				if (total > minTotal)
 					break;
 			}
 //				logger.info("for guess "+trial+", the size is "+total);
 //				if (total < minTotal || (total == minTotal && trial.equals(bestTurn(possible, guesses, possible)))) {
+
+//			if (trial.equals(new Position("AUDIO")) || // 185729
+//				trial.equals(new Position("ADIEU")) || // 185721
+//				trial.equals(new Position("SLATE")) || // 185533
+//				trial.equals(new Position("RAISE")) || // 185524
+//				trial.equals(new Position("STARE")) || // 185510
+//				trial.equals(new Position("ROATE"))    // 185459
+//				) 
+//				logger.info("for guess " + trial + ", the size is " + total);
+	
 			if (total < minTotal) {
 				logger.info("for guess " + trial + ", the size is " + total);
 				// Save the new best.
