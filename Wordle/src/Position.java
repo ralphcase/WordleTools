@@ -251,7 +251,7 @@ public class Position {
 	
 	private static String formatList(Set<String> input) {
 		StringBuilder output = new StringBuilder();
-		int lineLength = 25;
+		int lineLength = 22;
 		int i = 0;
 		for (String word : input) {
 			i++;
