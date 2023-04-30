@@ -76,10 +76,10 @@ public class Solver {
 //		boolean hardMode = true;
 		boolean hardMode = false;
 		
-		guesses.add(new Guess(new Position("AUDIO"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "green")))));
-//		guesses.add(new Guess(new Position("THERM"), new Report(new ArrayList<String>(List.of("yellow", "gray", "yellow", "green", "yellow")))));
-//		guesses.add(new Guess(new Position("WOMBY"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "gray", "gray")))));
-//		guesses.add(new Guess(new Position("GIVEN"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "green", "gray")))));
+		guesses.add(new Guess(new Position("STARE"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "gray", "gray")))));
+		guesses.add(new Guess(new Position("CLINK"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "gray", "gray")))));
+//		guesses.add(new Guess(new Position("LLAMA"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "gray", "green")))));
+//		guesses.add(new Guess(new Position("RAPED"), new Report(new ArrayList<String>(List.of("yellow", "yellow", "gray", "yellow", "yellow")))));
 //		guesses.add(new Guess(new Position("OILED"), new Report(new ArrayList<String>(List.of("yellow", "gray", "gray", "green", "gray")))));
 //		guesses.add(new Guess(new Position("RHOMB"), new Report(new ArrayList<String>(List.of("yellow", "gray", "yellow", "gray", "gray")))));
 //		guesses.add(new Guess(new Position("WICKY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "yellow", "gray")))));
@@ -128,14 +128,15 @@ public class Solver {
 //				logger.info("for guess "+trial+", the size is "+total);
 //				if (total < minTotal || (total == minTotal && trial.equals(bestTurn(possible, guesses, possible)))) {
 
-			if (trial.equals(new Position("AUDIO")) || // 190712
-				trial.equals(new Position("ADIEU")) || // 208284
-				trial.equals(new Position("SLATE")) || // 218267
-				trial.equals(new Position("RAISE")) || // 208395
-				trial.equals(new Position("STARE")) || // 190778
-				trial.equals(new Position("ROATE"))    // 190667
-				) 
-				logger.info("for guess " + trial + ", the size is " + total);
+//			if (
+//				trial.equals(new Position("ROATE")) || // 207669
+//				trial.equals(new Position("STARE")) || // 207742
+//				trial.equals(new Position("AUDIO")) || // 207781
+//				trial.equals(new Position("SLATE")) || // 207813
+//				trial.equals(new Position("ADIEU")) || // 242722
+//				trial.equals(new Position("RAISE"))    // 242784
+//				) 
+//				logger.info("for guess " + trial + ", the size is " + total);
 	
 			if (total < minTotal) {
 				logger.info("for guess " + trial + ", the size is " + total);

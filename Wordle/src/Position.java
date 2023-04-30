@@ -22,6 +22,8 @@ public class Position {
 	private static final String GOALFILE = "possibleGoals.txt";
 	private static final String ALLOWEDFILE = "nonGoals.txt";
 
+	private static final String WORDLEBOT = "wordlebot.txt";
+
 	
 	private char[] pos;
 	private static Random rand = new Random();
@@ -200,16 +202,29 @@ public class Position {
 	}
 	
 	public static void wordlists() {
-		Set<String> nytDictionary = new HashSet<String>(toStrings(AllPositions("nytDictionary.txt")));
-		Set<String> nytAllowedList = new HashSet<String>(toStrings(AllPositions("nytAllowedList.txt")));
-		Set<String> nytGoalList = new HashSet<String>(toStrings(AllPositions("nytGoalList.txt")));
-		Set<String> possibleGoals = new HashSet<String>(toStrings(AllPositions("possibleGoals.txt")));
+		Set<String> allWords = new HashSet<String>(toStrings(AllPositions("nonGoals.txt")));
+//		Set<String> nytAllowedList = new HashSet<String>(toStrings(AllPositions("nytAllowedList.txt")));
+//		Set<String> nytGoalList = new HashSet<String>(toStrings(AllPositions("nytGoalList.txt")));
+		Set<String> possibleGoals = new HashSet<String>(toStrings(AllPositions(GOALFILE)));
+		Set<String> wordlebot = new HashSet<String>(toStrings(AllPositions(WORDLEBOT)));
 		
-		Set<String> oldDictionary = new HashSet<String>();
-		oldDictionary.addAll(nytAllowedList);
-		oldDictionary.addAll(nytGoalList);
-		System.out.println("oldDictionary: "+oldDictionary.size());
-		System.out.println("nytDictionary: "+nytDictionary.size());
+		System.out.println("possible goals: "+possibleGoals.size());
+		possibleGoals.addAll(wordlebot);
+		System.out.println("possible goals with new wordlebot: "+possibleGoals.size());
+		System.out.println(formatList(possibleGoals));
+		
+		System.out.println("all words: "+allWords.size());
+		allWords.removeAll(possibleGoals);
+		System.out.println("updated words: "+allWords.size());
+		System.out.println(formatList(allWords));
+		
+		
+		
+//		Set<String> oldDictionary = new HashSet<String>();
+//		oldDictionary.addAll(nytAllowedList);
+//		oldDictionary.addAll(nytGoalList);
+//		System.out.println("oldDictionary: "+oldDictionary.size());
+//		System.out.println("nytDictionary: "+nytDictionary.size());
 		
 //		nytDictionary.removeAll(oldDictionary);
 //		System.out.println("in new dictionary but not in old: " + nytDictionary.size());
@@ -223,17 +238,32 @@ public class Position {
 //		System.out.println(goals);
 		
 //		nytDictionary.addAll(nytAllowedList);
-		nytDictionary.removeAll(nytGoalList);
-		System.out.println("allowed words: "+nytDictionary.size());
+//		nytDictionary.removeAll(nytGoalList);
+//		System.out.println("allowed words: "+nytDictionary.size());
 		
 //		nytDictionary.removeAll(nytAllowedList);
 		
 //		System.out.println("in dictionary but not in new allowed: " + nytDictionary.size());
-		System.out.println(nytDictionary);
+//		System.out.println(nytDictionary);
 		
 		
 	}
 	
+	private static String formatList(Set<String> input) {
+		StringBuilder output = new StringBuilder();
+		int lineLength = 22;
+		int i = 0;
+		for (String word : input) {
+			i++;
+			output.append(word);
+			output.append(' ');
+			if (i % lineLength == 0) {
+				output.append("\n");
+			}
+		}
+		return output.toString();
+	}
+
 	private static List<String> toStrings(List<Position> input) {
 		ArrayList<String> result = new ArrayList<String>();
 		for (Position word : input) 
