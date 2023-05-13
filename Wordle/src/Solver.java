@@ -76,9 +76,9 @@ public class Solver {
 //		boolean hardMode = true;
 		boolean hardMode = false;
 		
-		guesses.add(new Guess(new Position("ORATE"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "gray", "gray")))));
-		guesses.add(new Guess(new Position("SLICK"), new Report(new ArrayList<String>(List.of("green", "gray", "gray", "green", "green")))));
-//		guesses.add(new Guess(new Position("STARE"), new Report(new ArrayList<String>(List.of("green", "gray", "green", "gray", "gray")))));
+		guesses.add(new Guess(new Position("ORATE"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "gray", "gray")))));
+//		guesses.add(new Guess(new Position("LYRIC"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "green", "yellow")))));
+		guesses.add(new Guess(new Position("CARNY"), new Report(new ArrayList<String>(List.of("yellow", "yellow", "green", "gray", "gray")))));
 //		guesses.add(new Guess(new Position("PLANH"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "yellow", "gray")))));
 //		guesses.add(new Guess(new Position("PLINK"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "yellow", "green")))));
 			
@@ -127,14 +127,14 @@ public class Solver {
 
 //			if ( 
 //				total < 221134 ||
-//				trial.equals(new Position("ROATE")) || // 222561
-//				trial.equals(new Position("SOARE")) || // 241705
-//				trial.equals(new Position("ORATE")) || // 245599
-//				trial.equals(new Position("SLATE")) || // 245602
-//				trial.equals(new Position("STARE")) || // 245615
-//				trial.equals(new Position("RAISE")) || // 245837
-//				trial.equals(new Position("AUDIO")) || // 245921
-//				trial.equals(new Position("ADIEU"))    // 245939
+//				trial.equals(new Position("ROATE")) || // 222753
+//				trial.equals(new Position("ORATE")) || // 222784
+//				trial.equals(new Position("SOARE")) || // 222814
+//				trial.equals(new Position("STARE")) || // 222815
+//				trial.equals(new Position("AUDIO")) || // 222816
+//				trial.equals(new Position("SLATE")) || // 222833
+//				trial.equals(new Position("RAISE")) || // 222878
+//				trial.equals(new Position("ADIEU"))    // 284852
 //				) 
 //				logger.info("for guess " + trial + ", the size is " + total);
 	
