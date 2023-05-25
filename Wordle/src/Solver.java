@@ -81,9 +81,11 @@ public class Solver {
 //		guesses.add(new Guess(new Position("LABEL"), new Report(new ArrayList<String>(List.of("gray", "green", "yellow", "green", "green")))));
 //		guesses.add(new Guess(new Position("POWLT"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "yellow", "gray")))));
 //		guesses.add(new Guess(new Position("CEBID"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "gray", "gray")))));
-		guesses.add(new Guess(new Position("SLATE"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "gray", "yellow")))));
-		guesses.add(new Guess(new Position("LADER"), new Report(new ArrayList<String>(List.of("yellow", "green", "gray", "green", "gray")))));
-		guesses.add(new Guess(new Position("BUNCH"), new Report(new ArrayList<String>(List.of("green", "gray", "gray", "gray", "gray")))));
+//		guesses.add(new Guess(new Position("SLATE"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "gray", "yellow")))));
+//		guesses.add(new Guess(new Position("LADER"), new Report(new ArrayList<String>(List.of("yellow", "green", "gray", "green", "gray")))));
+//		guesses.add(new Guess(new Position("BUNCH"), new Report(new ArrayList<String>(List.of("green", "gray", "gray", "gray", "gray")))));
+		guesses.add(new Guess(new Position("CAVED"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "green", "gray")))));
+		guesses.add(new Guess(new Position("GRYPT"), new Report(new ArrayList<String>(List.of("yellow", "gray", "gray", "gray", "gray")))));
 			
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
 //		guesses.add(new Guess(new Position("VIVID"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "red")))));
@@ -114,6 +116,7 @@ public class Solver {
 		// For each possible next move, see which reduces the possible list the
 		// most on total.
 		int minTotal = Integer.MAX_VALUE;
+		int minPossibleTotal = Integer.MAX_VALUE;
 		Position best = possible.get(0);
 		for (Position trial : trialList) {
 
@@ -130,6 +133,7 @@ public class Solver {
 
 //			if ( 
 //				trial.equals(new Position("ROATE")) || // 231832
+//			    trial.equals(new Position("CAVED")) || // 231833
 //				trial.equals(new Position("SLATE")) || // 231837
 //				trial.equals(new Position("RAISE")) || // 231912
 //				trial.equals(new Position("AUDIO")) || // 231945
@@ -145,7 +149,11 @@ public class Solver {
 				// Save the new best.
 				minTotal = total;
 				best = trial;
-
+			}
+			if (total < minPossibleTotal  && possible.contains(trial)) {
+				logger.info("for possible guess " + trial + ", the size is " + total);
+				// Save the new best.
+				minPossibleTotal = total;
 			}
 		}
 		return best;
