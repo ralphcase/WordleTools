@@ -40,7 +40,7 @@ public class Position {
 			throw new IllegalArgumentException();
 		pos = word.toCharArray();
 		for (char member : pos) {
-			if (LETTERS.indexOf(member) <0)
+			if (LETTERS.indexOf(member) < 0)
 				throw new IllegalArgumentException();
 		}
 	}
