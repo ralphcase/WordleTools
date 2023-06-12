@@ -76,22 +76,11 @@ public class Solver {
 //		boolean hardMode = true;
 		boolean hardMode = false;
 		
-//		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "yellow", "green")))));
-//		guesses.add(new Guess(new Position("NEMPT"), new Report(new ArrayList<String>(List.of("yellow", "yellow", "gray", "gray", "gray")))));
+		guesses.add(new Guess(new Position("ROATE"), new Report(new ArrayList<String>(List.of("yellow", "yellow", "gray", "gray", "gray")))));
+		guesses.add(new Guess(new Position("CROON"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "gray", "yellow")))));
+		guesses.add(new Guess(new Position("PADIS"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
 
-//		guesses.add(new Guess(new Position("ROATE"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "gray", "gray")))));
-//		guesses.add(new Guess(new Position("CHINA"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "yellow")))));
-//		guesses.add(new Guess(new Position("SQUAD"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "yellow", "gray")))));
-//		guesses.add(new Guess(new Position("BALMY"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "gray", "green")))));
-//		guesses.add(new Guess(new Position("KANZU"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "green", "gray")))));
-//		guesses.add(new Guess(new Position("NALAS"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "gray", "gray")))));
-//		guesses.add(new Guess(new Position("CUPID"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
-//		guesses.add(new Guess(new Position("JUMBY"), new Report(new ArrayList<String>(List.of("green", "gray", "gray", "gray", "green")))));
-			
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
-//		guesses.add(new Guess(new Position("VIVID"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "red")))));
-//		guesses.add(new Guess(new Position("EGGED"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "red", "red")))));
-//		guesses.add(new Guess(new Position("TSKED"), new Report(new ArrayList<String>(List.of("gray", "gray", "red", "red", "red")))));
 				
 		removeImpossible(possible, guesses);
 //		removeImpossible(antiWords, guesses);
