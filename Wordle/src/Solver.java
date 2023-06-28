@@ -76,10 +76,10 @@ public class Solver {
 //		boolean hardMode = true;
 		boolean hardMode = false;
 		
-		guesses.add(new Guess(new Position("ROATE"), new Report(new ArrayList<String>(List.of("yellow", "yellow", "gray", "yellow", "gray")))));
-//		guesses.add(new Guess(new Position("SHUNT"), new Report(new ArrayList<String>(List.of("yellow", "gray", "gray", "gray", "green")))));
-		guesses.add(new Guess(new Position("SNOUT"), new Report(new ArrayList<String>(List.of("yellow", "gray", "green", "gray", "green")))));
-//		guesses.add(new Guess(new Position("SAYID"), new Report(new ArrayList<String>(List.of("green", "yellow", "gray", "gray", "gray")))));
+//		guesses.add(new Guess(new Position("ROATE"), new Report(new ArrayList<String>(List.of("yellow", "gray", "green", "yellow", "gray")))));
+//		guesses.add(new Guess(new Position("CRINS"), new Report(new ArrayList<String>(List.of("yellow", "green", "gray", "gray", "gray")))));
+//		guesses.add(new Guess(new Position("TRACK"), new Report(new ArrayList<String>(List.of("green", "green", "green", "green", "gray")))));
+//		guesses.add(new Guess(new Position("UPSET"), new Report(new ArrayList<String>(List.of("yellow", "gray", "yellow", "yellow", "green")))));
 
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
 				
@@ -123,12 +123,15 @@ public class Solver {
 //				if (total < minTotal || (total == minTotal && trial.equals(bestTurn(possible, guesses, possible)))) {
 
 //			if ( 
-//				trial.equals(new Position("ROATE")) || // 259269
-//				trial.equals(new Position("STARE")) || // 259321
-//				trial.equals(new Position("SOARE")) || // 266724
-//				trial.equals(new Position("RAISE")) || // 266737
-//				trial.equals(new Position("SLATE")) || // 266767
-//				trial.equals(new Position("ORATE"))    // 282531
+//				trial.equals(new Position("RAISE")) || // 276261
+//				trial.equals(new Position("IRATE")) || // 294083
+//				trial.equals(new Position("ARISE")) || // 300367
+//				trial.equals(new Position("STARE")) || // 339041
+//				trial.equals(new Position("CRANE")) || // 354073
+//				trial.equals(new Position("SLATE")) || // 360591
+//				trial.equals(new Position("TRAIN")) || // 426453
+//				trial.equals(new Position("ADIEU")) || // 447430
+//				trial.equals(new Position("AUDIO"))    // 640939
 //				) 
 //				logger.info("for guess " + trial + ", the size is " + total);
 	
