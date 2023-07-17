@@ -76,11 +76,9 @@ public class Solver {
 //		boolean hardMode = true;
 		boolean hardMode = false;
 		
-		guesses.add(new Guess(new Position("ROATE"), new Report(new ArrayList<String>(List.of("yellow", "gray", "yellow", "gray", "green")))));
-//		guesses.add(new Guess(new Position("BERGS"), new Report(new ArrayList<String>(List.of("green", "yellow", "green", "green", "gray")))));
-		guesses.add(new Guess(new Position("CARPI"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "gray", "gray")))));
-//		guesses.add(new Guess(new Position("HUMFS"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "yellow", "gray")))));
-//		guesses.add(new Guess(new Position("GIDDY"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "green", "green")))));
+		guesses.add(new Guess(new Position("ROATE"), new Report(new ArrayList<String>(List.of("yellow", "yellow", "gray", "gray", "gray")))));
+		guesses.add(new Guess(new Position("CROON"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "green", "gray")))));
+		guesses.add(new Guess(new Position("GLAMP"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "green")))));
 
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
 				
