@@ -76,9 +76,9 @@ public class Solver {
 //		boolean hardMode = true;
 		boolean hardMode = false;
 		
-		guesses.add(new Guess(new Position("ROATE"), new Report(new ArrayList<String>(List.of("yellow", "yellow", "gray", "gray", "gray")))));
-		guesses.add(new Guess(new Position("CROON"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "green", "gray")))));
-		guesses.add(new Guess(new Position("GLAMP"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "green")))));
+		guesses.add(new Guess(new Position("ROATE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "yellow", "green")))));
+//		guesses.add(new Guess(new Position("HILUS"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "gray", "yellow")))));
+//		guesses.add(new Guess(new Position("BEDEW"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "green", "yellow")))));
 
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
 				
@@ -122,17 +122,17 @@ public class Solver {
 //				if (total < minTotal || (total == minTotal && trial.equals(bestTurn(possible, guesses, possible)))) {
 
 //			if ( 
-//				trial.equals(new Position("ROATE")) || // 260774
-//				trial.equals(new Position("RAISE")) || // 276405
-//				trial.equals(new Position("IRATE")) || // 295275
-//				trial.equals(new Position("ARISE")) || // 300651
-//				trial.equals(new Position("STARE")) || // 339523
-//				trial.equals(new Position("ATONE")) || // 342189
-//				trial.equals(new Position("CRANE")) || // 356189
-//				trial.equals(new Position("SLATE")) || // 360671
-//				trial.equals(new Position("TRAIN")) || // 428625
-//				trial.equals(new Position("ADIEU")) || // 447558
-//				trial.equals(new Position("AUDIO"))    // 641301
+//				trial.equals(new Position("ROATE")) || // 262464
+//				trial.equals(new Position("RAISE")) || // 277497
+//				trial.equals(new Position("IRATE")) || // 298451
+//				trial.equals(new Position("ARISE")) || // 301849
+//				trial.equals(new Position("STARE")) || // 340371
+//				trial.equals(new Position("ATONE")) || // 345183
+//				trial.equals(new Position("CRANE")) || // 360353
+//				trial.equals(new Position("SLATE")) || // 361853
+//				trial.equals(new Position("TRAIN")) || // 432997
+//				trial.equals(new Position("ADIEU")) || // 451150
+//				trial.equals(new Position("AUDIO"))    // 647165
 //				) 
 //				logger.info("for guess " + trial + ", the size is " + total);
 	
