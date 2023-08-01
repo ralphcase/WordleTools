@@ -1,11 +1,18 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Logger;
 
 
 public class Solver {
 	
 	static Logger logger = Logger.getLogger(Solver.class.getName());
+	
+	static String[] starting = {
+			"ROATE", "RAISE", "IRATE", "ARISE", "STARE", "ATONE",
+			"CRANE", "SLATE", "TRAIN", "ADIEU", "AUDIO"
+	};
 
 	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
@@ -76,7 +83,7 @@ public class Solver {
 //		boolean hardMode = true;
 		boolean hardMode = false;
 		
-		guesses.add(new Guess(new Position("ROATE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "yellow", "green")))));
+//		guesses.add(new Guess(new Position("ROATE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "yellow", "green")))));
 //		guesses.add(new Guess(new Position("HILUS"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "gray", "yellow")))));
 //		guesses.add(new Guess(new Position("BEDEW"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "green", "yellow")))));
 
@@ -108,6 +115,10 @@ public class Solver {
 		int minTotal = Integer.MAX_VALUE;
 		int minPossibleTotal = Integer.MAX_VALUE;
 		Position best = possible.get(0);
+		Set<Position> startingWords = new HashSet<Position>();
+		for (String word : starting) {
+			startingWords.add(new Position(word));
+		}
 		for (Position trial : trialList) {
 
 			int total = 0;
@@ -118,24 +129,12 @@ public class Solver {
 				if (total > minTotal)
 					break;
 			}
+			if (startingWords.contains(trial)) 
+				logger.info("for guess " + trial + ", the size is " + total);
+	
 //				logger.info("for guess "+trial+", the size is "+total);
 //				if (total < minTotal || (total == minTotal && trial.equals(bestTurn(possible, guesses, possible)))) {
 
-//			if ( 
-//				trial.equals(new Position("ROATE")) || // 262464
-//				trial.equals(new Position("RAISE")) || // 277497
-//				trial.equals(new Position("IRATE")) || // 298451
-//				trial.equals(new Position("ARISE")) || // 301849
-//				trial.equals(new Position("STARE")) || // 340371
-//				trial.equals(new Position("ATONE")) || // 345183
-//				trial.equals(new Position("CRANE")) || // 360353
-//				trial.equals(new Position("SLATE")) || // 361853
-//				trial.equals(new Position("TRAIN")) || // 432997
-//				trial.equals(new Position("ADIEU")) || // 451150
-//				trial.equals(new Position("AUDIO"))    // 647165
-//				) 
-//				logger.info("for guess " + trial + ", the size is " + total);
-	
 			if (total < minTotal) {
 				logger.info("for best guess " + trial + ", the size is " + total);
 				// Save the new best.
