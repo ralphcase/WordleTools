@@ -47,6 +47,20 @@ public class PositionTest {
 		Report expected = new Report(new ArrayList<String>(List.of("yellow", "yellow", "gray", "gray", "gray")));
 		Assert.assertTrue(expected.equals(r1));
 	}
-	
+
+    @Test
+	public void TestEqualsFalse() {
+		Position p1 = new Position("ABBCD");
+		Position p2 = new Position("ABCBC");
+		Assert.assertFalse(p1.equals(p2));
+	}
+
+    @Test
+	public void TestEquals() {
+		Position p1 = new Position("EPOCH");
+		Position p2 = new Position("EPOCH");
+		Assert.assertTrue(p1.equals(p2));
+	}
+
 
 }

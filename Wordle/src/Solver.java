@@ -9,6 +9,28 @@ public class Solver {
 	
 	static Logger logger = Logger.getLogger(Solver.class.getName());
 	
+//	INFO: for guess ROATE, the size is 264383
+//	INFO: for guess RAISE, the size is 278446
+//	INFO: for guess AROSE, the size is 293646
+//	INFO: for guess IRATE, the size is 300768
+//	INFO: for guess ARISE, the size is 302868
+//	INFO: for guess STARE, the size is 342968
+//	INFO: for guess ATONE, the size is 347586
+//	INFO: for guess CRATE, the size is 352338
+//	INFO: for guess TRACE, the size is 354702
+//	INFO: for guess TEARS, the size is 357015
+//	INFO: for guess CRANE, the size is 363644
+//	INFO: for guess SLATE, the size is 364028
+//	INFO: for guess AISLE, the size is 364048
+//	INFO: for guess LEAST, the size is 383248
+//	INFO: for guess HEART, the size is 410818
+//	INFO: for guess TRAIN, the size is 436064
+//	INFO: for guess GREAT, the size is 448844
+//	INFO: for guess ADIEU, the size is 454303
+//	INFO: for guess DREAM, the size is 503340
+//	INFO: for guess HOUSE, the size is 567344
+//	INFO: for guess STEAM, the size is 574324
+//	INFO: for guess AUDIO, the size is 654940
 	static String[] starting = {
 			"ROATE", "RAISE", "IRATE", "ARISE", "STARE", "ATONE",
 			"CRANE", "SLATE", "TRAIN", "ADIEU", "AUDIO", "HOUSE", 
@@ -30,7 +52,6 @@ public class Solver {
 	
 	private static void example()
 	{
-		Position turn;
 //		Position goal = new Position("SHADE");
 //		Position goal = new Position("HATCH");    // Hard case for first solver.
 //		Position goal = new Position("TASTE");    // Hard case for first solver.
@@ -62,16 +83,15 @@ public class Solver {
 			removeImpossible(possible, guesses);
 			System.out.print("["+guesses.size()+"] "+possible.size() + " possible: \t");
 			if (possible.size() < 100)
-				System.out.print(possible);
-			System.out.println();
+				System.out.println(possible);
 			
 
 			// Choose a guess for this turn.
-			turn = bestTurn(possible, guesses, allWords);
+			Position turn = bestTurn(possible, guesses, allWords);
 			guesses.add(new Guess(goal, turn));
 		}
 		System.out.println("Guesses: " + guesses);
-		System.out.println("Solved in "+guesses.size()+" turns! ");
+		System.out.println("Solved in " + guesses.size() + " turns! ");
 	}
 	
 	
@@ -85,7 +105,7 @@ public class Solver {
 //		boolean hardMode = true;
 		boolean hardMode = false;
 		
-		guesses.add(new Guess(new Position("ROATE"), new Report(new ArrayList<String>(List.of("yellow", "gray", "yellow", "gray", "yellow")))));
+//		guesses.add(new Guess(new Position("ROATE"), new Report(new ArrayList<String>(List.of("yellow", "gray", "yellow", "gray", "yellow")))));
 //		guesses.add(new Guess(new Position("AMPED"), new Report(new ArrayList<String>(List.of("yellow", "gray", "gray", "yellow", "gray")))));
 //		guesses.add(new Guess(new Position("WELCH"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "yellow", "gray")))));
 //		guesses.add(new Guess(new Position("DAMPS"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "gray")))));
@@ -95,7 +115,7 @@ public class Solver {
 				
 		removeImpossible(possible, guesses);
 //		removeImpossible(antiWords, guesses);
-		System.out.println("["+guesses.size()+"] "+possible.size() + " possible: \t" + possible);
+		System.out.println("[" + guesses.size() + "] " + possible.size() + " possible: \t" + possible);
 		System.out.println("Guesses: " + guesses);
 		Position best;
 		if (hardMode)
@@ -119,10 +139,13 @@ public class Solver {
 		int minTotal = Integer.MAX_VALUE;
 		int minPossibleTotal = Integer.MAX_VALUE;
 		Position best = possible.get(0);
+		
 		Set<Position> startingWords = new HashSet<Position>();
 		for (String word : starting) {
 			startingWords.add(new Position(word));
 		}
+		System.out.println(startingWords);
+		
 		for (Position trial : trialList) {
 
 			int total = 0;
@@ -133,8 +156,12 @@ public class Solver {
 //				if (total > minTotal)
 //					break;
 			}
-			if (startingWords.contains(trial)) 
-				logger.info("for guess " + trial + ", the size is " + total);
+//			if (startingWords.contains(trial)) 
+//				logger.info("*** for guess " + trial + ", the size is " + total);
+			for (Position word : startingWords) {
+				if (trial.equals(word))
+					logger.info("for guess " + trial + ", the size is " + total);
+			}
 	
 //				logger.info("for guess "+trial+", the size is "+total);
 //				if (total < minTotal || (total == minTotal && trial.equals(bestTurn(possible, guesses, possible)))) {
@@ -145,7 +172,7 @@ public class Solver {
 				minTotal = total;
 				best = trial;
 			}
-			if (total < minPossibleTotal  && possible.contains(trial)) {
+			if (total < minPossibleTotal && possible.contains(trial)) {
 				logger.info("for best possible guess " + trial + ", the size is " + total);
 				// Save the new best.
 				minPossibleTotal = total;
