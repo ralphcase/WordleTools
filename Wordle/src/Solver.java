@@ -130,8 +130,8 @@ public class Solver {
 				if (!pos.equals(trial))
 					total += possibleSize(possible, guesses, new Guess(pos, trial));
 				
-				if (total > minTotal)
-					break;
+//				if (total > minTotal)
+//					break;
 			}
 			if (startingWords.contains(trial)) 
 				logger.info("for guess " + trial + ", the size is " + total);
