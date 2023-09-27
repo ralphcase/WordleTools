@@ -105,9 +105,9 @@ public class Solver {
 //		boolean hardMode = true;
 		boolean hardMode = false;
 		
-//		guesses.add(new Guess(new Position("ROATE"), new Report(new ArrayList<String>(List.of("yellow", "gray", "yellow", "gray", "yellow")))));
-//		guesses.add(new Guess(new Position("AMPED"), new Report(new ArrayList<String>(List.of("yellow", "gray", "gray", "yellow", "gray")))));
-//		guesses.add(new Guess(new Position("WELCH"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "yellow", "gray")))));
+		guesses.add(new Guess(new Position("ROATE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "green")))));
+//		guesses.add(new Guess(new Position("SLING"), new Report(new ArrayList<String>(List.of("green", "yellow", "green", "gray", "gray")))));
+//		guesses.add(new Guess(new Position("LOCAL"), new Report(new ArrayList<String>(List.of("green", "green", "gray", "green", "green")))));
 //		guesses.add(new Guess(new Position("DAMPS"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "gray")))));
 //		guesses.add(new Guess(new Position("BLING"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "gray", "gray")))));
 
@@ -153,15 +153,15 @@ public class Solver {
 				if (!pos.equals(trial))
 					total += possibleSize(possible, guesses, new Guess(pos, trial));
 				
-//				if (total > minTotal)
-//					break;
+				if (total > minTotal)
+					break;
 			}
 //			if (startingWords.contains(trial)) 
 //				logger.info("*** for guess " + trial + ", the size is " + total);
-			for (Position word : startingWords) {
-				if (trial.equals(word))
-					logger.info("for guess " + trial + ", the size is " + total);
-			}
+//			for (Position word : startingWords) {
+//				if (trial.equals(word))
+//					logger.info("for guess " + trial + ", the size is " + total);
+//			}
 	
 //				logger.info("for guess "+trial+", the size is "+total);
 //				if (total < minTotal || (total == minTotal && trial.equals(bestTurn(possible, guesses, possible)))) {
