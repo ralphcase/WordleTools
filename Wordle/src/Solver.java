@@ -48,7 +48,6 @@ private static boolean countsNeeded = false;
 		
 		solveHelper();
 //		example();
-//		debug();
 		
 		long endTime = System.currentTimeMillis();
 		System.out.println("It took " + (endTime - startTime) / 1000.0 + " seconds.");
@@ -180,32 +179,6 @@ private static boolean countsNeeded = false;
 		return best;
 	}	
 	
-	/*
-	 * Given a list of possible Positions and a list of guesses already made,
-	 * return the worst next guess. "Worst" is the guess that would reduce the
-	 * number of possibilities the least.
-	 */
-	private static Position worstTurn(List<Position> possible, List<Guess> guesses, List<Position> trialList) {
-		
-		int maxTotal = 0;
-		Position worst = possible.get(0);
-		int i = 0;
-		for (Position pos : possible) {
-				System.out.println(i++ + " " +pos +" "+ worst);
-				int total = 0;
-				for (Position trial : trialList) {
-					total += possibleSize(possible, guesses, new Guess(pos, trial));
-				}
-				if (total > maxTotal) {
-					// Save the new worst.
-					maxTotal = total;
-					worst = pos;
-			}
-		}
-		return worst;
-	}
-	
-	
 	private static Position deepBestTurn(List<Position> possible, List<Guess> guesses, List<Position> trialList) {
 		
 		// For each possible next move, see which reduces the possible list the
@@ -303,34 +276,6 @@ private static boolean countsNeeded = false;
 			}
 		}
 		return result;
-	}
-	
-	
-	private static void debug() {
-		Position.wordlists();
-//		List<Guess> guesses = new ArrayList<Guess>();
-//		Position.splitAllGoalWords();
-//		
-//		Position testWord = new Position("ECARD");
-//		System.out.println(testWord + " is in " + testWord.whichList());
-//		testWord = new Position("AREDD");
-//		System.out.println(testWord + " is in " + testWord.whichList());
-//		testWord = new Position("BREAD");
-//		System.out.println(testWord + " is in " + testWord.whichList());
-//		testWord = new Position("AREAD");
-//		System.out.println(testWord + " is in " + testWord.whichList());
-//		testWord = new Position("OREAD");
-//		System.out.println(testWord + " is in " + testWord.whichList());
-//
-//		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "gray")))));
-//		guesses.add(new Guess(new Position("CLOAM"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "yellow", "gray")))));
-//		guesses.add(new Guess(new Position("TONGA"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "yellow", "yellow")))));
-//		
-//		List<Position> words = new ArrayList<Position>();
-//		words.add(new Position("AGONY"));
-		
-//		removeImpossible(words, guesses);
-		
 	}
 
 
