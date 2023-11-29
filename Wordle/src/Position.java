@@ -202,7 +202,7 @@ public class Position {
 	}
 	
 	public static void wordlists() {
-		Set<String> allWords = new HashSet<String>(toStrings(AllPositions("nonGoals.txt")));
+		Set<String> allWords = new HashSet<String>(toStrings(AllPositions(ALLOWEDFILE)));
 //		Set<String> nytAllowedList = new HashSet<String>(toStrings(AllPositions("nytAllowedList.txt")));
 //		Set<String> nytGoalList = new HashSet<String>(toStrings(AllPositions("nytGoalList.txt")));
 		Set<String> possibleGoals = new HashSet<String>(toStrings(AllPositions(GOALFILE)));
