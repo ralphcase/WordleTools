@@ -4,39 +4,47 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
+/*
+ * References:
+ * https://sonorouschocolate.com/notes/index.php?title=The_best_strategies_for_Wordle
+ * https://www.youtube.com/watch?v=v68zYyaEmEA
+ * https://www.nytimes.com/interactive/2022/upshot/wordle-bot.html
+ */
 
 public class Solver {
 	
 	static Logger logger = Logger.getLogger(Solver.class.getName());
 
-//	INFO:	***	for	Starting	Word	guess	ROATE,	the	size	is	266757
-//	INFO:	***	for	Starting	Word	guess	RAISE,	the	size	is	279434
-//	INFO:	***	for	Starting	Word	guess	AROSE,	the	size	is	295352
-//	INFO:	***	for	Starting	Word	guess	IRATE,	the	size	is	302596
-//	INFO:	***	for	Starting	Word	guess	ARISE,	the	size	is	304076
-//	INFO:	***	for	Starting	Word	guess	STARE,	the	size	is	344404
-//	INFO:	***	for	Starting	Word	guess	ATONE,	the	size	is	350506
-//	INFO:	***	for	Starting	Word	guess	CRATE,	the	size	is	354292
-//	INFO:	***	for	Starting	Word	guess	TRACE,	the	size	is	356618
-//	INFO:	***	for	Starting	Word	guess	TEARS,	the	size	is	360713
-//	INFO:	***	for	Starting	Word	guess	SLATE,	the	size	is	365174
-//	INFO:	***	for	Starting	Word	guess	AISLE,	the	size	is	365194
-//	INFO:	***	for	Starting	Word	guess	CRANE,	the	size	is	365474
-//	INFO:	***	for	Starting	Word	guess	LEAST,	the	size	is	386220
-//	INFO:	***	for	Starting	Word	guess	HEART,	the	size	is	416696
-//	INFO:	***	for	Starting	Word	guess	TRAIN,	the	size	is	442436
-//	INFO:	***	for	Starting	Word	guess	GREAT,	the	size	is	454830
-//	INFO:	***	for	Starting	Word	guess	ADIEU,	the	size	is	458019
-//	INFO:	***	for	Starting	Word	guess	DREAM,	the	size	is	507362
-//	INFO:	***	for	Starting	Word	guess	HOUSE,	the	size	is	572380
-//	INFO:	***	for	Starting	Word	guess	STEAM,	the	size	is	578682
-//	INFO:	***	for	Starting	Word	guess	AUDIO,	the	size	is	664480
+//	for	Starting	Word	guess	ROATE,	the	size	is	267272
+//	for	Starting	Word	guess	RAISE,	the	size	is	279555
+//	for	Starting	Word	guess	AROSE,	the	size	is	295827
+//	for	Starting	Word	guess	IRATE,	the	size	is	302941
+//	for	Starting	Word	guess	ARISE,	the	size	is	304197
+//	for	Starting	Word	guess	SALET,	the	size	is	326246
+//	for	Starting	Word	guess	STARE,	the	size	is	345041
+//	for	Starting	Word	guess	ATONE,	the	size	is	350997
+//	for	Starting	Word	guess	CRATE,	the	size	is	354985
+//	for	Starting	Word	guess	TRACE,	the	size	is	357311
+//	for	Starting	Word	guess	TEARS,	the	size	is	361350
+//	for	Starting	Word	guess	AISLE,	the	size	is	365399
+//	for	Starting	Word	guess	SLATE,	the	size	is	365791
+//	for	Starting	Word	guess	CRANE,	the	size	is	366177
+//	for	Starting	Word	guess	LEAST,	the	size	is	386837
+//	for	Starting	Word	guess	HEART,	the	size	is	416849
+//	for	Starting	Word	guess	TRAIN,	the	size	is	442785
+//	for	Starting	Word	guess	SAUCE,	the	size	is	451683
+//	for	Starting	Word	guess	GREAT,	the	size	is	455589
+//	for	Starting	Word	guess	ADIEU,	the	size	is	458256
+//	for	Starting	Word	guess	DREAM,	the	size	is	508263
+//	for	Starting	Word	guess	HOUSE,	the	size	is	572543
+//	for	Starting	Word	guess	STEAM,	the	size	is	579435
+//	for	Starting	Word	guess	AUDIO,	the	size	is	665123
 
 	static String[] starting = {
 			"ROATE", "RAISE", "IRATE", "ARISE", "STARE", "ATONE",
 			"CRANE", "SLATE", "TRAIN", "ADIEU", "AUDIO", "HOUSE", 
 			"GREAT", "HEART", "AROSE", "STEAM", "TEARS", "AISLE",
-			"DREAM", "LEAST", "TRACE", "CRATE"
+			"DREAM", "LEAST", "TRACE", "CRATE", "SALET", "SAUCE"
 	};
 
 // Do we need to get total counts for the number of possible words?
@@ -63,9 +71,9 @@ private static boolean countsNeeded = false;
 //				true;
 				false;
 		
-		guesses.add(new Guess(new Position("ROATE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
-		guesses.add(new Guess(new Position("PLISH"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "yellow", "yellow")))));
-//		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "yellow", "gray")))));
+		guesses.add(new Guess(new Position("ROATE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "yellow", "green")))));
+//		guesses.add(new Guess(new Position("HILUS"), new Report(new ArrayList<String>(List.of("yellow", "gray", "gray", "gray", "yellow")))));
+//		guesses.add(new Guess(new Position("MUSTH"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "gray", "yellow")))));
 //		guesses.add(new Guess(new Position("SHOUT"), new Report(new ArrayList<String>(List.of("green", "gray", "yellow", "gray", "gray")))));
 //		guesses.add(new Guess(new Position("MAULS"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "gray", "yellow")))));
 
@@ -142,10 +150,13 @@ private static boolean countsNeeded = false;
 		Position best = possible.get(0);
 		
 		List<Position> startingWords = new ArrayList<Position>();
-		for (String word : starting) {
-			startingWords.add(new Position(word));
+		// Only include the Starting word analysis of there are no guesses.
+		if (guesses.size() == 0) {
+			for (String word : starting) {
+				startingWords.add(new Position(word));
+			}
+			System.out.println("Starting Words: " + startingWords);
 		}
-		System.out.println("Starting Words: " + startingWords);
 		
 		for (Position trial : trialList) {
 			
@@ -159,10 +170,10 @@ private static boolean countsNeeded = false;
 				if (!countsNeeded && total > minTotal)
 					break;
 			}
-			if (guesses.size() == 0)
-				for (Position word : startingWords)
-					if (trial.equals(word))
-						logger.info("*** for Starting Word guess " + trial + ", the size is " + total);
+			
+			for (Position word : startingWords)
+				if (trial.equals(word))
+					logger.info("*** for Starting Word guess " + trial + ", the size is " + total);
 	
 			if (total < minTotal) {
 				logger.info("for best guess " + trial + ", the size is " + total);
