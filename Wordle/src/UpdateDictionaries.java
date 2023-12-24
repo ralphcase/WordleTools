@@ -1,9 +1,12 @@
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
 
 public class UpdateDictionaries {
 
 	public static void main(String[] args) {
 		debug();
-
+//		System.out.println(letterFrequency(Position.getGOALWORDS()));
 	}
 
 	private static void debug() {
@@ -32,5 +35,16 @@ public class UpdateDictionaries {
 	//		removeImpossible(words, guesses);
 			
 		}
+	
+	public static Map<Character, Integer> letterFrequency(List<Position> words) {
+		Map<Character, Integer> result = new HashMap<Character, Integer>();
+		for (Position word : words) {
+			for (Character c : word.toCharArray()) {
+				int num = result.getOrDefault(c, 0);
+				result.put(c, num + 1);
+			}
+		}
+		return result;
+	}
 
 }
