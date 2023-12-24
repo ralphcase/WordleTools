@@ -5,8 +5,8 @@ import java.util.List;
 public class UpdateDictionaries {
 
 	public static void main(String[] args) {
-//		debug();
-		System.out.println(letterFrequency(Position.getGOALWORDS()));
+		debug();
+//		System.out.println(letterFrequency(Position.getGOALWORDS()));
 	}
 
 	private static void debug() {
