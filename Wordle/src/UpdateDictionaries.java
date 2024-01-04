@@ -9,7 +9,8 @@ import java.util.Comparator;
 public class UpdateDictionaries {
 
 	public static void main(String[] args) {
-		debug();
+//		debug();
+		Position.wordlists();
 //		System.out.println(letterFrequency(Position.getGOALWORDS()));
 	}
 
