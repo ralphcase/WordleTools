@@ -58,8 +58,7 @@ public class Report {
 	}
 
 	public Report(List<String> input) {
-		String[] data = new String[Position.NUMBERCELLS];
-		fillResult(input.toArray(data));
+		fillResult(input.toArray(new String[Position.NUMBERCELLS]));
 	}
 
 	private void fillResult(String[] input) {
