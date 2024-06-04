@@ -71,9 +71,9 @@ private static boolean countsNeeded = false;
 //				true;
 				false;
 		
-		guesses.add(new Guess(new Position("ROATE"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "gray", "yellow")))));
-		guesses.add(new Guess(new Position("CANAL"), new Report(new ArrayList<String>(List.of("yellow", "gray", "gray", "green", "gray")))));
-//		guesses.add(new Guess(new Position("DUMPS"), new Report(new ArrayList<String>(List.of("yellow", "gray", "gray", "gray", "yellow")))));
+		guesses.add(new Guess(new Position("ROATE"), new Report(new ArrayList<String>(List.of("yellow", "yellow", "gray", "gray", "gray")))));
+		guesses.add(new Guess(new Position("CROON"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "green", "gray")))));
+		guesses.add(new Guess(new Position("BIPED"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
 
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
 				

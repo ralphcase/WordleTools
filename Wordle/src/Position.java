@@ -208,14 +208,14 @@ public class Position {
 		Set<String> possibleGoals = new HashSet<String>(toStrings(AllPositions(GOALFILE)));
 		Set<String> wordlebot = new HashSet<String>(toStrings(AllPositions(WORDLEBOT)));
 		
-		System.out.println("possible goals: "+possibleGoals.size());
+		System.out.println("possible goals: " + possibleGoals.size());
 		possibleGoals.addAll(wordlebot);
-		System.out.println("possible goals with new wordlebot: "+possibleGoals.size());
+		System.out.println("possible goals with new wordlebot: " + possibleGoals.size());
 		System.out.println(formatList(possibleGoals));
 		
 		System.out.println("all words: "+allWords.size());
 		allWords.removeAll(possibleGoals);
-		System.out.println("updated words: "+allWords.size());
+		System.out.println("updated words: " + allWords.size());
 		System.out.println(formatList(allWords));
 		
 		
@@ -306,8 +306,5 @@ public class Position {
 		}
 		return pivot;
 	}
-
-
-
 
 }
