@@ -1,4 +1,5 @@
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,6 +59,14 @@ public class Position {
 	 */
 	public Report guess(Position input) {
 		return new Report(this, input);
+	}
+	
+	private static void writeWords(String wordlist, String filename) {
+		try (FileWriter writer = new FileWriter(filename)) {
+			writer.write(wordlist);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -211,12 +220,12 @@ public class Position {
 		System.out.println("possible goals: " + possibleGoals.size());
 		possibleGoals.addAll(wordlebot);
 		System.out.println("possible goals with new wordlebot: " + possibleGoals.size());
-		System.out.println(formatList(possibleGoals));
+		writeWords(formatList(possibleGoals), GOALFILE);
 		
 		System.out.println("all words: "+allWords.size());
 		allWords.removeAll(possibleGoals);
 		System.out.println("updated words: " + allWords.size());
-		System.out.println(formatList(allWords));
+		writeWords(formatList(allWords), ALLOWEDFILE);
 		
 		
 		
