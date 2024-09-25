@@ -15,30 +15,30 @@ public class Solver {
 	
 	static Logger logger = Logger.getLogger(Solver.class.getName());
 
-//	for	Starting	Word	guess	ROATE,	the	size	is	267272
-//	for	Starting	Word	guess	RAISE,	the	size	is	279555
-//	for	Starting	Word	guess	AROSE,	the	size	is	295827
-//	for	Starting	Word	guess	IRATE,	the	size	is	302941
-//	for	Starting	Word	guess	ARISE,	the	size	is	304197
-//	for	Starting	Word	guess	SALET,	the	size	is	326246
-//	for	Starting	Word	guess	STARE,	the	size	is	345041
-//	for	Starting	Word	guess	ATONE,	the	size	is	350997
-//	for	Starting	Word	guess	CRATE,	the	size	is	354985
-//	for	Starting	Word	guess	TRACE,	the	size	is	357311
-//	for	Starting	Word	guess	TEARS,	the	size	is	361350
-//	for	Starting	Word	guess	AISLE,	the	size	is	365399
-//	for	Starting	Word	guess	SLATE,	the	size	is	365791
-//	for	Starting	Word	guess	CRANE,	the	size	is	366177
-//	for	Starting	Word	guess	LEAST,	the	size	is	386837
-//	for	Starting	Word	guess	HEART,	the	size	is	416849
-//	for	Starting	Word	guess	TRAIN,	the	size	is	442785
-//	for	Starting	Word	guess	SAUCE,	the	size	is	451683
-//	for	Starting	Word	guess	GREAT,	the	size	is	455589
-//	for	Starting	Word	guess	ADIEU,	the	size	is	458256
-//	for	Starting	Word	guess	DREAM,	the	size	is	508263
-//	for	Starting	Word	guess	HOUSE,	the	size	is	572543
-//	for	Starting	Word	guess	STEAM,	the	size	is	579435
-//	for	Starting	Word	guess	AUDIO,	the	size	is	665123
+//	for	Starting	Word	guess	ROATE,	the	size	is	274145
+//	for	Starting	Word	guess	STARE,	the	size	is	274155
+//	for	Starting	Word	guess	AISLE,	the	size	is	274184
+//	for	Starting	Word	guess	AROSE,	the	size	is	274187
+//	for	Starting	Word	guess	HOUSE,	the	size	is	274221
+//	for	Starting	Word	guess	TRAIN,	the	size	is	274245
+//	for	Starting	Word	guess	ATONE,	the	size	is	274272
+//	for	Starting	Word	guess	TRACE,	the	size	is	274283
+//	for	Starting	Word	guess	SAUCE,	the	size	is	274429
+//	for	Starting	Word	guess	STEAM,	the	size	is	274442
+//	for	Starting	Word	guess	SLATE,	the	size	is	284845
+//	for	Starting	Word	guess	RAISE,	the	size	is	284852
+//	for	Starting	Word	guess	ARISE,	the	size	is	284856
+//	for	Starting	Word	guess	HEART,	the	size	is	284870
+//	for	Starting	Word	guess	CRANE,	the	size	is	284872
+//	for	Starting	Word	guess	SALET,	the	size	is	284901
+//	for	Starting	Word	guess	GREAT,	the	size	is	284916
+//	for	Starting	Word	guess	LEAST,	the	size	is	284918
+//	for	Starting	Word	guess	CRATE,	the	size	is	284924
+//	for	Starting	Word	guess	ADIEU,	the	size	is	284960
+//	for	Starting	Word	guess	IRATE,	the	size	is	284995
+//	for	Starting	Word	guess	DREAM,	the	size	is	284999
+//	for	Starting	Word	guess	TEARS,	the	size	is	285011
+//	for	Starting	Word	guess	AUDIO,	the	size	is	285357
 
 	static String[] starting = {
 			"ROATE", "RAISE", "IRATE", "ARISE", "STARE", "ATONE",
