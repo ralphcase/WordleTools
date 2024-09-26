@@ -22,6 +22,7 @@ public class Position {
 //	private static final String ALLOWEDFILE = "nytDictionary.txt";
 	private static final String GOALFILE = "possibleGoals.txt";
 	private static final String ALLOWEDFILE = "nonGoals.txt";
+	private static final String SOLUTIONFILE = "solutions.txt";
 
 	private static final String WORDLEBOT = "wordlebot.txt";
 
@@ -32,6 +33,8 @@ public class Position {
 	private static List<Position> GOALWORDS = AllPositions(GOALFILE);
 
 	private static List<Position> ALLWORDS = AllPositions(ALLOWEDFILE);
+
+	private static List<Position> SOLUTIONWORDS = AllPositions(SOLUTIONFILE);
 	
 	/*
 	 * Main constructor
@@ -39,7 +42,7 @@ public class Position {
 	public Position(String word) {
 		if (word.length() != NUMBERCELLS)
 			throw new IllegalArgumentException();
-		pos = word.toCharArray();
+		this.pos = word.toCharArray();
 		for (char member : pos) {
 			if (LETTERS.indexOf(member) < 0)
 				throw new IllegalArgumentException();
@@ -121,11 +124,23 @@ public class Position {
 		return 1 + rand.nextInt(num);
 	}
 
+	@Override
+	public boolean equals(Object other) {
+		if (this == other) return true;
+	    if (other == null || getClass() != other.getClass()) return false;
+	    Position position = (Position) other;
+		return Arrays.equals(this.pos, position.pos);
+	}
 	
-	public boolean equals(Position other) {
-		return Arrays.equals(this.pos, other.pos);
+	@Override
+	public int hashCode() {
+		return Arrays.hashCode(this.pos);
 	}
 
+
+	public static List<Position> getSOLUTIONWORDS() {
+		return SOLUTIONWORDS;
+	}
 
 	public static List<Position> getGOALWORDS() {
 		return GOALWORDS;

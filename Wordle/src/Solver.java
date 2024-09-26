@@ -15,36 +15,38 @@ public class Solver {
 	
 	static Logger logger = Logger.getLogger(Solver.class.getName());
 
-//	for	Starting	Word	guess	ROATE,	the	size	is	274145
-//	for	Starting	Word	guess	STARE,	the	size	is	274155
-//	for	Starting	Word	guess	AISLE,	the	size	is	274184
-//	for	Starting	Word	guess	AROSE,	the	size	is	274187
-//	for	Starting	Word	guess	HOUSE,	the	size	is	274221
-//	for	Starting	Word	guess	TRAIN,	the	size	is	274245
-//	for	Starting	Word	guess	ATONE,	the	size	is	274272
-//	for	Starting	Word	guess	TRACE,	the	size	is	274283
-//	for	Starting	Word	guess	SAUCE,	the	size	is	274429
-//	for	Starting	Word	guess	STEAM,	the	size	is	274442
-//	for	Starting	Word	guess	SLATE,	the	size	is	284845
-//	for	Starting	Word	guess	RAISE,	the	size	is	284852
-//	for	Starting	Word	guess	ARISE,	the	size	is	284856
-//	for	Starting	Word	guess	HEART,	the	size	is	284870
-//	for	Starting	Word	guess	CRANE,	the	size	is	284872
-//	for	Starting	Word	guess	SALET,	the	size	is	284901
-//	for	Starting	Word	guess	GREAT,	the	size	is	284916
-//	for	Starting	Word	guess	LEAST,	the	size	is	284918
-//	for	Starting	Word	guess	CRATE,	the	size	is	284924
-//	for	Starting	Word	guess	ADIEU,	the	size	is	284960
-//	for	Starting	Word	guess	IRATE,	the	size	is	284995
-//	for	Starting	Word	guess	DREAM,	the	size	is	284999
-//	for	Starting	Word	guess	TEARS,	the	size	is	285011
-//	for	Starting	Word	guess	AUDIO,	the	size	is	285357
+//	for	Starting	Word	guess	OATER,	the	size	is	121222
+//	for	Starting	Word	guess	AUDIO,	the	size	is	121292
+//	for	Starting	Word	guess	TRAIN,	the	size	is	121941
+//	for	Starting	Word	guess	AISLE,	the	size	is	121947
+//	for	Starting	Word	guess	AROSE,	the	size	is	121970
+//	for	Starting	Word	guess	TEARS,	the	size	is	121981
+//	for	Starting	Word	guess	HEART,	the	size	is	121990
+//	for	Starting	Word	guess	ROATE,	the	size	is	121990
+//	for	Starting	Word	guess	DREAM,	the	size	is	122032
+//	for	Starting	Word	guess	ATONE,	the	size	is	122040
+//	for	Starting	Word	guess	STEAM,	the	size	is	122041
+//	for	Starting	Word	guess	SAUCE,	the	size	is	122044
+//	for	Starting	Word	guess	IRATE,	the	size	is	122053
+//	for	Starting	Word	guess	CRATE,	the	size	is	122065
+//	for	Starting	Word	guess	ADIEU,	the	size	is	122076
+//	for	Starting	Word	guess	ARISE,	the	size	is	122077
+//	for	Starting	Word	guess	CRANE,	the	size	is	122111
+//	for	Starting	Word	guess	TRACE,	the	size	is	122114
+//	for	Starting	Word	guess	RAISE,	the	size	is	123356
+//	for	Starting	Word	guess	GREAT,	the	size	is	123358
+//	for	Starting	Word	guess	STARE,	the	size	is	123400
+//	for	Starting	Word	guess	LEAST,	the	size	is	123411
+//	for	Starting	Word	guess	SALET,	the	size	is	123473
+//	for	Starting	Word	guess	HOUSE,	the	size	is	123548
+//	for	Starting	Word	guess	SLATE,	the	size	is	123552
 
 	static String[] starting = {
 			"ROATE", "RAISE", "IRATE", "ARISE", "STARE", "ATONE",
 			"CRANE", "SLATE", "TRAIN", "ADIEU", "AUDIO", "HOUSE", 
 			"GREAT", "HEART", "AROSE", "STEAM", "TEARS", "AISLE",
-			"DREAM", "LEAST", "TRACE", "CRATE", "SALET", "SAUCE"
+			"DREAM", "LEAST", "TRACE", "CRATE", "SALET", "SAUCE",
+			"OATER"
 	};
 
 // Do we need to get total counts for the number of possible words?
@@ -65,14 +67,19 @@ private static boolean countsNeeded = false;
 	private static void solveHelper() {
 		List<Position> allWords = Position.getALLWORDS();
 		List<Position> possible = Position.getGOALWORDS();
+		List<Position> solutions = Position.getSOLUTIONWORDS();
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 		
+		// Assume that previous solutions are not possible solutions.
+		possible.removeAll(solutions);
+		System.out.println(possible.size() + " possible: \t" + possible);
+				
 		boolean hardMode = 
 //				true;
 				false;
 		
-		guesses.add(new Guess(new Position("STARE"), new Report(new ArrayList<String>(List.of("yellow", "yellow", "gray", "yellow", "gray")))));
-		guesses.add(new Guess(new Position("TROUT"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "gray", "green")))));
+		guesses.add(new Guess(new Position("OATER"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "gray", "gray")))));
+		guesses.add(new Guess(new Position("SLINK"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "green", "green")))));
 //		guesses.add(new Guess(new Position("CHYND"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "yellow", "yellow")))));
 
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
