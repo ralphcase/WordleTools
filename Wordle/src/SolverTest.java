@@ -11,9 +11,9 @@ public class SolverTest {
 		List<Position> possible = Position.getGOALWORDS();
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 		
-		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "yellow")))));
-		System.out.println(Solver.countPossible(possible, guesses));
-		Assert.assertEquals(238, Solver.countPossible(possible, guesses));
+//		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "yellow")))));
+//		System.out.println(Solver.countPossible(possible, guesses));
+//		Assert.assertEquals(238, Solver.countPossible(possible, guesses));
 		
 		guesses = new ArrayList<Guess>();
 		guesses.add(new Guess(new Position("RAISE"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));

@@ -1,28 +1,28 @@
 
 public class Guess {
-	private Position p;
+	private Position position;
 	private Report score;
 
 	public Guess(Position p, Report s) {
-		this.p = p;
+		this.position = p;
 		this.score = s;
 	}
-	
+
 	public Guess(Position target, Position guess) {
-		this.p = guess;
-		this.score = target.guess(guess);
+		this(guess, target.guess(guess));
 	}
 
 	public Position getPos() {
-		return p;
+		return position;
 	}
 
 	public Report getScore() {
 		return score;
 	}
-	
+
+	@Override
 	public String toString() {
-		return p.toString()+" "+score.toString();
+		return position.toString() + " " + score.toString();
 	}
 
 	public boolean isSolved() {

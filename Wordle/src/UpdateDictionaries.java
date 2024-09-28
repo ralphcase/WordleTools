@@ -42,22 +42,22 @@ public class UpdateDictionaries {
 		}
 	
 	static class EntryCompare implements Comparator<Entry<Character, Integer>> {
+		@Override
 	    public int compare(Entry<Character, Integer> o1, Entry<Character, Integer> o2) {
 	        return o2.getValue().compareTo(o1.getValue());
 	    }
 	}
 	
 	public static List<Entry<Character, Integer>> letterFrequency(List<Position> words) {
-		Map<Character, Integer> result = new HashMap<Character, Integer>();
+		Map<Character, Integer> frequencyMap = new HashMap<Character, Integer>();
 		for (Position word : words) {
 			for (Character c : word.toCharArray()) {
-				int num = result.getOrDefault(c, 0);
-				result.put(c, num + 1);
+				frequencyMap.put(c, frequencyMap.getOrDefault(c, 0) + 1);
 			}
 		}
-		List<Map.Entry<Character, Integer>> list = new ArrayList<Map.Entry<Character, Integer>>(result.entrySet());
-		Collections.sort(list, new EntryCompare());
-		return list;
+		List<Map.Entry<Character, Integer>> frequencyList = new ArrayList<Map.Entry<Character, Integer>>(frequencyMap.entrySet());
+		Collections.sort(frequencyList, new EntryCompare());
+		return frequencyList;
 	}
 
 }
