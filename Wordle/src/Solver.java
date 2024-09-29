@@ -15,31 +15,31 @@ public class Solver {
 	
 	static Logger logger = Logger.getLogger(Solver.class.getName());
 
-//	for	Starting	Word	guess	OATER,	the	size	is	121222
-//	for	Starting	Word	guess	AUDIO,	the	size	is	121292
-//	for	Starting	Word	guess	TRAIN,	the	size	is	121941
-//	for	Starting	Word	guess	AISLE,	the	size	is	121947
-//	for	Starting	Word	guess	AROSE,	the	size	is	121970
-//	for	Starting	Word	guess	TEARS,	the	size	is	121981
-//	for	Starting	Word	guess	HEART,	the	size	is	121990
-//	for	Starting	Word	guess	ROATE,	the	size	is	121990
-//	for	Starting	Word	guess	DREAM,	the	size	is	122032
-//	for	Starting	Word	guess	ATONE,	the	size	is	122040
-//	for	Starting	Word	guess	STEAM,	the	size	is	122041
-//	for	Starting	Word	guess	SAUCE,	the	size	is	122044
-//	for	Starting	Word	guess	IRATE,	the	size	is	122053
-//	for	Starting	Word	guess	CRATE,	the	size	is	122065
-//	for	Starting	Word	guess	ADIEU,	the	size	is	122076
-//	for	Starting	Word	guess	ARISE,	the	size	is	122077
-//	for	Starting	Word	guess	CRANE,	the	size	is	122111
-//	for	Starting	Word	guess	TRACE,	the	size	is	122114
-//	for	Starting	Word	guess	RAISE,	the	size	is	123356
-//	for	Starting	Word	guess	GREAT,	the	size	is	123358
-//	for	Starting	Word	guess	STARE,	the	size	is	123400
-//	for	Starting	Word	guess	LEAST,	the	size	is	123411
-//	for	Starting	Word	guess	SALET,	the	size	is	123473
-//	for	Starting	Word	guess	HOUSE,	the	size	is	123548
-//	for	Starting	Word	guess	SLATE,	the	size	is	123552
+//	for	Starting	Word	guess	OATER,	the	size	is	121045
+//	for	Starting	Word	guess	AUDIO,	the	size	is	121286
+//	for	Starting	Word	guess	ATONE,	the	size	is	121660
+//	for	Starting	Word	guess	ROATE,	the	size	is	121661
+//	for	Starting	Word	guess	IRATE,	the	size	is	121663
+//	for	Starting	Word	guess	TRAIN,	the	size	is	121667
+//	for	Starting	Word	guess	AISLE,	the	size	is	121674
+//	for	Starting	Word	guess	TEARS,	the	size	is	121678
+//	for	Starting	Word	guess	AROSE,	the	size	is	121684
+//	for	Starting	Word	guess	HEART,	the	size	is	121699
+//	for	Starting	Word	guess	STEAM,	the	size	is	121708
+//	for	Starting	Word	guess	ADIEU,	the	size	is	121757
+//	for	Starting	Word	guess	TRACE,	the	size	is	121757
+//	for	Starting	Word	guess	SAUCE,	the	size	is	121758
+//	for	Starting	Word	guess	DREAM,	the	size	is	121770
+//	for	Starting	Word	guess	CRATE,	the	size	is	121783
+//	for	Starting	Word	guess	ARISE,	the	size	is	121796
+//	for	Starting	Word	guess	CRANE,	the	size	is	121891
+//	for	Starting	Word	guess	RAISE,	the	size	is	123173
+//	for	Starting	Word	guess	GREAT,	the	size	is	123190
+//	for	Starting	Word	guess	HOUSE,	the	size	is	123211
+//	for	Starting	Word	guess	LEAST,	the	size	is	123226
+//	for	Starting	Word	guess	SALET,	the	size	is	123233
+//	for	Starting	Word	guess	STARE,	the	size	is	123272
+//	for	Starting	Word	guess	SLATE,	the	size	is	123335
 
 	static String[] starting = {
 			"ROATE", "RAISE", "IRATE", "ARISE", "STARE", "ATONE",
@@ -78,9 +78,9 @@ private static boolean countsNeeded = false;
 //				true;
 				false;
 		
-		guesses.add(new Guess(new Position("OATER"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "gray", "gray")))));
-		guesses.add(new Guess(new Position("SLINK"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "green", "green")))));
-//		guesses.add(new Guess(new Position("CHYND"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "yellow", "yellow")))));
+		guesses.add(new Guess(new Position("OATER"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "green", "green")))));
+		guesses.add(new Guess(new Position("DIRLS"), new Report(new ArrayList<String>(List.of("yellow", "green", "yellow", "gray", "gray")))));
+		guesses.add(new Guess(new Position("REWTH"), new Report(new ArrayList<String>(List.of("green", "yellow", "gray", "gray", "gray")))));
 
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
 				
