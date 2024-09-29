@@ -13,12 +13,16 @@ public class Report {
 	static final String ANSI_YELLOW = "\u001B[33m";
 	static final String ANSI_BLACK = "\u001B[30m";
 	static final String ANSI_GRAY = "\u001B[90m";
-	static final Map<Hint, String> COLORMAP = Map.of(Hint.ABSENT, ANSI_GRAY, Hint.PRESENT, ANSI_YELLOW, Hint.CORRECT,
-			ANSI_GREEN);
+	static final Map<Hint, String> COLORMAP = Map.of(
+			Hint.ABSENT, 	ANSI_GRAY, 
+			Hint.PRESENT, 	ANSI_YELLOW, 
+			Hint.CORRECT, 	ANSI_GREEN
+			);
 
-	private Hint[] result = new Hint[Position.NUMBERCELLS];
-
+	private Hint[] result;
+	
 	public Report(Position target, Position guess) {
+		result = new Hint[Position.NUMBERCELLS];
 		boolean[] matched = new boolean[Position.NUMBERCELLS];
 		exactMatches(target, guess, matched);
 		presentLetters(target, guess, matched);
@@ -37,7 +41,9 @@ public class Report {
 	private void presentLetters(Position target, Position guess, boolean[] matched) {
 		for (int i = 0; i < Position.NUMBERCELLS; i++) {
 			for (int j = 0; j < Position.NUMBERCELLS; j++) {
-				if (!matched[j] && result[i] != Hint.CORRECT && i != j
+				if (!matched[j] 
+						&& result[i] != Hint.CORRECT 
+						&& i != j
 						&& target.toCharArray()[j] == guess.toCharArray()[i]) {
 					result[i] = Hint.PRESENT;
 					matched[j] = true;
@@ -64,16 +70,25 @@ public class Report {
 	}
 
 	private void fillResult(String[] input) {
+		result = new Hint[Position.NUMBERCELLS];
 		for (int i = 0; i < Position.NUMBERCELLS; i++) {
-			if (input[i].equalsIgnoreCase("gray") || input[i].equalsIgnoreCase("absent"))
+			switch (input[i].toLowerCase()) {
+			case "gray":
+			case "absent":
 				result[i] = Hint.ABSENT;
-			else if (input[i].equalsIgnoreCase("green") || input[i].equalsIgnoreCase("red")
-					|| input[i].equalsIgnoreCase("correct"))
-				result[i] = Hint.CORRECT;
-			else if (input[i].equalsIgnoreCase("yellow") || input[i].equalsIgnoreCase("present"))
-				result[i] = Hint.PRESENT;
-			else
-				throw new IllegalArgumentException(input.toString());
+				break;
+			case "green":
+	        case "red":
+	        case "correct":
+	            result[i] = Hint.CORRECT;
+	            break;
+	        case "yellow":
+	        case "present":
+	            result[i] = Hint.PRESENT;
+	            break;
+	        default:
+	            throw new IllegalArgumentException(input.toString());
+			}
 		}
 	}
 
