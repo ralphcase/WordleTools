@@ -126,9 +126,11 @@ public class Position {
 
 	@Override
 	public boolean equals(Object other) {
-		if (this == other) return true;
-	    if (other == null || getClass() != other.getClass()) return false;
-	    Position position = (Position) other;
+		if (this == other)
+			return true;
+		if (other == null || getClass() != other.getClass())
+			return false;
+		Position position = (Position) other;
 		return Arrays.equals(this.pos, position.pos);
 	}
 	
