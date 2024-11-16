@@ -13,34 +13,10 @@ public class Solver {
 	
 	static Logger logger = Logger.getLogger(Solver.class.getName());
 
-//	best: [[ARIEL:115988], [OATER:116468], [RAILE:117676], [RAISE:118252], [ROATE:118408], [TALER:122034], [SOARE:122496], [LASER:122512], [LARES:122722], [RALES:123406], [LATER:124393], [SANER:124395], [SOREL:124632], [RATEL:124652], [SOLER:124920], [ARLES:125028], [AROSE:125421], [RAINE:125610], [PAREO:125812], [SATER:125946], [ALTER:126496], [ARTEL:126948], [NAIEO:127858], [TIARE:127952], [REALO:129172], [ORATE:129206], [ORIEL:129322], [ALOES:129676], [TARES:129766], [ARISE:129925], [TASER:130071], [SAYER:130622], [SERIA:131152], [LOSER:131196], [NARES:131276], [RANES:131384], [AESIR:131574], [RATES:131798], [OARED:131949], [OILER:132021], [AEROS:132164], [AUREI:132204], [SARED:132296], [LORES:133062], [ROLES:133098], [PAIRE:133846], [URAEI:134264], [LAYER:134296], [IRATE:134320], [DEAIR:134600]]
-
-//	for	Starting	Word	guess	ARIEL,	the	size	is	115988
-//	for	Starting	Word	guess	OATER,	the	size	is	116468
-//	for	Starting	Word	guess	RAISE,	the	size	is	118252
-//	for	Starting	Word	guess	ROATE,	the	size	is	118408
-//	for	Starting	Word	guess	AROSE,	the	size	is	125421
-//	for	Starting	Word	guess	ARISE,	the	size	is	129925
-//	for	Starting	Word	guess	IRATE,	the	size	is	134320
-//	for	Starting	Word	guess	SALET,	the	size	is	138082
-//	for	Starting	Word	guess	AISLE,	the	size	is	153976
-//	for	Starting	Word	guess	ATONE,	the	size	is	154816
-//	for	Starting	Word	guess	STARE,	the	size	is	155035
-//	for	Starting	Word	guess	TEARS,	the	size	is	158088
-//	for	Starting	Word	guess	CRATE,	the	size	is	164572
-//	for	Starting	Word	guess	TRACE,	the	size	is	165210
-//	for	Starting	Word	guess	SLATE,	the	size	is	166228
-//	for	Starting	Word	guess	ADIEU,	the	size	is	167237
-//	for	Starting	Word	guess	LEAST,	the	size	is	167823
-//	for	Starting	Word	guess	CRANE,	the	size	is	168264
-//	for	Starting	Word	guess	HEART,	the	size	is	184062
-//	for	Starting	Word	guess	SAUCE,	the	size	is	197053
-//	for	Starting	Word	guess	DREAM,	the	size	is	198256
-//	for	Starting	Word	guess	TRAIN,	the	size	is	199494
-//	for	Starting	Word	guess	GREAT,	the	size	is	200148
-//	for	Starting	Word	guess	AUDIO,	the	size	is	232750
-//	for	Starting	Word	guess	STEAM,	the	size	is	234668
-//	for	Starting	Word	guess	HOUSE,	the	size	is	252098
+//	best: [[ARIEL:115502], [OATER:115550], [RAILE:117296], [ROATE:117514], [RAISE:117596], [TALER:121298], [SOARE:121770], [LASER:121804], [LARES:121988], [RALES:122674], [LATER:123621], [SANER:123831], [RATEL:123924], [SOREL:124036], [SOLER:124336], [ARLES:124390], [PAREO:124736], [AROSE:124747], [RAINE:124802], [SATER:124986]]
+//			[LATER:123621]
+//			[SANER:123831]
+//			[AROSE:124747]
 
 	static String[] starting = {
 			"ROATE", "RAISE", "IRATE", "ARISE", "STARE", "ATONE",
@@ -79,9 +55,9 @@ private static boolean countsNeeded = true;
 //				true;
 				false;
 		
-		guesses.add(new Guess(new Position("ARIEL"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "yellow", "green")))));
-//		guesses.add(new Guess(new Position("HOKUM"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
-//		guesses.add(new Guess(new Position("THRIP"), new Report(new ArrayList<String>(List.of("yellow", "gray", "gray", "gray", "gray")))));
+		guesses.add(new Guess(new Position("ARIEL"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "gray", "gray")))));
+		guesses.add(new Guess(new Position("GROMS"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "gray", "yellow")))));
+//		guesses.add(new Guess(new Position("BAFTS"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "yellow", "gray")))));
 //		guesses.add(new Guess(new Position("RUBIN"), new Report(new ArrayList<String>(List.of("yellow", "gray", "green", "yellow", "gray")))));
 
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
@@ -167,7 +143,7 @@ private static boolean countsNeeded = true;
 		
 		for (Position trial : trialList) {
 			
-			if (countsNeeded) System.out.print(".");
+//			if (countsNeeded) System.out.print(".");
 
 			int total = 0;
 			for (Position pos : possible) {

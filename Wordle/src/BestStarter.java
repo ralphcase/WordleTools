@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 public class BestStarter {
 
 	private static Logger logger = Logger.getLogger(Solver.class.getName());
-	private static final int TOPSIZE = 20;
+	private static final int TOPSIZE = 50;
 	
 	private static class Score implements Comparable<Score>{
 		Position pos;
@@ -19,7 +19,6 @@ public class BestStarter {
 			return "["+pos+":"+score+"]";
 		}
 		public int compareTo(Score o) {
-//			logger.info(this + " - " + o);
 			return Integer.compare(o.score, this.score);
 		}
 	}
@@ -44,7 +43,6 @@ public class BestStarter {
 		
 		// Assume that previous solutions are not possible solutions.
 		possible.removeAll(solutions);
-		System.out.println(possible.size() + " possible: \t" + possible);
 				
 		boolean hardMode = 
 //				true;
@@ -59,6 +57,12 @@ public class BestStarter {
 		else
 			best = bestTurn(possible, guesses, allWords);
 		System.out.println("\nbest: " + best);	
+		
+		for (Score sc : best) {
+			if (possible.contains(sc.pos)) {
+				System.out.println(sc);
+			}
+		}
 		
 	}
 	
@@ -84,11 +88,11 @@ public class BestStarter {
 				}
 			}
 			
+			// Only save a few, limited by TOPSIZE.
 			top.offer(new Score(trial, total));
 			if (top.size() > TOPSIZE) {
 				top.poll();
 			}
-	
 		}
 		
 		List<Score> topl = new ArrayList<Score>();
