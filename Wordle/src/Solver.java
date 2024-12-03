@@ -13,17 +13,21 @@ public class Solver {
 	
 	static Logger logger = Logger.getLogger(Solver.class.getName());
 
-//	best: [[ARIEL:115502], [OATER:115550], [RAILE:117296], [ROATE:117514], [RAISE:117596], [TALER:121298], [SOARE:121770], [LASER:121804], [LARES:121988], [RALES:122674], [LATER:123621], [SANER:123831], [RATEL:123924], [SOREL:124036], [SOLER:124336], [ARLES:124390], [PAREO:124736], [AROSE:124747], [RAINE:124802], [SATER:124986]]
-//			[LATER:123621]
-//			[SANER:123831]
-//			[AROSE:124747]
-
+//	best: [[OATER:113490], [ARIEL:113768], [RAISE:115770], [RAILE:115928], [ROATE:116042], [TALER:119360], [LARES:119566], [LASER:119716], [SOARE:120106], [RALES:120432], [LATER:121547], [SANER:121691], [RATEL:121726], [SOREL:121890], [ARLES:121962], [PAREO:122128], [SATER:122600], [AROSE:122665], [SOLER:122704], [RAINE:123066], [ALTER:123744], [ARTEL:123948], [TIARE:125350], [NAIEO:125968], [TARES:126172], [ORATE:126250], [REALO:126428], [TASER:126621], [ARISE:126943], [ORIEL:127110], [SAYER:127402], [OARED:127527], [ALOES:127780], [AUREI:128110], [SARED:128174], [NARES:128178], [AESIR:128214], [SERIA:128236], [RATES:128238], [RANES:128316], [AEROS:128528], [LOSER:128592], [OILER:129775], [LORES:130040], [ROLES:130466], [PAIRE:130700], [URAEI:130802], [DEAIR:131046], [LAYER:131050], [IRATE:131308]]
+//			[LATER:121547]
+//			[SANER:121691]
+//			[AROSE:122665]
+//			[TASER:126621]
+//			[ARISE:126943]
+//			[OARED:127527]
+//			[OILER:129775]
+					
 	static String[] starting = {
 			"ROATE", "RAISE", "IRATE", "ARISE", "STARE", "ATONE",
 			"CRANE", "SLATE", "TRAIN", "ADIEU", "AUDIO", "HOUSE", 
 			"GREAT", "HEART", "AROSE", "STEAM", "TEARS", "AISLE",
 			"DREAM", "LEAST", "TRACE", "CRATE", "SALET", "SAUCE",
-			"OATER", "ARIEL"
+			"OATER", "ARIEL", "LATER", "SANER", "TASER"
 	};
 
 // Do we need to get total counts for the number of possible words?
@@ -55,9 +59,10 @@ private static boolean countsNeeded = true;
 //				true;
 				false;
 		
-		guesses.add(new Guess(new Position("ARIEL"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "gray", "gray")))));
-		guesses.add(new Guess(new Position("GROMS"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "gray", "yellow")))));
-//		guesses.add(new Guess(new Position("BAFTS"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "yellow", "gray")))));
+		guesses.add(new Guess(new Position("OATER"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "gray")))));
+		guesses.add(new Guess(new Position("SLAIN"), new Report(new ArrayList<String>(List.of("green", "gray", "green", "gray", "gray")))));
+		guesses.add(new Guess(new Position("WHACK"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "gray", "yellow")))));
+//		guesses.add(new Guess(new Position("QUICH"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "green", "yellow")))));
 //		guesses.add(new Guess(new Position("RUBIN"), new Report(new ArrayList<String>(List.of("yellow", "gray", "green", "yellow", "gray")))));
 
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
