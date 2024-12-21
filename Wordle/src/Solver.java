@@ -13,14 +13,15 @@ public class Solver {
 	
 	static Logger logger = Logger.getLogger(Solver.class.getName());
 
-//	best: [[OATER:113490], [ARIEL:113768], [RAISE:115770], [RAILE:115928], [ROATE:116042], [TALER:119360], [LARES:119566], [LASER:119716], [SOARE:120106], [RALES:120432], [LATER:121547], [SANER:121691], [RATEL:121726], [SOREL:121890], [ARLES:121962], [PAREO:122128], [SATER:122600], [AROSE:122665], [SOLER:122704], [RAINE:123066], [ALTER:123744], [ARTEL:123948], [TIARE:125350], [NAIEO:125968], [TARES:126172], [ORATE:126250], [REALO:126428], [TASER:126621], [ARISE:126943], [ORIEL:127110], [SAYER:127402], [OARED:127527], [ALOES:127780], [AUREI:128110], [SARED:128174], [NARES:128178], [AESIR:128214], [SERIA:128236], [RATES:128238], [RANES:128316], [AEROS:128528], [LOSER:128592], [OILER:129775], [LORES:130040], [ROLES:130466], [PAIRE:130700], [URAEI:130802], [DEAIR:131046], [LAYER:131050], [IRATE:131308]]
-//			[LATER:121547]
-//			[SANER:121691]
-//			[AROSE:122665]
-//			[TASER:126621]
-//			[ARISE:126943]
-//			[OARED:127527]
-//			[OILER:129775]
+//	best: [[OATER:110662], [ARIEL:111462], [RAISE:113124], [RAILE:113598], [ROATE:113638], [TALER:116994], [LARES:117156], [LASER:117282], [SOARE:117638], [RALES:118110], [LATER:118969], [RATEL:119264], [PAREO:119314], [SANER:119503], [SATER:119624], [ARLES:119630], [SOREL:119684], [AROSE:120075], [RAINE:120402], [SOLER:120610], [ALTER:121418], [ARTEL:121450], [TIARE:122444], [TARES:123018], [NAIEO:123452], [TASER:123457], [ORATE:123582], [OARED:124211], [ARISE:124251], [REALO:124410], [ORIEL:124774], [SARED:124890], [AUREI:124940], [RATES:125044], [SAYER:125136], [AESIR:125390], [NARES:125642], [ALOES:125822], [SERIA:125832], [RANES:125840], [AEROS:126120], [LOSER:126168], [OILER:127225], [PAIRE:127372], [LORES:127636], [DEAIR:127736], [URAEI:127866], [ROLES:128224], [IRATE:128346], [AIRED:128783]]
+//			[LATER:118969]
+//			[SANER:119503]
+//			[AROSE:120075]
+//			[TASER:123457]
+//			[OARED:124211]
+//			[ARISE:124251]
+//			[OILER:127225]
+//			[AIRED:128783]
 					
 	static String[] starting = {
 			"ROATE", "RAISE", "IRATE", "ARISE", "STARE", "ATONE",
@@ -59,9 +60,10 @@ private static boolean countsNeeded = true;
 //				true;
 				false;
 		
-		guesses.add(new Guess(new Position("OATER"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "gray")))));
-		guesses.add(new Guess(new Position("SLAIN"), new Report(new ArrayList<String>(List.of("green", "gray", "green", "gray", "gray")))));
-		guesses.add(new Guess(new Position("WHACK"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "gray", "yellow")))));
+		guesses.add(new Guess(new Position("OATER"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "yellow", "gray")))));
+		guesses.add(new Guess(new Position("LEASE"), new Report(new ArrayList<String>(List.of("yellow", "gray", "green", "gray", "green")))));
+		guesses.add(new Guess(new Position("GLADE"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "green", "green")))));
+		guesses.add(new Guess(new Position("CLADE"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "green", "green")))));
 //		guesses.add(new Guess(new Position("QUICH"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "green", "yellow")))));
 //		guesses.add(new Guess(new Position("RUBIN"), new Report(new ArrayList<String>(List.of("yellow", "gray", "green", "yellow", "gray")))));
 
