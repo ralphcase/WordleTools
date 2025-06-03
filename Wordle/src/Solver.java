@@ -13,17 +13,8 @@ public class Solver {
 	
 	static Logger logger = Logger.getLogger(Solver.class.getName());
 
-//	best: [[ARIEL:99909], [OATER:100287], [RAILE:102517], [RAISE:103201], [ROATE:103297], [TALER:106093], [LASER:106679], [LARES:106749], [PAREO:107207], [SOARE:107581], [RALES:107651], [LATER:107880], [RATEL:108515], [RAINE:108691], [SOREL:108753], [NAIEO:108787], [ARLES:108843], [SOLER:109065], [SANER:109162], [ALTER:109479], [SATER:109755], [AROSE:109918], [ARTEL:110299], [ORIEL:111007], [TIARE:111187], [AUREI:111315], [OILER:112280], [REALO:112335], [ALOES:112705], [TARES:112773], [ARISE:112966], [TASER:113100], [AESIR:113149], [ORATE:113185], [SERIA:113325], [OARED:113520], [LOSER:113983], [AEROS:114029], [SAYER:114031], [NARES:114407], [PAIRE:114525], [RATES:114781], [RANES:114877], [DEAIR:115005], [SARED:115231], [LORES:115427], [AIRED:115586], [ROLES:115797], [LAYER:115855], [URAEI:115895]]
-//			[LATER:107880]
-//			[SANER:109162]
-//			[AROSE:109918]
-//			[OILER:112280]
-//			[ARISE:112966]
-//			[TASER:113100]
-//			[OARED:113520]
-//			[AIRED:115586]
 					
-static String[] starting = {
+	static String[] starting = {
 			"ROATE", "RAISE", "IRATE", "ARISE", "STARE", "ATONE",
 			"CRANE", "SLATE", "TRAIN", "ADIEU", "AUDIO", "HOUSE", 
 			"GREAT", "HEART", "AROSE", "STEAM", "TEARS", "AISLE",
@@ -33,7 +24,7 @@ static String[] starting = {
 
 // Do we need to get total counts for the number of possible words?
 // A value of false allows short-circuiting.
-private static boolean countsNeeded = true;
+	private static boolean countsNeeded = true;
 
 	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
@@ -46,6 +37,16 @@ private static boolean countsNeeded = true;
 	}
 	
 	
+//	best: [[ARIEL:94498], [OATER:94936], [RAILE:97384], [ROATE:98564], [RAISE:98670], [TALER:99974], [LASER:100556], [LARES:100842], [PAREO:101536], [RALES:101662], [LATER:101783], [RATEL:102460], [SOARE:102878], [ARLES:102970], [NAIEO:103124], [ALTER:103274], [SOREL:103520], [RAINE:103580], [SANER:103591], [SOLER:103882], [SATER:103924], [ARTEL:104252], [AUREI:104936], [ORIEL:104988], [AROSE:105365], [TIARE:105952], [REALO:105994], [OILER:106045], [TARES:106740], [TASER:106869], [ALOES:107212], [OARED:107803], [AESIR:107852], [ORATE:107884], [SAYER:108010], [SERIA:108046], [LOSER:108330], [ARISE:108389], [NARES:108468], [RATES:108658], [AEROS:108776], [LAYER:108846], [RANES:108970], [PAIRE:109018], [DEAIR:109154], [URAEI:109470], [LORES:109712], [AIRED:109745], [SARED:109868], [ROLES:109986]]
+//			[LATER:101783]
+//			[SANER:103591]
+//			[AROSE:105365]
+//			[OILER:106045]
+//			[TASER:106869]
+//			[OARED:107803]
+//			[ARISE:108389]
+//			[AIRED:109745]
+
 	private static void solveHelper() {
 		List<Position> allWords = Position.getALLWORDS();
 		List<Position> possible = Position.getGOALWORDS();
@@ -60,9 +61,9 @@ private static boolean countsNeeded = true;
 //				true;
 				false;
 		
-		guesses.add(new Guess(new Position("ARIEL"), new Report(new ArrayList<String>(List.of("green", "gray", "gray", "green", "gray")))));
-		guesses.add(new Guess(new Position("PUNCH"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "gray", "yellow")))));
-//		guesses.add(new Guess(new Position("PURSE"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "green", "green")))));
+		guesses.add(new Guess(new Position("ARIEL"), new Report(new ArrayList<String>(List.of("green", "gray", "yellow", "gray", "gray")))));
+		guesses.add(new Guess(new Position("GNOWS"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "gray")))));
+//		guesses.add(new Guess(new Position("SWASH"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "green", "green")))));
 //		guesses.add(new Guess(new Position("HUFFY"), new Report(new ArrayList<String>(List.of("gray", "green", "yellow", "gray", "green")))));
 
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
