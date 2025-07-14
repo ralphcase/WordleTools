@@ -37,15 +37,16 @@ public class Solver {
 	}
 	
 	
-//	best: [[ARIEL:94498], [OATER:94936], [RAILE:97384], [ROATE:98564], [RAISE:98670], [TALER:99974], [LASER:100556], [LARES:100842], [PAREO:101536], [RALES:101662], [LATER:101783], [RATEL:102460], [SOARE:102878], [ARLES:102970], [NAIEO:103124], [ALTER:103274], [SOREL:103520], [RAINE:103580], [SANER:103591], [SOLER:103882], [SATER:103924], [ARTEL:104252], [AUREI:104936], [ORIEL:104988], [AROSE:105365], [TIARE:105952], [REALO:105994], [OILER:106045], [TARES:106740], [TASER:106869], [ALOES:107212], [OARED:107803], [AESIR:107852], [ORATE:107884], [SAYER:108010], [SERIA:108046], [LOSER:108330], [ARISE:108389], [NARES:108468], [RATES:108658], [AEROS:108776], [LAYER:108846], [RANES:108970], [PAIRE:109018], [DEAIR:109154], [URAEI:109470], [LORES:109712], [AIRED:109745], [SARED:109868], [ROLES:109986]]
-//			[LATER:101783]
-//			[SANER:103591]
-//			[AROSE:105365]
-//			[OILER:106045]
-//			[TASER:106869]
-//			[OARED:107803]
-//			[ARISE:108389]
-//			[AIRED:109745]
+//	best: [[ARIEL:90279], [OATER:90547], [RAILE:93441], [RAISE:94439], [ROATE:94923], [LASER:95511], [TALER:95671], [LARES:95963], [PAREO:96567], [RALES:96643], [LATER:97346], [RATEL:98019], [ARLES:98167], [SATER:98335], [SOARE:98347], [SANER:98414], [SOREL:98443], [SOLER:98521], [NAIEO:98523], [ALTER:99157], [RAINE:99301], [ARTEL:100049], [AUREI:100339], [AROSE:100398], [ORIEL:100429], [TARES:101015], [OILER:101082], [TASER:101120], [REALO:101377], [TIARE:102013], [ALOES:102291], [AESIR:102409], [SAYER:102447], [OARED:102602], [LOSER:102603], [SERIA:102679], [AEROS:102719], [RATES:102823], [NARES:103151], [RANES:103505], [LAYER:104049], [ARISE:104088], [ORATE:104127], [LORES:104321], [ROLES:104451], [DEAIR:104497], [SARED:104641], [URAEI:104991], [AIRED:105070], [PAIRE:105071]]
+//			[LATER:97346]
+//			[SANER:98414]
+//			[AROSE:100398]
+//			[OILER:101082]
+//			[TASER:101120]
+//			[OARED:102602]
+//			[ARISE:104088]
+//			[AIRED:105070]
+
 
 	private static void solveHelper() {
 		List<Position> allWords = Position.getALLWORDS();
@@ -61,9 +62,9 @@ public class Solver {
 //				true;
 				false;
 		
-		guesses.add(new Guess(new Position("ARIEL"), new Report(new ArrayList<String>(List.of("green", "gray", "yellow", "gray", "gray")))));
-		guesses.add(new Guess(new Position("GNOWS"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "gray")))));
-//		guesses.add(new Guess(new Position("SWASH"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "green", "green")))));
+		guesses.add(new Guess(new Position("ARIEL"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "gray", "gray")))));
+		guesses.add(new Guess(new Position("DONUT"), new Report(new ArrayList<String>(List.of("yellow", "gray", "yellow", "yellow", "gray")))));
+//		guesses.add(new Guess(new Position("DOBBY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "green")))));
 //		guesses.add(new Guess(new Position("HUFFY"), new Report(new ArrayList<String>(List.of("gray", "green", "yellow", "gray", "green")))));
 
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
