@@ -37,14 +37,15 @@ public class Solver {
 	}
 	
 	
-//	best: [[ARIEL:89539], [OATER:89645], [RAILE:92573], [RAISE:93333], [ROATE:93957], [LASER:94173], [TALER:94535], [LARES:94883], [RALES:95429], [LATER:96134], [PAREO:96573], [RATEL:96723], [SOLER:96837], [SOREL:96929], [SATER:96945], [ARLES:96979], [SANER:97580], [SOARE:97647], [ALTER:97867], [NAIEO:97999], [RAINE:98721], [ARTEL:98811], [ORIEL:99281], [AROSE:99780], [TASER:99844], [OILER:99856], [TARES:99881], [AUREI:100023], [REALO:100723], [TIARE:100751], [ALOES:100915], [AESIR:101031], [LOSER:101115], [SERIA:101409], [SAYER:101473], [RATES:101497], [AEROS:102031], [NARES:102387], [RANES:102707], [ARISE:102794], [ROLES:102943], [ORATE:103097], [LORES:103099], [OARED:103162], [LAYER:103233], [SARED:104187], [DEAIR:104301], [PAIRE:104411], [URAEI:104677], [SLIER:104737]]
-//			[LATER:96134]
-//			[SANER:97580]
-//			[AROSE:99780]
-//			[TASER:99844]
-//			[OILER:99856]
-//			[ARISE:102794]
-//			[OARED:103162]
+//	best: [[OATER:89601], [ARIEL:89929], [RAILE:92959], [RAISE:93357], [ROATE:93979], [LASER:94549], [TALER:94905], [LARES:95353], [RALES:95905], [LATER:96208], [RATEL:96821], [SATER:96947], [SOLER:97095], [PAREO:97129], [SOREL:97201], [ARLES:97431], [SOARE:97823], [SANER:97852], [ALTER:97909], [NAIEO:98427], [ARTEL:98899], [RAINE:99153], [ORIEL:99687], [AROSE:99872], [TASER:99980], [TARES:100039], [OILER:100056], [AUREI:100279], [TIARE:100677], [AESIR:101185], [ALOES:101283], [SERIA:101475], [REALO:101483], [RATES:101493], [LOSER:101521], [SAYER:101647], [AEROS:102331], [ARISE:102764], [NARES:102851], [ORATE:103119], [RANES:103167], [ROLES:103423], [LORES:103567], [OARED:103764], [LAYER:103939], [SARED:104391], [DEAIR:104493], [PAIRE:104619], [SLIER:104801], [AIRED:104808]]
+//			[LATER:96208]
+//			[SANER:97852]
+//			[AROSE:99872]
+//			[TASER:99980]
+//			[OILER:100056]
+//			[ARISE:102764]
+//			[OARED:103764]
+//			[AIRED:104808]
 
 
 	private static void solveHelper() {
@@ -61,8 +62,8 @@ public class Solver {
 //				true;
 				false;
 		
-		guesses.add(new Guess(new Position("ARIEL"), new Report(new ArrayList<String>(List.of("yellow", "gray", "gray", "gray", "green")))));
-		guesses.add(new Guess(new Position("BOTCH"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
+		guesses.add(new Guess(new Position("ARIEL"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "gray", "gray")))));
+		guesses.add(new Guess(new Position("DONUT"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "gray", "yellow")))));
 //		guesses.add(new Guess(new Position("NIECE"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "green")))));
 //		guesses.add(new Guess(new Position("HUFFY"), new Report(new ArrayList<String>(List.of("gray", "green", "yellow", "gray", "green")))));
 
