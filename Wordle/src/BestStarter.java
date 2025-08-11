@@ -28,14 +28,14 @@ public class BestStarter {
 	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
 	
-		analyze();
+		Position.writeWords(analyze(), "BestStarter.txt");
 
 		long endTime = System.currentTimeMillis();
 		System.out.println("It took " + (endTime - startTime) / 1000.0 + " seconds.");
 	}
 	
 
-	private static void analyze() {
+	private static String analyze() {
 		List<Position> allWords = Position.getALLWORDS();
 		List<Position> possible = Position.getGOALWORDS();
 		List<Position> solutions = Position.getSOLUTIONWORDS();
@@ -49,21 +49,23 @@ public class BestStarter {
 				false;
 						
 		Solver.removeImpossible(possible, guesses);
-		System.out.println("[" + guesses.size() + "] " + possible.size() + " possible: \t" + possible);
-		System.out.println("Guesses: " + guesses);
+		StringBuilder output = new StringBuilder();
+		
+		output.append("[" + guesses.size() + "] " + possible.size() + " possible: \t" + possible + "\n");
+		output.append("Guesses: " + guesses + "\n");
 		List<Score> best;
 		if (hardMode)
 			best = bestTurn(possible, guesses, possible);
 		else
 			best = bestTurn(possible, guesses, allWords);
-		System.out.println("\nbest: " + best);	
+		output.append("\nbest: " + best + "\n");	
 		
 		for (Score sc : best) {
 			if (possible.contains(sc.pos)) {
-				System.out.println(sc);
+				output.append(sc);
 			}
 		}
-		
+		return output.toString();
 	}
 	
 	/*
