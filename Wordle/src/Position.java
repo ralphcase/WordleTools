@@ -3,6 +3,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -275,7 +276,7 @@ public class Position {
 		
 	}
 	
-	private static String formatList(Set<String> input) {
+	private static String formatList(Collection<String> input) {
 		StringBuilder output = new StringBuilder();
 		int lineLength = 22;
 		int i = 0;

@@ -39,7 +39,7 @@ public class BestStarter {
 		List<Position> allWords = Position.getALLWORDS();
 		List<Position> possible = Position.getGOALWORDS();
 		List<Position> solutions = Position.getSOLUTIONWORDS();
-		ArrayList<Guess> guesses = new ArrayList<Guess>();
+		List<Guess> guesses = new ArrayList<Guess>();
 		
 		// Assume that previous solutions are not possible solutions.
 		possible.removeAll(solutions);
@@ -62,7 +62,7 @@ public class BestStarter {
 		
 		for (Score sc : best) {
 			if (possible.contains(sc.pos)) {
-				output.append(sc);
+				output.append("\t" + sc + "\n");
 			}
 		}
 		return output.toString();
