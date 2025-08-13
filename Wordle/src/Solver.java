@@ -50,7 +50,8 @@ public class Solver {
 
 	private static void solveHelper() {
 		List<Position> allWords = Position.getALLWORDS();
-		List<Position> possible = Position.getGOALWORDS();
+//		List<Position> possible = Position.getGOALWORDS();
+		List<Position> possible = Position.getALLWORDS();
 		List<Position> solutions = Position.getSOLUTIONWORDS();
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 		
@@ -62,8 +63,8 @@ public class Solver {
 //				true;
 				false;
 		
-		guesses.add(new Guess(new Position("OATER"), new Report(new ArrayList<String>(List.of("yellow", "yellow", "gray", "gray", "gray")))));
-		guesses.add(new Guess(new Position("NOILY"), new Report(new ArrayList<String>(List.of("green", "green", "gray", "gray", "gray")))));
+		guesses.add(new Guess(new Position("OATER"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "yellow", "green")))));
+		guesses.add(new Guess(new Position("FEMUR"), new Report(new ArrayList<String>(List.of("yellow", "green", "gray", "gray", "green")))));
 //		guesses.add(new Guess(new Position("NIECE"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "green")))));
 //		guesses.add(new Guess(new Position("HUFFY"), new Report(new ArrayList<String>(List.of("gray", "green", "yellow", "gray", "green")))));
 
