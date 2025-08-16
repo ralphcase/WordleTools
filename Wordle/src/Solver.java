@@ -36,22 +36,10 @@ public class Solver {
 		System.out.println("It took " + (endTime - startTime) / 1000.0 + " seconds.");
 	}
 	
-	
-//	best: [[OATER:89601], [ARIEL:89929], [RAILE:92959], [RAISE:93357], [ROATE:93979], [LASER:94549], [TALER:94905], [LARES:95353], [RALES:95905], [LATER:96208], [RATEL:96821], [SATER:96947], [SOLER:97095], [PAREO:97129], [SOREL:97201], [ARLES:97431], [SOARE:97823], [SANER:97852], [ALTER:97909], [NAIEO:98427], [ARTEL:98899], [RAINE:99153], [ORIEL:99687], [AROSE:99872], [TASER:99980], [TARES:100039], [OILER:100056], [AUREI:100279], [TIARE:100677], [AESIR:101185], [ALOES:101283], [SERIA:101475], [REALO:101483], [RATES:101493], [LOSER:101521], [SAYER:101647], [AEROS:102331], [ARISE:102764], [NARES:102851], [ORATE:103119], [RANES:103167], [ROLES:103423], [LORES:103567], [OARED:103764], [LAYER:103939], [SARED:104391], [DEAIR:104493], [PAIRE:104619], [SLIER:104801], [AIRED:104808]]
-//			[LATER:96208]
-//			[SANER:97852]
-//			[AROSE:99872]
-//			[TASER:99980]
-//			[OILER:100056]
-//			[ARISE:102764]
-//			[OARED:103764]
-//			[AIRED:104808]
-
 
 	private static void solveHelper() {
 		List<Position> allWords = Position.getALLWORDS();
-//		List<Position> possible = Position.getGOALWORDS();
-		List<Position> possible = Position.getALLWORDS();
+		List<Position> possible = Position.getGOALWORDS();
 		List<Position> solutions = Position.getSOLUTIONWORDS();
 		ArrayList<Guess> guesses = new ArrayList<Guess>();
 		
@@ -63,8 +51,8 @@ public class Solver {
 //				true;
 				false;
 		
-		guesses.add(new Guess(new Position("OATER"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "yellow", "green")))));
-		guesses.add(new Guess(new Position("FEMUR"), new Report(new ArrayList<String>(List.of("yellow", "green", "gray", "gray", "green")))));
+		guesses.add(new Guess(new Position("OATER"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "yellow", "gray")))));
+		guesses.add(new Guess(new Position("LATHE"), new Report(new ArrayList<String>(List.of("gray", "green", "green", "gray", "green")))));
 //		guesses.add(new Guess(new Position("NIECE"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "green")))));
 //		guesses.add(new Guess(new Position("HUFFY"), new Report(new ArrayList<String>(List.of("gray", "green", "yellow", "gray", "green")))));
 
