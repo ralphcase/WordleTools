@@ -51,9 +51,9 @@ public class Solver {
 //				true;
 				false;
 		
-		guesses.add(new Guess(new Position("OATER"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "green", "gray")))));
-		guesses.add(new Guess(new Position("CLOWN"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "green")))));
-//		guesses.add(new Guess(new Position("MOORS"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "yellow", "green")))));
+		guesses.add(new Guess(new Position("OATER"), new Report(new ArrayList<String>(List.of("yellow", "gray", "green", "green", "gray")))));
+		guesses.add(new Guess(new Position("DUVET"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "green", "yellow")))));
+//		guesses.add(new Guess(new Position("WHANG"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "gray")))));
 //		guesses.add(new Guess(new Position("CLOMP"), new Report(new ArrayList<String>(List.of("gray", "yellow", "green", "gray", "yellow")))));
 
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
