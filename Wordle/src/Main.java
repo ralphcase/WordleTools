@@ -1,12 +1,12 @@
 
+import java.util.List;
+
 import dictionary.WordListLoader;
 import dictionary.WordRepository;
 import position.Position;
 import report.Report;
-import solver.Solver;
 import solver.Guess;
-
-import java.util.List;
+import solver.Solver;
 
 public final class Main {
 
