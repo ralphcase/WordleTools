@@ -24,6 +24,7 @@ public class Position {
 	private static final String GOALFILE = "possibleGoals.txt";
 	private static final String ALLOWEDFILE = "nonGoals.txt";
 	private static final String SOLUTIONFILE = "solutions.txt";
+	private static final String OLDSOLUTIONFILE = "oldsolutions.txt";
 
 	private static final String WORDLEBOT = "wordlebot.txt";
 
@@ -36,6 +37,8 @@ public class Position {
 	private static List<Position> ALLWORDS = AllPositions(ALLOWEDFILE);
 
 	private static List<Position> SOLUTIONWORDS = AllPositions(SOLUTIONFILE);
+	
+	private static List<Position> OLDSOLUTIONWORDS = AllPositions(OLDSOLUTIONFILE);
 	
 	/*
 	 * Main constructor
@@ -143,6 +146,10 @@ public class Position {
 
 	public static List<Position> getSOLUTIONWORDS() {
 		return SOLUTIONWORDS;
+	}
+
+	public static List<Position> getOLDSOLUTIONWORDS() {
+		return OLDSOLUTIONWORDS;
 	}
 
 	public static List<Position> getGOALWORDS() {

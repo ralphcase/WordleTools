@@ -43,6 +43,7 @@ public class BestStarter {
 		
 		// Assume that previous solutions are not possible solutions.
 		possible.removeAll(solutions);
+		possible = solutions;
 				
 		boolean hardMode = 
 //				true;

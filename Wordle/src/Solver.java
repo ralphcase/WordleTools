@@ -45,16 +45,18 @@ public class Solver {
 		
 		// Assume that previous solutions are not possible solutions.
 		possible.removeAll(solutions);
-		System.out.println(possible.size() + " possible: \t" + possible);
+//		possible = solutions;
+//		possible = Position.getOLDSOLUTIONWORDS();
+//		System.out.println(possible.size() + " possible: \t" + possible);
 				
 		boolean hardMode = 
 //				true;
 				false;
 		
-		guesses.add(new Guess(new Position("OATER"), new Report(new ArrayList<String>(List.of("gray", "green", "gray", "green", "gray")))));
-		guesses.add(new Guess(new Position("COWLS"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "gray", "gray")))));
-		guesses.add(new Guess(new Position("INDEX"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "green", "yellow")))));
-//		guesses.add(new Guess(new Position("MYRRH"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "gray", "gray")))));
+		guesses.add(new Guess(new Position("OATER"), new Report(new ArrayList<String>(List.of("gray", "yellow", "yellow", "gray", "gray")))));
+		guesses.add(new Guess(new Position("ALANT"), new Report(new ArrayList<String>(List.of("gray", "gray", "green", "green", "yellow")))));
+//		guesses.add(new Guess(new Position("JINGS"), new Report(new ArrayList<String>(List.of("gray", "yellow", "gray", "gray", "yellow")))));
+//		guesses.add(new Guess(new Position("SQUAB"), new Report(new ArrayList<String>(List.of("green", "green", "green", "green", "gray")))));
 
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
 				
