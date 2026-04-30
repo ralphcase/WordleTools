@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="Wordle/src/main/java"/>
+	<classpathentry kind="src" path="Wordle/test"/>
 	<classpathentry excluding="main/java/|test/java/" kind="src" path="Wordle/src"/>
 	<classpathentry kind="src" output="bin/test" path="Wordle/src/test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
@@ -9,5 +10,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin/main"/>
 </classpath>
