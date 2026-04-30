@@ -44,4 +44,28 @@ class ConstraintSetTest {
 		assertThrows(IllegalArgumentException.class, () -> cs.updatedBy(shortGuess, fb));
 	}
 
+	@Test
+	void updatedByRecordsGreenLetters() {
+		ConstraintSet cs = new ConstraintSet();
+
+		Word guess = new Word("APPLE");
+		Feedback fb = new Feedback(new Mark[] { Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT });
+
+		cs.updatedBy(guess, fb);
+
+		// Now assert that position 0 must be 'A'
+		assertEquals(Character.valueOf('A'), cs.mustBe()[0]);
+	}
+
+	@Test
+	void updatedByRejectsConflictingGreenLetters() {
+		ConstraintSet cs = new ConstraintSet();
+
+		cs.updatedBy(new Word("APPLE"),
+				new Feedback(new Mark[] { Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT }));
+
+		assertThrows(IllegalStateException.class, () -> cs.updatedBy(new Word("BPPLE"),
+				new Feedback(new Mark[] { Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT })));
+	}
+
 }
