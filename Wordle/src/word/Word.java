@@ -5,10 +5,14 @@ import java.util.Objects;
 public final class Word {
 
     private final String text;
+    public static final int LENGTH = 5;
 
     public Word(String text) {
         if (text == null || text.isBlank()) {
             throw new IllegalArgumentException("Word cannot be null or blank");
+        }
+        if (text.length() != LENGTH) {
+            throw new IllegalArgumentException("Word must be " + LENGTH + " letters");
         }
         this.text = text.trim().toUpperCase();
     }

@@ -134,4 +134,70 @@ class ConstraintSetTest {
 	    assertFalse(cs.cannotContain().contains('P'));
 	}
 
+	@Test
+	void grayForbidsLetterAtPosition() {
+	    ConstraintSet cs = new ConstraintSet();
+
+	    cs.updatedBy(
+	        new Word("APPLE"),
+	        new Feedback(new Mark[] {
+	                Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+	        })
+	    );
+
+	    assertEquals(Character.valueOf('A'), cs.cannotBe()[0]);
+	    assertEquals(Character.valueOf('P'), cs.cannotBe()[1]);
+	}
+
+	@Test
+	void grayDoesNotOverrideYellowButStillForbidsPosition() {
+	    ConstraintSet cs = new ConstraintSet();
+
+	    // First: yellow P at position 1
+	    cs.updatedBy(
+	        new Word("APPLE"),
+	        new Feedback(new Mark[] {
+	                Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+	        })
+	    );
+
+	    // Second: gray P at position 3
+	    cs.updatedBy(
+	        new Word("PUPPY"),
+	        new Feedback(new Mark[] {
+	                Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+	        })
+	    );
+
+	    // P must NOT be globally forbidden
+	    assertFalse(cs.cannotContain().contains('P'));
+
+	    // But P must be forbidden at position 3
+	    assertEquals(Character.valueOf('P'), cs.cannotBe()[3]);
+	}
+
+	@Test
+	void conflictingGrayConstraintsThrow() {
+	    ConstraintSet cs = new ConstraintSet();
+
+	    // First forbid 'A' at position 0
+	    cs.updatedBy(
+	        new Word("APPLE"),
+	        new Feedback(new Mark[] {
+	                Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+	        })
+	    );
+
+	    // Now try to forbid a different letter at the same position
+	    assertThrows(IllegalStateException.class, () ->
+	        cs.updatedBy(
+	            new Word("BPPLE"),
+	            new Feedback(new Mark[] {
+	                    Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+	            })
+	        )
+	    );
+	}
+
+	
 }
