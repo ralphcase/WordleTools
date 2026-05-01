@@ -1,24 +1,22 @@
 package constraints;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import feedback.Feedback;
-import feedback.Mark;
 import word.Word;
 
 public final class ConstraintSet {
 
-	private final Character[] mustBe = new Character[Word.LENGTH];
+	final Character[] mustBe = new Character[Word.LENGTH];
 	@SuppressWarnings("unchecked")
-	private final Set<Character>[] cannotBe = new Set[Word.LENGTH];
-	private final Set<Character> mustContain = new HashSet<>();
-	private final Set<Character> cannotContain = new HashSet<>();
-	private final Map<Character, Integer> minCount = new HashMap<>();
-	private final Map<Character, Integer> maxCount = new HashMap<>();
+	final Set<Character>[] cannotBe = new Set[Word.LENGTH];
+	final Set<Character> mustContain = new HashSet<>();
+	final Set<Character> cannotContain = new HashSet<>();
+	final Map<Character, Integer> minCount = new HashMap<>();
+	final Map<Character, Integer> maxCount = new HashMap<>();
 
 	public ConstraintSet() {
 		for (int i = 0; i < Word.LENGTH; i++) {
@@ -210,7 +208,7 @@ public final class ConstraintSet {
 	    Set<Character> absent = new HashSet<>();                // letters with at least one ABSENT mark
 
 	    for (int i = 0; i < Word.LENGTH; i++) {
-	        char letter = guess.charAt(i);
+	        char letter = guess.text().charAt(i);
 
 	        switch (fb.marks()[i]) {
 	            case CORRECT, PRESENT ->

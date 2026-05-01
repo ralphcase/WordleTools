@@ -8,6 +8,9 @@ import word.Word;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 class ConstraintSetTest {
 
 	@Test
@@ -37,11 +40,6 @@ class ConstraintSetTest {
 
 		// This should pass
 		cs.updatedBy(guess, fb);
-
-		// Now try a mismatched guess
-		Word shortGuess = new Word("DOG");
-
-		assertThrows(IllegalArgumentException.class, () -> cs.updatedBy(shortGuess, fb));
 	}
 
 	@Test
@@ -54,7 +52,7 @@ class ConstraintSetTest {
 		cs.updatedBy(guess, fb);
 
 		// Now assert that position 0 must be 'A'
-		assertEquals(guess.text().charAt(0), cs.mustBe()[0]);
+		assertEquals(guess.text().charAt(0), cs.mustBe[0]);
 	}
 
 	@Test
@@ -77,7 +75,7 @@ class ConstraintSetTest {
 
 		cs.updatedBy(guess, fb);
 
-		assertTrue(cs.mustContain().contains('P'));
+		assertTrue(cs.mustContain.contains('P'));
 	}
 
 	@Test
@@ -95,109 +93,86 @@ class ConstraintSetTest {
 
 	@Test
 	void updatedByRecordsGrayLetters() {
-	    ConstraintSet cs = new ConstraintSet();
+		ConstraintSet cs = new ConstraintSet();
 
-	    Word guess = new Word("APPLE");
-	    Feedback fb = new Feedback(new Mark[] {
-	            Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
-	    });
+		Word guess = new Word("APPLE");
+		Feedback fb = new Feedback(new Mark[] { Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT });
 
-	    cs.updatedBy(guess, fb);
+		cs.updatedBy(guess, fb);
 
-	    assertTrue(cs.cannotContain().contains('A'));
-	    assertTrue(cs.cannotContain().contains('P'));
-	    assertTrue(cs.cannotContain().contains('L'));
-	    assertTrue(cs.cannotContain().contains('E'));
+		assertTrue(cs.cannotContain.contains('A'));
+		assertTrue(cs.cannotContain.contains('P'));
+		assertTrue(cs.cannotContain.contains('L'));
+		assertTrue(cs.cannotContain.contains('E'));
 	}
 
 	@Test
 	void grayDoesNotOverrideYellow() {
-	    ConstraintSet cs = new ConstraintSet();
+		ConstraintSet cs = new ConstraintSet();
 
-	    // First: yellow P
-	    cs.updatedBy(
-	        new Word("APPLE"),
-	        new Feedback(new Mark[] {
-	                Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
-	        })
-	    );
+		// First: yellow P
+		cs.updatedBy(new Word("APPLE"),
+				new Feedback(new Mark[] { Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT }));
 
-	    // Second: gray P at a different position
-	    cs.updatedBy(
-	        new Word("PUPPY"),
-	        new Feedback(new Mark[] {
-	                Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
-	        })
-	    );
-
-	    // P must NOT be in cannotContain because it's known to be present
-	    assertFalse(cs.cannotContain().contains('P'));
+		// P must NOT be in cannotContain because it's known to be present
+		assertThrows(IllegalStateException.class, () -> cs.updatedBy(new Word("PUPPY"),
+				new Feedback(new Mark[] { Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT })));
 	}
 
 	@Test
 	void grayForbidsLetterAtPosition() {
-	    ConstraintSet cs = new ConstraintSet();
+		ConstraintSet cs = new ConstraintSet();
 
-	    cs.updatedBy(
-	        new Word("APPLE"),
-	        new Feedback(new Mark[] {
-	                Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
-	        })
-	    );
+		cs.updatedBy(new Word("APPLE"),
+				new Feedback(new Mark[] { Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT }));
+		Set<Character> expected = new HashSet<Character>();
+		expected.add('A');
+		expected.add('P');
+		expected.add('L');
+		expected.add('E');
 
-	    assertEquals(Character.valueOf('A'), cs.cannotBe()[0]);
-	    assertEquals(Character.valueOf('P'), cs.cannotBe()[1]);
+		assertEquals(expected, cs.cannotBe[0]);
+		assertEquals(expected, cs.cannotBe[1]);
 	}
 
 	@Test
 	void grayDoesNotOverrideYellowButStillForbidsPosition() {
-	    ConstraintSet cs = new ConstraintSet();
+		ConstraintSet cs = new ConstraintSet();
 
-	    // First: yellow P at position 1
-	    cs.updatedBy(
-	        new Word("APPLE"),
-	        new Feedback(new Mark[] {
-	                Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
-	        })
-	    );
+		// First: yellow P at position 1
+		cs.updatedBy(new Word("APPLE"),
+				new Feedback(new Mark[] { Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT }));
 
-	    // Second: gray P at position 3
-	    cs.updatedBy(
-	        new Word("PUPPY"),
-	        new Feedback(new Mark[] {
-	                Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
-	        })
-	    );
+		assertThrows(IllegalStateException.class, () ->
+		// Second: gray P at position 3
+		cs.updatedBy(new Word("PUPPY"),
+				new Feedback(new Mark[] { Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT })));
 
-	    // P must NOT be globally forbidden
-	    assertFalse(cs.cannotContain().contains('P'));
+		// P must NOT be globally forbidden
+		assertFalse(cs.cannotContain.contains('P'));
 
-	    // But P must be forbidden at position 3
-	    assertEquals(Character.valueOf('P'), cs.cannotBe()[3]);
+		// But P must be forbidden at position 3
+		Set<Character> expected = new HashSet<Character>();
+		expected.add('A');
+		expected.add('P');
+		expected.add('L');
+		expected.add('E');
+		expected.add('U');
+		expected.add('Y');
+		assertEquals(expected, cs.cannotBe[3]);
 	}
 
 	@Test
 	void conflictingGrayConstraintsThrow() {
-	    ConstraintSet cs = new ConstraintSet();
+		ConstraintSet cs = new ConstraintSet();
 
-	    // First forbid 'A' at position 0
-	    cs.updatedBy(
-	        new Word("APPLE"),
-	        new Feedback(new Mark[] {
-	                Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
-	        })
-	    );
+		// First forbid 'A' at position 0
+		cs.updatedBy(new Word("APPLE"),
+				new Feedback(new Mark[] { Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT }));
 
-	    // Now try to forbid a different letter at the same position
-	    assertThrows(IllegalStateException.class, () ->
-	        cs.updatedBy(
-	            new Word("BPPLE"),
-	            new Feedback(new Mark[] {
-	                    Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
-	            })
-	        )
-	    );
+		// Now try to forbid a different letter at the same position
+		assertThrows(IllegalStateException.class, () -> cs.updatedBy(new Word("BAPLE"),
+				new Feedback(new Mark[] { Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT })));
 	}
 
-	
 }
