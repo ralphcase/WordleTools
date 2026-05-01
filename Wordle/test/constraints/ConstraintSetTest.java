@@ -93,4 +93,45 @@ class ConstraintSetTest {
 				new Feedback(new Mark[] { Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT })));
 	}
 
+	@Test
+	void updatedByRecordsGrayLetters() {
+	    ConstraintSet cs = new ConstraintSet();
+
+	    Word guess = new Word("APPLE");
+	    Feedback fb = new Feedback(new Mark[] {
+	            Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+	    });
+
+	    cs.updatedBy(guess, fb);
+
+	    assertTrue(cs.cannotContain().contains('A'));
+	    assertTrue(cs.cannotContain().contains('P'));
+	    assertTrue(cs.cannotContain().contains('L'));
+	    assertTrue(cs.cannotContain().contains('E'));
+	}
+
+	@Test
+	void grayDoesNotOverrideYellow() {
+	    ConstraintSet cs = new ConstraintSet();
+
+	    // First: yellow P
+	    cs.updatedBy(
+	        new Word("APPLE"),
+	        new Feedback(new Mark[] {
+	                Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+	        })
+	    );
+
+	    // Second: gray P at a different position
+	    cs.updatedBy(
+	        new Word("PUPPY"),
+	        new Feedback(new Mark[] {
+	                Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+	        })
+	    );
+
+	    // P must NOT be in cannotContain because it's known to be present
+	    assertFalse(cs.cannotContain().contains('P'));
+	}
+
 }

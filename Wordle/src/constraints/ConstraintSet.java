@@ -10,6 +10,8 @@ public final class ConstraintSet {
 
 	private final Character[] mustBe = new Character[5];
 	private final java.util.Set<Character> mustContain = new java.util.HashSet<>();
+	private final java.util.Set<Character> cannotContain = new java.util.HashSet<>();
+
 
 	public ConstraintSet() {
 		// empty initial constraints
@@ -47,6 +49,17 @@ public final class ConstraintSet {
 					throw new IllegalStateException("Yellow letter " + letter + " cannot be at position " + i);
 				}
 			}
+			
+			if (fb.marks()[i] == Mark.ABSENT) {
+			    char letter = guess.text().charAt(i);
+
+			    // If we already know the letter must appear somewhere (from yellow),
+			    // we cannot forbid it globally yet — skip for now.
+			    if (!mustContain.contains(letter)) {
+			        cannotContain.add(letter);
+			    }
+			}
+
 
 		}
 
@@ -59,6 +72,9 @@ public final class ConstraintSet {
 
 	public java.util.Set<Character> mustContain() {
 		return new java.util.HashSet<>(mustContain);
+	}
+	public java.util.Set<Character> cannotContain() {
+	    return new java.util.HashSet<>(cannotContain);
 	}
 
 }
