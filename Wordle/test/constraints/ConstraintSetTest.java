@@ -54,7 +54,7 @@ class ConstraintSetTest {
 		cs.updatedBy(guess, fb);
 
 		// Now assert that position 0 must be 'A'
-		assertEquals(Character.valueOf('A'), cs.mustBe()[0]);
+		assertEquals(guess.text().charAt(0), cs.mustBe()[0]);
 	}
 
 	@Test
@@ -66,6 +66,31 @@ class ConstraintSetTest {
 
 		assertThrows(IllegalStateException.class, () -> cs.updatedBy(new Word("BPPLE"),
 				new Feedback(new Mark[] { Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT })));
+	}
+
+	@Test
+	void updatedByRecordsYellowLetters() {
+		ConstraintSet cs = new ConstraintSet();
+
+		Word guess = new Word("APPLE");
+		Feedback fb = new Feedback(new Mark[] { Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT });
+
+		cs.updatedBy(guess, fb);
+
+		assertTrue(cs.mustContain().contains('P'));
+	}
+
+	@Test
+	void updatedByRejectsYellowInGreenPosition() {
+		ConstraintSet cs = new ConstraintSet();
+
+		// First establish a green constraint at position 1
+		cs.updatedBy(new Word("APPLE"),
+				new Feedback(new Mark[] { Mark.ABSENT, Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT }));
+
+		// Now try to say that same letter is yellow at the same position
+		assertThrows(IllegalStateException.class, () -> cs.updatedBy(new Word("APPLE"),
+				new Feedback(new Mark[] { Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT })));
 	}
 
 }

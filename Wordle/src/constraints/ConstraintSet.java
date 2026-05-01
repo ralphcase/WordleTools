@@ -1,5 +1,7 @@
 package constraints;
 
+import java.util.Arrays;
+
 import feedback.Feedback;
 import feedback.Mark;
 import word.Word;
@@ -7,6 +9,7 @@ import word.Word;
 public final class ConstraintSet {
 
 	private final Character[] mustBe = new Character[5];
+	private final java.util.Set<Character> mustContain = new java.util.HashSet<>();
 
 	public ConstraintSet() {
 		// empty initial constraints
@@ -23,18 +26,39 @@ public final class ConstraintSet {
 		}
 
 		for (int i = 0; i < Feedback.LENGTH; i++) {
-		    if (fb.marks()[i] == Mark.CORRECT) {
-		        char letter = guess.text().charAt(i);
+			if (fb.marks()[i] == Mark.CORRECT) {
+				char letter = guess.text().charAt(i);
 
-		        if (mustBe[i] != null && mustBe[i] != letter) {
-		            throw new IllegalStateException(
-		                "Conflicting green constraint at position " + i
-		            );
-		        }
+				if (mustBe[i] != null && mustBe[i] != letter) {
+					throw new IllegalStateException("Conflicting green constraint at position " + i);
+				}
 
-		        mustBe[i] = letter;
-		    }
+				mustBe[i] = letter;
+			}
+
+			if (fb.marks()[i] == Mark.PRESENT) {
+				char letter = guess.text().charAt(i);
+
+				// Rule 1: the letter must appear somewhere
+				mustContain.add(letter);
+
+				// Rule 2: the letter cannot be in this position
+				if (mustBe[i] != null && mustBe[i] == letter) {
+					throw new IllegalStateException("Yellow letter " + letter + " cannot be at position " + i);
+				}
+			}
+
 		}
+
 		return this;
 	}
+
+	public Character[] mustBe() {
+		return Arrays.copyOf(mustBe, mustBe.length);
+	}
+
+	public java.util.Set<Character> mustContain() {
+		return new java.util.HashSet<>(mustContain);
+	}
+
 }
