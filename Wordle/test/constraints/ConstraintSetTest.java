@@ -175,4 +175,147 @@ class ConstraintSetTest {
 				new Feedback(new Mark[] { Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT })));
 	}
 
+    @Test
+    void green_sets_exact_position_and_mustContain() {
+        ConstraintSet cs = new ConstraintSet();
+
+        Word guess = new Word("ABCDE");
+        Feedback fb = Feedback.of(
+            Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+        );
+
+        cs.updatedBy(guess, fb);
+
+        assertEquals('A', cs.mustBe[0]);
+        assertTrue(cs.mustContain.contains('A'));
+        assertFalse(cs.cannotContain.contains('A'));
+        assertFalse(cs.cannotBe[0].contains('A'));
+    }
+
+    @Test
+    void yellow_forbids_position_and_requires_presence() {
+        ConstraintSet cs = new ConstraintSet();
+
+        Word guess = new Word("ABCDE");
+        Feedback fb = Feedback.of(
+            Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+        );
+
+        cs.updatedBy(guess, fb);
+
+        assertTrue(cs.cannotBe[0].contains('A'));
+        assertTrue(cs.mustContain.contains('A'));
+        assertFalse(cs.cannotContain.contains('A'));
+    }
+
+    @Test
+    void pure_gray_forbids_letter_globally() {
+        ConstraintSet cs = new ConstraintSet();
+
+        Word guess = new Word("abcde");
+        Feedback fb = Feedback.of(
+            Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+        );
+
+        cs.updatedBy(guess, fb);
+
+        assertTrue(cs.cannotContain.contains('A'));
+        assertTrue(cs.cannotContain.contains('B'));
+        assertTrue(cs.cannotContain.contains('C'));
+        assertTrue(cs.cannotContain.contains('D'));
+        assertTrue(cs.cannotContain.contains('E'));
+
+        for (int i = 0; i < Word.LENGTH; i++) {
+            assertTrue(cs.cannotBe[i].contains('A'));
+            assertTrue(cs.cannotBe[i].contains('B'));
+            assertTrue(cs.cannotBe[i].contains('C'));
+            assertTrue(cs.cannotBe[i].contains('D'));
+            assertTrue(cs.cannotBe[i].contains('E'));
+        }
+    }
+
+    @Test
+    void mixed_gray_and_present_sets_exact_maxCount() {
+        ConstraintSet cs = new ConstraintSet();
+
+        // Guess: a a a a a
+        // Marks: PRESENT, ABSENT, ABSENT, ABSENT, ABSENT
+        Word guess = new Word("AAAAA");
+        Feedback fb = Feedback.of(
+            Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+        );
+
+        cs.updatedBy(guess, fb);
+
+        // minCount(a) = 1
+        assertEquals(1, cs.minCount.get('A'));
+
+        // maxCount(a) = 1 (mixed marks)
+        assertEquals(1, cs.maxCount.get('A'));
+
+        // cannotBe at position 0 (yellow)
+        assertTrue(cs.cannotBe[0].contains('A'));
+    }
+
+    @Test
+    void contradiction_green_then_gray_same_position() {
+        ConstraintSet cs = new ConstraintSet();
+
+        Word guess1 = new Word("abcde");
+        Feedback fb1 = Feedback.of(
+            Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+        );
+        cs.updatedBy(guess1, fb1);
+
+        Word guess2 = new Word("abcde");
+        Feedback fb2 = Feedback.of(
+            Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+        );
+
+        assertThrows(IllegalStateException.class, () -> cs.updatedBy(guess2, fb2));
+    }
+
+    @Test
+    void contradiction_yellow_then_global_gray() {
+        ConstraintSet cs = new ConstraintSet();
+
+        Word guess1 = new Word("abcde");
+        Feedback fb1 = Feedback.of(
+            Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+        );
+        cs.updatedBy(guess1, fb1);
+
+        Word guess2 = new Word("abcde");
+        Feedback fb2 = Feedback.of(
+            Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+        );
+
+        assertThrows(IllegalStateException.class, () -> cs.updatedBy(guess2, fb2));
+    }
+
+    @Test
+    void monotonicity_mustBe_cannotBe_mustContain() {
+        ConstraintSet cs = new ConstraintSet();
+
+        Word guess1 = new Word("abcde");
+        Feedback fb1 = Feedback.of(
+            Mark.CORRECT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+        );
+        cs.updatedBy(guess1, fb1);
+
+        // After first update
+        assertEquals('A', cs.mustBe[0]);
+        assertTrue(cs.mustContain.contains('B'));
+        assertTrue(cs.cannotBe[1].contains('B'));
+
+        // Second update tightens constraints
+        Word guess2 = new Word("bbcde");
+        Feedback fb2 = Feedback.of(
+            Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+        );
+        cs.updatedBy(guess2, fb2);
+
+        // cannotBe[1] must NOT lose constraints
+        assertTrue(cs.cannotBe[1].contains('B')); // still forbidden at pos 1 from earlier yellow
+    }
 }
