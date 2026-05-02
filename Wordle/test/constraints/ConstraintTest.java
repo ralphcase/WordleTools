@@ -10,6 +10,33 @@ import word.Word;
 
 public class ConstraintTest {
 
+	@Test
+	void constructorRejectsNullGuess() {
+	    assertThrows(IllegalArgumentException.class, () ->
+	        new Constraint(null, Feedback.of(ABSENT, ABSENT, ABSENT, ABSENT, ABSENT))
+	    );
+	}
+
+	@Test
+	void constructorRejectsNullFeedback() {
+	    assertThrows(IllegalArgumentException.class, () ->
+	        new Constraint(new Word("ABCDE"), null)
+	    );
+	}
+	
+	@Test
+	void allowsRejectsNullCandidate() {
+	    Constraint c = new Constraint(
+	        new Word("ABCDE"),
+	        Feedback.of(ABSENT, ABSENT, ABSENT, ABSENT, ABSENT)
+	    );
+
+	    assertThrows(NullPointerException.class, () ->
+	        c.allows(null)
+	    );
+	}
+
+
     // ------------------------------------------------------------
     // 1. CORRECT tests
     // ------------------------------------------------------------
@@ -74,6 +101,7 @@ public class ConstraintTest {
 
         assertFalse(c.allows(new Word("AXXXX"))); // A forbidden
         assertTrue(c.allows(new Word("XXXXX")));  // no forbidden letters
+        assertFalse(c.allows(new Word("XXAXX"))); // A forbidden
     }
 
     // ------------------------------------------------------------
