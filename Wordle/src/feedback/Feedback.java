@@ -65,4 +65,14 @@ public final class Feedback {
     public String toString() {
         return Arrays.toString(marks);
     }
+
+    public boolean hasAnyPresentOrCorrect(Word guess, char letter) {
+        for (int i = 0; i < marks.length; i++) {
+            if (guess.letters()[i] == letter &&
+                (marks[i] == Mark.PRESENT || marks[i] == Mark.CORRECT)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

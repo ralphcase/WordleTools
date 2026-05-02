@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import feedback.Feedback;
 import feedback.Mark;
+import static feedback.Mark.*;
 import word.Word;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,14 +30,14 @@ class ConstraintSetTest {
 	void updatedByReturnsSameInstanceForNow() {
 		ConstraintSet cs = new ConstraintSet();
 		assertSame(cs, cs.updatedBy(new Word("DINGO"),
-				new Feedback(new Mark[] { Mark.CORRECT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.CORRECT })));
+				new Feedback(new Mark[] { CORRECT, PRESENT, ABSENT, ABSENT, CORRECT })));
 	}
 
 	@Test
 	void updatedByRejectsMismatchedLengths() {
 		ConstraintSet cs = new ConstraintSet();
 		Word guess = new Word("APPLE");
-		Feedback fb = new Feedback(new Mark[] { Mark.CORRECT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.CORRECT });
+		Feedback fb = new Feedback(new Mark[] { CORRECT, PRESENT, ABSENT, ABSENT, CORRECT });
 
 		// This should pass
 		cs.updatedBy(guess, fb);
@@ -47,7 +48,7 @@ class ConstraintSetTest {
 		ConstraintSet cs = new ConstraintSet();
 
 		Word guess = new Word("APPLE");
-		Feedback fb = new Feedback(new Mark[] { Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT });
+		Feedback fb = new Feedback(new Mark[] { CORRECT, ABSENT, ABSENT, ABSENT, ABSENT });
 
 		cs.updatedBy(guess, fb);
 
@@ -60,10 +61,10 @@ class ConstraintSetTest {
 		ConstraintSet cs = new ConstraintSet();
 
 		cs.updatedBy(new Word("APPLE"),
-				new Feedback(new Mark[] { Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT }));
+				new Feedback(new Mark[] { CORRECT, ABSENT, ABSENT, ABSENT, ABSENT }));
 
 		assertThrows(IllegalStateException.class, () -> cs.updatedBy(new Word("BPPLE"),
-				new Feedback(new Mark[] { Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT })));
+				new Feedback(new Mark[] { CORRECT, ABSENT, ABSENT, ABSENT, ABSENT })));
 	}
 
 	@Test
@@ -71,7 +72,7 @@ class ConstraintSetTest {
 		ConstraintSet cs = new ConstraintSet();
 
 		Word guess = new Word("APPLE");
-		Feedback fb = new Feedback(new Mark[] { Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT });
+		Feedback fb = new Feedback(new Mark[] { ABSENT, PRESENT, ABSENT, ABSENT, ABSENT });
 
 		cs.updatedBy(guess, fb);
 
@@ -84,11 +85,11 @@ class ConstraintSetTest {
 
 		// First establish a green constraint at position 1
 		cs.updatedBy(new Word("APPLE"),
-				new Feedback(new Mark[] { Mark.ABSENT, Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT }));
+				new Feedback(new Mark[] { ABSENT, CORRECT, ABSENT, ABSENT, ABSENT }));
 
 		// Now try to say that same letter is yellow at the same position
 		assertThrows(IllegalStateException.class, () -> cs.updatedBy(new Word("APPLE"),
-				new Feedback(new Mark[] { Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT })));
+				new Feedback(new Mark[] { ABSENT, PRESENT, ABSENT, ABSENT, ABSENT })));
 	}
 
 	@Test
@@ -96,7 +97,7 @@ class ConstraintSetTest {
 		ConstraintSet cs = new ConstraintSet();
 
 		Word guess = new Word("APPLE");
-		Feedback fb = new Feedback(new Mark[] { Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT });
+		Feedback fb = new Feedback(new Mark[] { ABSENT, ABSENT, ABSENT, ABSENT, ABSENT });
 
 		cs.updatedBy(guess, fb);
 
@@ -112,11 +113,11 @@ class ConstraintSetTest {
 
 		// First: yellow P
 		cs.updatedBy(new Word("APPLE"),
-				new Feedback(new Mark[] { Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT }));
+				new Feedback(new Mark[] { ABSENT, PRESENT, ABSENT, ABSENT, ABSENT }));
 
 		// P must NOT be in cannotContain because it's known to be present
 		assertThrows(IllegalStateException.class, () -> cs.updatedBy(new Word("PUPPY"),
-				new Feedback(new Mark[] { Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT })));
+				new Feedback(new Mark[] { ABSENT, ABSENT, ABSENT, ABSENT, ABSENT })));
 	}
 
 	@Test
@@ -124,7 +125,7 @@ class ConstraintSetTest {
 		ConstraintSet cs = new ConstraintSet();
 
 		cs.updatedBy(new Word("APPLE"),
-				new Feedback(new Mark[] { Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT }));
+				new Feedback(new Mark[] { ABSENT, ABSENT, ABSENT, ABSENT, ABSENT }));
 		Set<Character> expected = new HashSet<Character>();
 		expected.add('A');
 		expected.add('P');
@@ -141,12 +142,12 @@ class ConstraintSetTest {
 
 		// First: yellow P at position 1
 		cs.updatedBy(new Word("APPLE"),
-				new Feedback(new Mark[] { Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT }));
+				new Feedback(new Mark[] { ABSENT, PRESENT, ABSENT, ABSENT, ABSENT }));
 
 		assertThrows(IllegalStateException.class, () ->
 		// Second: gray P at position 3
 		cs.updatedBy(new Word("PUPPY"),
-				new Feedback(new Mark[] { Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT })));
+				new Feedback(new Mark[] { ABSENT, ABSENT, ABSENT, ABSENT, ABSENT })));
 
 		// P must NOT be globally forbidden
 		assertFalse(cs.cannotContain.contains('P'));
@@ -168,11 +169,11 @@ class ConstraintSetTest {
 
 		// First forbid 'A' at position 0
 		cs.updatedBy(new Word("APPLE"),
-				new Feedback(new Mark[] { Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT }));
+				new Feedback(new Mark[] { ABSENT, ABSENT, ABSENT, ABSENT, ABSENT }));
 
 		// Now try to forbid a different letter at the same position
 		assertThrows(IllegalStateException.class, () -> cs.updatedBy(new Word("BAPLE"),
-				new Feedback(new Mark[] { Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT })));
+				new Feedback(new Mark[] { ABSENT, PRESENT, ABSENT, ABSENT, ABSENT })));
 	}
 
     @Test
@@ -181,7 +182,7 @@ class ConstraintSetTest {
 
         Word guess = new Word("ABCDE");
         Feedback fb = Feedback.of(
-            Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+            CORRECT, ABSENT, ABSENT, ABSENT, ABSENT
         );
 
         cs.updatedBy(guess, fb);
@@ -198,7 +199,7 @@ class ConstraintSetTest {
 
         Word guess = new Word("ABCDE");
         Feedback fb = Feedback.of(
-            Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+            PRESENT, ABSENT, ABSENT, ABSENT, ABSENT
         );
 
         cs.updatedBy(guess, fb);
@@ -214,7 +215,7 @@ class ConstraintSetTest {
 
         Word guess = new Word("abcde");
         Feedback fb = Feedback.of(
-            Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+            ABSENT, ABSENT, ABSENT, ABSENT, ABSENT
         );
 
         cs.updatedBy(guess, fb);
@@ -242,7 +243,7 @@ class ConstraintSetTest {
         // Marks: PRESENT, ABSENT, ABSENT, ABSENT, ABSENT
         Word guess = new Word("AAAAA");
         Feedback fb = Feedback.of(
-            Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+            PRESENT, ABSENT, ABSENT, ABSENT, ABSENT
         );
 
         cs.updatedBy(guess, fb);
@@ -263,13 +264,13 @@ class ConstraintSetTest {
 
         Word guess1 = new Word("abcde");
         Feedback fb1 = Feedback.of(
-            Mark.CORRECT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+            CORRECT, ABSENT, ABSENT, ABSENT, ABSENT
         );
         cs.updatedBy(guess1, fb1);
 
         Word guess2 = new Word("abcde");
         Feedback fb2 = Feedback.of(
-            Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+            ABSENT, ABSENT, ABSENT, ABSENT, ABSENT
         );
 
         assertThrows(IllegalStateException.class, () -> cs.updatedBy(guess2, fb2));
@@ -281,13 +282,13 @@ class ConstraintSetTest {
 
         Word guess1 = new Word("abcde");
         Feedback fb1 = Feedback.of(
-            Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+            PRESENT, ABSENT, ABSENT, ABSENT, ABSENT
         );
         cs.updatedBy(guess1, fb1);
 
         Word guess2 = new Word("abcde");
         Feedback fb2 = Feedback.of(
-            Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+            ABSENT, ABSENT, ABSENT, ABSENT, ABSENT
         );
 
         assertThrows(IllegalStateException.class, () -> cs.updatedBy(guess2, fb2));
@@ -299,7 +300,7 @@ class ConstraintSetTest {
 
         Word guess1 = new Word("abcde");
         Feedback fb1 = Feedback.of(
-            Mark.CORRECT, Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+            CORRECT, PRESENT, ABSENT, ABSENT, ABSENT
         );
         cs.updatedBy(guess1, fb1);
 
@@ -311,11 +312,122 @@ class ConstraintSetTest {
         // Second update tightens constraints
         Word guess2 = new Word("bbcde");
         Feedback fb2 = Feedback.of(
-            Mark.PRESENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+            PRESENT, ABSENT, ABSENT, ABSENT, ABSENT
         );
         cs.updatedBy(guess2, fb2);
 
         // cannotBe[1] must NOT lose constraints
         assertTrue(cs.cannotBe[1].contains('B')); // still forbidden at pos 1 from earlier yellow
     }
+    
+    @Test
+    void green_conflicts_with_existing_green() {
+        ConstraintSet cs = new ConstraintSet();
+
+        cs.updatedBy(new Word("ABCDE"),
+                     Feedback.of(CORRECT, ABSENT, ABSENT, ABSENT, ABSENT));
+
+        assertThrows(IllegalStateException.class, () ->
+            cs.updatedBy(new Word("XBCDE"),
+                         Feedback.of(CORRECT, ABSENT, ABSENT, ABSENT, ABSENT))
+        );
+    }
+
+    @Test
+    void green_conflicts_with_prior_yellow_forbidding_position() {
+        ConstraintSet cs = new ConstraintSet();
+
+        cs.updatedBy(new Word("ABCDE"),
+                     Feedback.of(PRESENT, ABSENT, ABSENT, ABSENT, ABSENT));
+
+        assertThrows(IllegalStateException.class, () ->
+            cs.updatedBy(new Word("ABCDE"),
+                         Feedback.of(CORRECT, ABSENT, ABSENT, ABSENT, ABSENT))
+        );
+    }
+
+    @Test
+    void yellow_conflicts_with_existing_green_same_position() {
+        ConstraintSet cs = new ConstraintSet();
+
+        cs.updatedBy(new Word("ABCDE"),
+                     Feedback.of(CORRECT, ABSENT, ABSENT, ABSENT, ABSENT));
+
+        assertThrows(IllegalStateException.class, () ->
+            cs.updatedBy(new Word("ABCDE"),
+                         Feedback.of(PRESENT, ABSENT, ABSENT, ABSENT, ABSENT))
+        );
+    }
+
+    @Test
+    void yellow_conflicts_with_global_gray() {
+        ConstraintSet cs = new ConstraintSet();
+
+        cs.updatedBy(new Word("ABCDE"),
+                     Feedback.of(ABSENT, ABSENT, ABSENT, ABSENT, ABSENT));
+
+        assertThrows(IllegalStateException.class, () ->
+            cs.updatedBy(new Word("ABCDE"),
+                         Feedback.of(PRESENT, ABSENT, ABSENT, ABSENT, ABSENT))
+        );
+    }
+
+    @Test
+    void gray_after_yellow_hits_early_return_branch() {
+        ConstraintSet cs = new ConstraintSet();
+
+        cs.updatedBy(new Word("ABCDE"),
+                     Feedback.of(PRESENT, ABSENT, ABSENT, ABSENT, ABSENT));
+
+        // This should NOT forbid globally — only forbid at this position
+        cs.updatedBy(new Word("ABCDE"),
+                     Feedback.of(ABSENT, ABSENT, ABSENT, ABSENT, ABSENT));
+
+        assertTrue(cs.cannotBe[0].contains('A'));
+        assertFalse(cs.cannotContain.contains('A'));
+    }
+
+    @Test
+    void gray_conflicts_with_minCount_from_mixed_marks() {
+        ConstraintSet cs = new ConstraintSet();
+
+        cs.updatedBy(new Word("AAAAA"),
+                     Feedback.of(PRESENT, ABSENT, ABSENT, ABSENT, ABSENT));
+
+        assertThrows(IllegalStateException.class, () ->
+            cs.updatedBy(new Word("AAAAA"),
+                         Feedback.of(ABSENT, ABSENT, ABSENT, ABSENT, ABSENT))
+        );
+    }
+
+    
+    @Test
+    void minCount_exceeds_maxCount_triggers_consistency_error() {
+        ConstraintSet cs = new ConstraintSet();
+
+        // First: mixed marks so maxCount(a) = 1
+        cs.updatedBy(new Word("AAAAA"),
+                     Feedback.of(PRESENT, ABSENT, ABSENT, ABSENT, ABSENT));
+
+        // Second: two PRESENT marks so minCount(a) = 2
+        assertThrows(IllegalStateException.class, () ->
+            cs.updatedBy(new Word("AAAAA"),
+                         Feedback.of(PRESENT, PRESENT, ABSENT, ABSENT, ABSENT))
+        );
+    }
+
+    
+    @Test
+    void green_then_global_gray_triggers_consistency_error() {
+        ConstraintSet cs = new ConstraintSet();
+
+        cs.updatedBy(new Word("ABCDE"),
+                     Feedback.of(CORRECT, ABSENT, ABSENT, ABSENT, ABSENT));
+
+        assertThrows(IllegalStateException.class, () ->
+            cs.updatedBy(new Word("ABCDE"),
+                         Feedback.of(ABSENT, ABSENT, ABSENT, ABSENT, ABSENT))
+        );
+    }
+
 }

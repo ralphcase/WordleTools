@@ -1,5 +1,6 @@
 package word;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public final class Word {
@@ -20,6 +21,10 @@ public final class Word {
     public String text() {
         return text;
     }
+    
+    public boolean contains(char c) {
+    	return text.indexOf(c) >= 0;
+    }
 
     @Override
     public String toString() {
@@ -38,4 +43,20 @@ public final class Word {
     public int hashCode() {
         return Objects.hash(text);
     }
+
+	public char[] letters() {
+		char[] result = new char[Word.LENGTH];
+		for (int i = 0; i < Word.LENGTH; i++) {
+			result[i] = text.charAt(i);
+		}
+		return result;
+	}
+
+	public int count(char letter) {
+	    int count = 0;
+	    for (int i = 0; i < text.length(); i++) {
+	        if (text.charAt(i) == letter) count++;
+	    }
+	    return count;
+	}
 }
