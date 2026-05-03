@@ -1,61 +1,59 @@
 package dictionary;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import position.Position;
+import java.util.*;
+import word.Word;
 
 public final class WordRepository {
 
-    private final List<Position> goalWords;
-    private final List<Position> allowedWords;
-    private final List<Position> solutionWords;
+    private final List<Word> allowedWords;
+    private final List<Word> goalWords;
+    private final List<Word> pastSolutionWords;
 
-    /**
-     * Construct a repository from lists loaded by WordListLoader.
-     */
     public WordRepository(
-            List<Position> goalWords,
-            List<Position> allowedWords,
-            List<Position> solutionWords) {
+            List<Word> allowedWords,
+            List<Word> goalWords,
+            List<Word> pastSolutionWords) {
 
-        this.goalWords = new ArrayList<>(goalWords);
-        this.allowedWords = new ArrayList<>(allowedWords);
-        this.solutionWords = new ArrayList<>(solutionWords);
+        Objects.requireNonNull(allowedWords, "allowedWords must not be null");
+        Objects.requireNonNull(goalWords, "goalWords must not be null");
+        
+
+  
+        // Defensive copies
+        this.allowedWords = List.copyOf(allowedWords);
+        this.goalWords = List.copyOf(goalWords);
+        if (pastSolutionWords == null) {
+            this.pastSolutionWords = List.of();
+        } else {
+            this.pastSolutionWords = List.copyOf(pastSolutionWords);
+        }
+      
+        // Enforce invariants
+        ensureSubset(this.goalWords, this.allowedWords,
+                "goalWords must be a subset of allowedWords");
+
+        ensureSubset(this.pastSolutionWords, this.goalWords,
+                "pastSolutionWords must be a subset of goalWords");
     }
 
-    /**
-     * Words that can be chosen as the hidden Wordle solution.
-     */
-    public List<Position> getGoalWords() {
-        return Collections.unmodifiableList(goalWords);
+    private static void ensureSubset(List<Word> subset, List<Word> superset, String message) {
+        Set<Word> superSet = new HashSet<>(superset);
+        for (Word w : subset) {
+            if (!superSet.contains(w)) {
+                throw new IllegalArgumentException(message + ": " + w);
+            }
+        }
     }
 
-    /**
-     * Words that are allowed as guesses (may include goal words).
-     */
-    public List<Position> getAllowedWords() {
-        return Collections.unmodifiableList(allowedWords);
+    public List<Word> getAllowedWords() {
+        return allowedWords;
     }
 
-    /**
-     * Words that your solver has identified as valid solutions
-     * (your old SOLUTIONWORDS list).
-     */
-    public List<Position> getSolutionWords() {
-        return Collections.unmodifiableList(solutionWords);
+    public List<Word> getGoalWords() {
+        return goalWords;
     }
 
-    /**
-     * ALLWORDS = allowedWords ∪ goalWords
-     * This matches your old behavior.
-     */
-    public List<Position> getAllWords() {
-        Set<Position> merged = new HashSet<>(allowedWords);
-        merged.addAll(goalWords);
-        return new ArrayList<>(merged);
+    public List<Word> getPastSolutionWords() {
+        return pastSolutionWords;
     }
 }
