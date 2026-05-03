@@ -1,6 +1,5 @@
 package word;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 public final class Word {
@@ -12,10 +11,10 @@ public final class Word {
         if (text == null || text.isBlank()) {
             throw new IllegalArgumentException("Word cannot be null or blank");
         }
-        if (text.length() != LENGTH) {
+        this.text = text.trim().toUpperCase();
+        if (this.text.length() != LENGTH) {
             throw new IllegalArgumentException("Word must be " + LENGTH + " letters");
         }
-        this.text = text.trim().toUpperCase();
     }
 
     public String text() {

@@ -12,7 +12,7 @@ class WordTest {
     }
 
     @Test
-    void trimsAndLowercases() {
+    void trimsAndUppercases() {
         Word w = new Word("  Apple  ");
         assertEquals("APPLE", w.text());
     }
