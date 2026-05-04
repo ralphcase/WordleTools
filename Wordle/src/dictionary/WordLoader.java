@@ -12,7 +12,9 @@ import java.util.List;
 
 public final class WordLoader {
 
-    /**
+    private static final int WORDSPERROW = 22;
+
+	/**
      * Load a list of Word objects from a text file.
      * The file may contain words separated by whitespace, punctuation, or newlines.
      * Lowercase is allowed; Word constructor enforces uppercase and validity.
@@ -67,7 +69,7 @@ public final class WordLoader {
                 writer.write(w.toString());
                 writer.write(' ');
                 count++;
-                if (count % 22 == 0) {
+                if (count % WORDSPERROW == 0) {
                     writer.write("\n");
                 }
             }

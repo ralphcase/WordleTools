@@ -16,8 +16,6 @@ public final class WordRepository {
 
         Objects.requireNonNull(allowedWords, "allowedWords must not be null");
         Objects.requireNonNull(goalWords, "goalWords must not be null");
-        
-
   
         // Defensive copies
         this.allowedWords = List.copyOf(allowedWords);

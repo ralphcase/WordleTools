@@ -42,6 +42,40 @@ public final class Feedback {
 
         return new Feedback(copy);
     }
+    
+    public static Feedback from(Word guess, Word target) {
+        Mark[] marks = new Mark[Word.LENGTH];
+
+        // First pass: CORRECT marks
+        boolean[] used = new boolean[Word.LENGTH];
+        for (int i = 0; i < Word.LENGTH; i++) {
+            if (guess.text().charAt(i) == target.text().charAt(i)) {
+                marks[i] = Mark.CORRECT;
+                used[i] = true;
+            }
+        }
+
+        // Second pass: PRESENT or ABSENT
+        for (int i = 0; i < Word.LENGTH; i++) {
+            if (marks[i] == Mark.CORRECT) continue;
+
+            char g = guess.text().charAt(i);
+            boolean found = false;
+
+            for (int j = 0; j < Word.LENGTH; j++) {
+                if (!used[j] && target.text().charAt(j) == g) {
+                    found = true;
+                    used[j] = true;
+                    break;
+                }
+            }
+
+            marks[i] = found ? Mark.PRESENT : Mark.ABSENT;
+        }
+
+        return Feedback.of(marks);
+    }
+
 
 
     public Mark[] marks() {

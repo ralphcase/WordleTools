@@ -23,7 +23,7 @@ public final class Constraint {
 //    	return allows_r(candidate);
 	}
 
-	public boolean allows_c(Word candidate) {
+	private boolean allows_c(Word candidate) {
 		char[] g = guess.letters();
 		char[] c = candidate.letters();
 		Mark[] m = feedback.marks();
@@ -119,7 +119,7 @@ public final class Constraint {
 		return true;
 	}
 
-	public boolean allows_r(Word candidate) {
+	private boolean allows_r(Word candidate) {
 		boolean[] matched = new boolean[Word.LENGTH];
 
 		return exactMatches(candidate, matched) && presentLetters(candidate, matched)

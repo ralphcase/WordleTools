@@ -13,6 +13,9 @@ import word.Word;
 public class Main {
 
     public static void main(String[] args) {
+		long startTime = System.currentTimeMillis();
+		
+
         // Load dictionary
         DictionaryInitializer initializer = new DictionaryInitializer();
         WordRepository repo = initializer.loadDictionaries();
@@ -23,13 +26,17 @@ public class Main {
         // Hardcoded example guess + feedback
 
         solver.applyFeedback(new Word("OATER"), Feedback.of(ABSENT, ABSENT, ABSENT, CORRECT, CORRECT));
-        solver.applyFeedback(new Word("BLUER"), Feedback.of(ABSENT, ABSENT, ABSENT, CORRECT, CORRECT));
-        solver.applyFeedback(new Word("SEDER"), Feedback.of(PRESENT, ABSENT, ABSENT, CORRECT, CORRECT));
+        solver.applyFeedback(new Word("FIDUS"), Feedback.of(ABSENT, CORRECT, ABSENT, ABSENT, PRESENT));
+        solver.applyFeedback(new Word("ASWIM"), Feedback.of(ABSENT, PRESENT, ABSENT, PRESENT, ABSENT));
 
         // Print remaining candidates
         List<Word> cands = solver.remainingCandidates();
         System.out.println(cands.size() +" Remaining candidates: "+cands);
         
         System.out.println("Next Guess: "+ solver.nextGuess());
+        
+		long endTime = System.currentTimeMillis();
+		System.out.println("It took " + (endTime - startTime) / 1000.0 + " seconds.");
+
     }
 }

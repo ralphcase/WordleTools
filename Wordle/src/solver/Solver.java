@@ -12,23 +12,24 @@ public class Solver {
 
 	private final WordRepository repository;
 	private final List<Constraint> constraints = new ArrayList<>();
+	private final List<Word> goalWords;
 
 	public Solver(WordRepository repository) {
 		if (repository == null) {
 			throw new IllegalArgumentException("Repository cannot be null");
 		}
 		this.repository = repository;
+		this.goalWords = repository.getGoalWords();
 	}
 
 	/**
 	 * Returns all candidate words that satisfy every constraint.
 	 */
-    public List<Word> remainingCandidates() {
-        return repository.getGoalWords().stream()
-            .filter(word -> constraints.stream().allMatch(c -> c.allows(word)))
-            .toList();
-    }
-    
+	public List<Word> remainingCandidates() {
+		return goalWords.stream().filter(word -> constraints.stream().allMatch(c -> c.allows(word)))
+				.toList();
+	}
+
 	/**
 	 * Adds new constraints derived from feedback.
 	 */
@@ -39,7 +40,33 @@ public class Solver {
 	/**
 	 * Chooses the next guess.
 	 */
-    public Word nextGuess() {
-        List<Word> candidates = remainingCandidates();
-        return candidates.isEmpty() ? null : candidates.get(0);
-    }}
+	public Word nextGuessSimple() {
+		List<Word> candidates = remainingCandidates();
+		return candidates.isEmpty() ? null : candidates.get(0);
+	}
+	public Word nextGuess() {
+		List<Word> allowed = repository.getAllowedWords();
+		Word result = allowed.get(0); 
+		List<Word> goals = remainingCandidates();
+		int minTotal = Integer.MAX_VALUE;
+		for (Word poss : allowed) {
+			int total = 0;
+			for (Word target : goals) {
+				Constraint c = new Constraint(poss, Feedback.from(poss, target));
+				constraints.add(c);
+				List<Word> r = remainingCandidates();
+				constraints.remove(c);
+				total += r.size();
+			}
+			System.out.print(".");
+			if (total < minTotal) {
+				System.out.println();
+				System.out.println(poss+" ("+total+")");
+				minTotal = total;
+				result = poss;
+			}
+		}
+		System.out.println();
+		return result;
+	}
+}
