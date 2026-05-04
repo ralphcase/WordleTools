@@ -21,13 +21,15 @@ public class Main {
         Solver solver = new Solver(repo);
 
         // Hardcoded example guess + feedback
-        Word guess = new Word("CRANE");
-        Feedback fb = Feedback.of(ABSENT, PRESENT, ABSENT, ABSENT, ABSENT);
 
-        solver.applyFeedback(guess, fb);
+        solver.applyFeedback(new Word("OATER"), Feedback.of(ABSENT, ABSENT, ABSENT, CORRECT, CORRECT));
+        solver.applyFeedback(new Word("BLUER"), Feedback.of(ABSENT, ABSENT, ABSENT, CORRECT, CORRECT));
+        solver.applyFeedback(new Word("SEDER"), Feedback.of(PRESENT, ABSENT, ABSENT, CORRECT, CORRECT));
 
         // Print remaining candidates
         List<Word> cands = solver.remainingCandidates();
         System.out.println(cands.size() +" Remaining candidates: "+cands);
+        
+        System.out.println("Next Guess: "+ solver.nextGuess());
     }
 }
