@@ -1,70 +1,45 @@
 package solver;
 
+import constraints.Constraint;
+import dictionary.WordRepository;
+import word.Word;
+import feedback.Feedback;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import position.Position;
-import report.Report;
-import dictionary.WordRepository;
+public class Solver {
 
-public final class Solver {
+	private final WordRepository repository;
+	private final List<Constraint> constraints = new ArrayList<>();
 
-    private final WordRepository repo;
-    private final ConstraintEngine engine;
+	public Solver(WordRepository repository) {
+		if (repository == null) {
+			throw new IllegalArgumentException("Repository cannot be null");
+		}
+		this.repository = repository;
+	}
 
-    private List<Position> candidates;
-
-    /**
-     * Construct a solver with a repository of word lists.
-     * Starts with ALLWORDS as the initial candidate set.
-     */
-    public Solver(WordRepository repo) {
-        this.repo = repo;
-        this.engine = new ConstraintEngine();
-        this.candidates = new ArrayList<>(repo.getAllWords());
+	/**
+	 * Returns all candidate words that satisfy every constraint.
+	 */
+    public List<Word> remainingCandidates() {
+        return repository.getGoalWords().stream()
+            .filter(word -> constraints.stream().allMatch(c -> c.allows(word)))
+            .toList();
     }
+    
+	/**
+	 * Adds new constraints derived from feedback.
+	 */
+	public void applyFeedback(Word guess, Feedback feedback) {
+		constraints.add(new Constraint(guess, feedback));
+	}
 
-    /**
-     * Return an unmodifiable view of the current candidate list.
-     */
-    public List<Position> getCandidates() {
-        return Collections.unmodifiableList(candidates);
-    }
-
-    /**
-     * Apply a guess + report to narrow the candidate list.
-     */
-    public void applyFeedback(Position guess, Report report) {
-        this.candidates = engine.filter(candidates, guess, report);
-    }
-
-    /**
-     * Choose the next guess.
-     * 
-     * This is a simple baseline strategy:
-     *   - If candidates are small, guess from candidates
-     *   - Otherwise, guess from the full allowed list
-     * 
-     * You can replace this with a smarter heuristic later.
-     */
-    public Position chooseNextGuess() {
-        if (candidates.isEmpty()) {
-            throw new IllegalStateException("No candidates left — inconsistent feedback?");
-        }
-
-        if (candidates.size() <= 2) {
-            return candidates.get(0);
-        }
-
-        // Simple baseline: pick the first allowed word
-        return repo.getAllowedWords().get(0);
-    }
-
-    /**
-     * Reset the solver to its initial state.
-     */
-    public void reset() {
-        this.candidates = new ArrayList<>(repo.getAllWords());
-    }
-}
+	/**
+	 * Chooses the next guess.
+	 */
+    public Word nextGuess() {
+        List<Word> candidates = remainingCandidates();
+        return candidates.isEmpty() ? null : candidates.get(0);
+    }}
