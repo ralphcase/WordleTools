@@ -7,6 +7,8 @@ import feedback.Feedback;
 import feedback.Mark;
 import word.Word;
 
+import static feedback.Mark.ABSENT;
+import static feedback.Mark.CORRECT;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
@@ -36,6 +38,23 @@ public class SolverTest {
 		List<Word> candidates = solver.remainingCandidates();
 
 		assertTrue(candidates.isEmpty());
+		}
+	
+	@Test
+	void RiserScenario() {
+		WordRepository repo = new WordRepository(
+				List.of(new Word("MISER"), new Word("WISER"), new Word("RISER")),
+				List.of(new Word("MISER"), new Word("WISER"), new Word("RISER")),
+				List.of());
+
+		Solver solver = new Solver(repo);
+
+        solver.applyFeedback(new Word("MISER"), Feedback.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT));
+
+   		List<Word> candidates = solver.remainingCandidates();
+
+		assertTrue(candidates.contains(new Word("RISER")));
+		assertFalse(candidates.contains(new Word("MISER")));
 		}
 
 }

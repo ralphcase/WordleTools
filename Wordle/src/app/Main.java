@@ -26,8 +26,9 @@ public class Main {
         // Hardcoded example guess + feedback
 
         solver.applyFeedback(new Word("OATER"), Feedback.of(ABSENT, ABSENT, ABSENT, CORRECT, CORRECT));
-        solver.applyFeedback(new Word("FIDUS"), Feedback.of(ABSENT, CORRECT, ABSENT, ABSENT, PRESENT));
-        solver.applyFeedback(new Word("ASWIM"), Feedback.of(ABSENT, PRESENT, ABSENT, PRESENT, ABSENT));
+//        solver.applyFeedback(new Word("BLIND"), Feedback.of(ABSENT, ABSENT, PRESENT, ABSENT, ABSENT));
+//        solver.applyFeedback(new Word("PHASM"), Feedback.of(ABSENT, ABSENT, ABSENT, PRESENT, ABSENT));
+//        solver.applyFeedback(new Word("WISER"), Feedback.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT));
 
         // Print remaining candidates
         List<Word> cands = solver.remainingCandidates();

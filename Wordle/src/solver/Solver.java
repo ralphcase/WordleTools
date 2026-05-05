@@ -26,8 +26,7 @@ public class Solver {
 	 * Returns all candidate words that satisfy every constraint.
 	 */
 	public List<Word> remainingCandidates() {
-		return goalWords.stream().filter(word -> constraints.stream().allMatch(c -> c.allows(word)))
-				.toList();
+		return goalWords.stream().filter(word -> constraints.stream().allMatch(c -> c.allows(word))).toList();
 	}
 
 	/**
@@ -44,24 +43,30 @@ public class Solver {
 		List<Word> candidates = remainingCandidates();
 		return candidates.isEmpty() ? null : candidates.get(0);
 	}
+
 	public Word nextGuess() {
 		List<Word> allowed = repository.getAllowedWords();
-		Word result = allowed.get(0); 
+//		List<Word> allowed = repository.getGoalWords();
+//		List<Word> allowed = new ArrayList<Word>();
+//		allowed.add(new Word("RISER"));
+		Word result = allowed.get(0);
 		List<Word> goals = remainingCandidates();
 		int minTotal = Integer.MAX_VALUE;
 		for (Word poss : allowed) {
 			int total = 0;
 			for (Word target : goals) {
-				Constraint c = new Constraint(poss, Feedback.from(poss, target));
-				constraints.add(c);
-				List<Word> r = remainingCandidates();
-				constraints.remove(c);
-				total += r.size();
+				if (!target.equals(poss)) {
+					Constraint c = new Constraint(poss, Feedback.from(poss, target));
+					constraints.add(c);
+					List<Word> r = remainingCandidates();
+					constraints.remove(c);
+					total += r.size();
+				}
 			}
 			System.out.print(".");
 			if (total < minTotal) {
 				System.out.println();
-				System.out.println(poss+" ("+total+")");
+				System.out.println(poss + " (" + total + ")");
 				minTotal = total;
 				result = poss;
 			}
