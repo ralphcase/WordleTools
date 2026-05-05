@@ -35,17 +35,6 @@ Shape of done
 - applyFeedback updates the set
 - remainingCandidates uses a single allows() call
 
-### Refactor Solver for better performance
-What it is  
-Stop recomputing candidate lists from scratch.
-
-Why it matters  
-Performance and clarity: constraints shrink the candidate set monotonically.
-
-Shape of done  
-- Solver stores List<Word> candidates
-- Each constraint update filters the existing list
-- No list of constraints; only the accumulated list of candidates
 
 ### Implement Hard Mode
 What it is  
