@@ -71,6 +71,17 @@ Shape of done
 - Solver initialized with empty ConstraintSet
 - Outputs top N scoring words
 
+### Update Dictionaries
+What it is
+Read data copied from Wordlebot Analysis  
+
+Why it matters
+to update the possible goals to better match those in Wordle
+
+Shape of done
+- Parse the output of the Wordlebot 
+- write out an updated goals dictionary 
+
 ---------------------------------------------------------------------
 
 ## Codebase Hygiene
