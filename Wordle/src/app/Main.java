@@ -3,6 +3,7 @@ package app;
 import dictionary.DictionaryInitializer;
 import dictionary.WordRepository;
 import feedback.Feedback;
+import feedback.Mark;
 import static feedback.Mark.*;
 
 import java.util.List;
@@ -11,6 +12,9 @@ import solver.Solver;
 import word.Word;
 
 public class Main {
+	static final Mark green = Mark.CORRECT;
+	static final Mark yellow = Mark.PRESENT;
+	static final Mark gray = Mark.ABSENT;
 
     public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
@@ -25,9 +29,9 @@ public class Main {
 
         // Hardcoded example guess + feedback
 
-        solver.applyFeedback(new Word("OATER"), Feedback.of(ABSENT, CORRECT, CORRECT, ABSENT, ABSENT));
-        solver.applyFeedback(new Word("CUSPY"), Feedback.of(PRESENT, ABSENT, ABSENT, ABSENT, ABSENT));
-        solver.applyFeedback(new Word("HWYLS"), Feedback.of(PRESENT, ABSENT, ABSENT, PRESENT, ABSENT));
+        solver.applyFeedback(new Word("OATER"), Feedback.of(gray, green, green, gray, gray));
+        solver.applyFeedback(new Word("CUSPY"), Feedback.of(yellow, gray, gray, gray, gray));
+        solver.applyFeedback(new Word("HWYLS"), Feedback.of(yellow, gray, gray, yellow, gray));
 //        solver.applyFeedback(new Word("WISER"), Feedback.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT));
 
         // Print remaining candidates
