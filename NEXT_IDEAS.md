@@ -48,18 +48,6 @@ Shape of done
 - Filter using ConstraintSet
 - Solver chooses from this list when Hard Mode is enabled
 
-### Add an entry point for BestStarter
-What it is  
-A mode that runs Solver with no constraints to compute best first guesses.
-
-Why it matters  
-Supports analysis tools and starter word exploration.
-
-Shape of done  
-- CLI or method entry point
-- Solver initialized with empty ConstraintSet
-- Outputs top N scoring words
-
 ### Update Dictionaries
 What it is
 Read data copied from Wordlebot Analysis  
