@@ -29,10 +29,10 @@ public class Main {
 
         // Hardcoded example guess + feedback
 
-        solver.applyFeedback(new Word("OATER"), Feedback.of(gray, green, green, gray, gray));
-        solver.applyFeedback(new Word("CUSPY"), Feedback.of(yellow, gray, gray, gray, gray));
-        solver.applyFeedback(new Word("HWYLS"), Feedback.of(yellow, gray, gray, yellow, gray));
-//        solver.applyFeedback(new Word("WISER"), Feedback.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT));
+        solver.applyFeedback(new Word("OATER"), Feedback.of(gray, gray, gray, gray, gray));
+//        solver.applyFeedback(new Word("CUSPY"), Feedback.of(yellow, gray, gray, gray, gray));
+//        solver.applyFeedback(new Word("HWYLS"), Feedback.of(yellow, gray, gray, yellow, gray));
+        solver.applyFeedback(new Word("WISER"), Feedback.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT));
 
         // Print remaining candidates
         List<Word> cands = solver.remainingCandidates();

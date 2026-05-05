@@ -5,34 +5,33 @@ import dictionary.WordRepository;
 import word.Word;
 import feedback.Feedback;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Solver {
 
-	private final WordRepository repository;
-	private final List<Constraint> constraints = new ArrayList<>();
-	private final List<Word> goalWords;
+//	private final List<Constraint> constraints = new ArrayList<>();
+	private List<Word> goalWords;
+	private List<Word> allowedWords;
 
 	public Solver(WordRepository repository) {
 		if (repository == null) {
 			throw new IllegalArgumentException("Repository cannot be null");
 		}
-		this.repository = repository;
 		this.goalWords = repository.getGoalWords();
+		this.allowedWords = repository.getAllowedWords();
+
 	}
 
 	/**
 	 * Returns all candidate words that satisfy every constraint.
 	 */
 	public List<Word> remainingCandidates() {
-		return goalWords.stream()
-				.filter(word -> constraints.stream().allMatch(c -> c.allows(word)))
-				.toList();
+		return goalWords;
 	}
 	
 	/**
 	 * Returns all candidate words that satisfy the given constraint.
+	 * Don't update the state.
 	 */
 	public List<Word> remainingCandidates(Constraint constraint) {
 	    return goalWords.stream()
@@ -45,33 +44,34 @@ public class Solver {
 	 * Adds new constraints derived from feedback.
 	 */
 	public void applyFeedback(Word guess, Feedback feedback) {
-		constraints.add(new Constraint(guess, feedback));
+		Constraint constraint = new Constraint(guess, feedback);
+	    goalWords = goalWords.stream()
+	            .filter(constraint::allows)
+	            .toList();
 	}
 
 	/**
 	 * Chooses the next guess.
+	 * Just pick one.
 	 */
 	public Word nextGuessSimple() {
 		List<Word> candidates = remainingCandidates();
 		return candidates.isEmpty() ? null : candidates.get(0);
 	}
 
+	/**
+	 * Chooses the next guess using an estimate for which word will
+	 * eliminate the most goal words, on average.
+	 */
 	public Word nextGuess() {
-		List<Word> allowed = repository.getAllowedWords();
-//		List<Word> allowed = repository.getGoalWords();
-//		List<Word> allowed = new ArrayList<Word>();
-//		allowed.add(new Word("RISER"));
-		Word result = allowed.get(0);
+		Word result = allowedWords.get(0);
 		List<Word> goals = remainingCandidates();
 		int minTotal = Integer.MAX_VALUE;
-		for (Word poss : allowed) {
+		for (Word poss : allowedWords) {
 			int total = 0;
 			for (Word target : goals) {
 				if (!target.equals(poss)) {
-					Constraint c = new Constraint(poss, Feedback.from(poss, target));
-					constraints.add(c);
-					List<Word> r = remainingCandidates();
-					constraints.remove(c);
+					List<Word> r = remainingCandidates(new Constraint(poss, Feedback.from(poss, target)));
 					total += r.size();
 				}
 			}

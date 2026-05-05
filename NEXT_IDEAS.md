@@ -45,7 +45,7 @@ Performance and clarity: constraints shrink the candidate set monotonically.
 Shape of done  
 - Solver stores List<Word> candidates
 - Each constraint update filters the existing list
-- No list of constraints; only the accumulated ConstraintSet
+- No list of constraints; only the accumulated list of candidates
 
 ### Implement Hard Mode
 What it is  
