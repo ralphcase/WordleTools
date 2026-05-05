@@ -26,9 +26,21 @@ public class Solver {
 	 * Returns all candidate words that satisfy every constraint.
 	 */
 	public List<Word> remainingCandidates() {
-		return goalWords.stream().filter(word -> constraints.stream().allMatch(c -> c.allows(word))).toList();
+		return goalWords.stream()
+				.filter(word -> constraints.stream().allMatch(c -> c.allows(word)))
+				.toList();
+	}
+	
+	/**
+	 * Returns all candidate words that satisfy the given constraint.
+	 */
+	public List<Word> remainingCandidates(Constraint constraint) {
+	    return goalWords.stream()
+	            .filter(constraint::allows)
+	            .toList();
 	}
 
+	
 	/**
 	 * Adds new constraints derived from feedback.
 	 */
