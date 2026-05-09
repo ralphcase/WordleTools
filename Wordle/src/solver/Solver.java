@@ -10,23 +10,34 @@ import java.util.List;
 
 public class Solver {
 
+	public enum Mode {
+		ARCHIVE, NEW, ALL, SMART
+	}
+
 	private List<Word> goalWords;
 	private List<Word> allowedWords;
 
 	public Solver(WordRepository repository) {
-		this(repository, false);
+		this(repository, Mode.ALL);
 	}
 
-	public Solver(WordRepository repository, boolean archive) {
+	public Solver(WordRepository repository, Mode archive) {
 		if (repository == null) {
 			throw new IllegalArgumentException("Repository cannot be null");
 		}
-		if (archive) {
+		switch (archive) {
+		case ARCHIVE -> {
 			this.goalWords = repository.getPastSolutionWords();
-		} else {
+		}
+		case NEW -> {
 			this.goalWords = new ArrayList<Word>(repository.getGoalWords());
 			this.goalWords.removeAll(repository.getPastSolutionWords());
 		}
+		case ALL -> {
+			this.goalWords = repository.getGoalWords();
+		}
+		}
+
 		this.allowedWords = repository.getAllowedWords();
 
 	}

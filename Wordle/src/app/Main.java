@@ -25,8 +25,10 @@ public class Main {
         WordRepository repo = initializer.loadDictionaries();
 
         // Create solver
-        boolean archive = false;
-        Solver solver = new Solver(repo, archive);
+//        Solver solver = new Solver(repo, Solver.Mode.ARCHIVE);
+//        Solver solver = new Solver(repo, Solver.Mode.NEW);
+        Solver solver = new Solver(repo, Solver.Mode.ALL);
+
 
         // Hardcoded example guess + feedback
 
