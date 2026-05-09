@@ -7,20 +7,6 @@ Each idea includes: What it is, Why it matters, and Shape of done.
 
 ## Dictionary and WordRepository
 
-### Use different goalWords for different scenarios
-What it is  
-Support multiple goal sets: all words, past solutions, or "no repeats" mode.
-
-Why it matters  
-Keeps Solver logic clean and pushes scenario differences into the repository layer.
-
-Shape of done  
-- WordRepository exposes goalWordsFor(Scenario)
-- Scenarios: base, archive, no-repeat
-- Solver receives the correct list at construction time
-
----------------------------------------------------------------------
-
 ## Solver Architecture
 
 ### Refactor Solver to use ConstraintSet instead of Constraint
