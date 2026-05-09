@@ -1,6 +1,6 @@
 # Next Ideas
 
-A structured list of future improvements, organized by category.
+A list of future improvements, organized by category.
 Each idea includes: What it is, Why it matters, and Shape of done.
 
 ---------------------------------------------------------------------
