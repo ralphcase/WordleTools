@@ -34,17 +34,6 @@ Shape of done
 - Filter using ConstraintSet
 - Solver chooses from this list when Hard Mode is enabled
 
-### Update Dictionaries
-What it is
-Read data copied from Wordlebot Analysis  
-
-Why it matters
-to update the possible goals to better match those in Wordle
-
-Shape of done
-- Parse the output of the Wordlebot 
-- write out an updated goals dictionary 
-
 ---------------------------------------------------------------------
 
 ## Codebase Hygiene

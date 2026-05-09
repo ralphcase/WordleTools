@@ -14,6 +14,7 @@ public class DictionaryBuilder {
 	private static final String ALLOWEDFILE = "allowed_words.txt";
 	private static final String SOLUTIONFILE = "solutions.txt";
 	private static final String OLDSOLUTIONFILE = "oldsolutions.txt";
+	private static final String WORDLEBOT = "wordlebot.txt";
 
 	
 	public static void main(String[] args) {
@@ -25,6 +26,7 @@ public class DictionaryBuilder {
 		List<Word> glist = loader.loadWords(GOALFILE);
 		List<Word> alist = loader.loadWords(ALLOWEDFILE);
 		List<Word> slist = loader.loadWords(SOLUTIONFILE);
+		List<Word> wlist = loader.loadWords(WORDLEBOT);
 		System.out.println(GOALFILE + " has "+ glist.size() + " words.");
 		System.out.println(ALLOWEDFILE + " has "+ alist.size() + " words.");
 		System.out.println(SOLUTIONFILE + " has "+ slist.size() + " words.");
@@ -34,11 +36,12 @@ public class DictionaryBuilder {
 //		alist = new ArrayList<Word>(aset);
 //		loader.writeWords(alist, "allowed_words.txt");
 //		
-//		aset = new HashSet<Word>(glist);
-//		alist = new ArrayList<Word>(aset);
-//		loader.writeWords(alist, "goals.txt");
-//		
-		Set<Word> aset = new HashSet<Word>(slist);
+		Set<Word> aset = new HashSet<Word>(glist);
+		aset.addAll(wlist);
+		alist = new ArrayList<Word>(aset);
+		loader.writeWords(alist, "goals.txt");
+		
+		aset = new HashSet<Word>(slist);
 		alist = new ArrayList<Word>(aset);
 		loader.writeWords(alist, "past_solutions.txt");
 		
