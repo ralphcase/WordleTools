@@ -56,7 +56,6 @@ public class Solver {
 		guesses.add(new Guess(new Position("ROATE"), new Report(new ArrayList<String>(List.of("yellow", "gray", "green", "gray", "yellow")))));
 		guesses.add(new Guess(new Position("BLEND"), new Report(new ArrayList<String>(List.of("gray", "gray", "yellow", "gray", "gray")))));
 //		guesses.add(new Guess(new Position("AURAL"), new Report(new ArrayList<String>(List.of("yellow", "yellow", "yellow", "gray", "gray")))));
-
 //		guesses.add(new Guess(new Position("FUZZY"), new Report(new ArrayList<String>(List.of("gray", "gray", "gray", "gray", "gray")))));
 				
 		removeImpossible(possible, guesses);
