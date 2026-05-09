@@ -51,3 +51,4 @@ target/
 # Gradle
 .gradle/
 build/
+/bin/
