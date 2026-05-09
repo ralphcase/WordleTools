@@ -10,8 +10,8 @@ import dictionary.WordLoader;
 import word.Word;
 
 public class DictionaryBuilder {
-	private static final String GOALFILE = "possibleGoals.txt";
-	private static final String ALLOWEDFILE = "nonGoals.txt";
+	private static final String GOALFILE = "goals.txt";
+	private static final String ALLOWEDFILE = "allowed_words.txt";
 	private static final String SOLUTIONFILE = "solutions.txt";
 	private static final String OLDSOLUTIONFILE = "oldsolutions.txt";
 
@@ -29,16 +29,16 @@ public class DictionaryBuilder {
 		System.out.println(ALLOWEDFILE + " has "+ alist.size() + " words.");
 		System.out.println(SOLUTIONFILE + " has "+ slist.size() + " words.");
 		
-		alist.addAll(glist);
-		Set<Word> aset = new HashSet<Word>(alist); 
-		alist = new ArrayList<Word>(aset);
-		loader.writeWords(alist, "allowed_words.txt");
-		
-		aset = new HashSet<Word>(glist);
-		alist = new ArrayList<Word>(aset);
-		loader.writeWords(alist, "goals.txt");
-		
-		aset = new HashSet<Word>(slist);
+//		alist.addAll(glist);
+//		Set<Word> aset = new HashSet<Word>(alist); 
+//		alist = new ArrayList<Word>(aset);
+//		loader.writeWords(alist, "allowed_words.txt");
+//		
+//		aset = new HashSet<Word>(glist);
+//		alist = new ArrayList<Word>(aset);
+//		loader.writeWords(alist, "goals.txt");
+//		
+		Set<Word> aset = new HashSet<Word>(slist);
 		alist = new ArrayList<Word>(aset);
 		loader.writeWords(alist, "past_solutions.txt");
 		

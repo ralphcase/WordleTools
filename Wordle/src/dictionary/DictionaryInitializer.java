@@ -11,7 +11,7 @@ public final class DictionaryInitializer {
     // -----------------------------
     public static final String ALLOWED_WORDS_FILE = "allowed_words.txt";
     public static final String GOAL_WORDS_FILE = "goals.txt";
-    public static final String PAST_SOLUTIONS_FILE = "past_solutions.txt";
+    public static final String PAST_SOLUTIONS_FILE = "solutions.txt";
 
     private final File baseDir;
     private final WordLoader loader = new WordLoader();

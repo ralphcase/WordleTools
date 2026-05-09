@@ -21,8 +21,8 @@ public class Position {
 //	private static final String ALLOWEDFILE = "nytAllowedList.txt";
 //	private static final String GOALFILE = "nytDictionary.txt";
 //	private static final String ALLOWEDFILE = "nytDictionary.txt";
-	private static final String GOALFILE = "possibleGoals.txt";
-	private static final String ALLOWEDFILE = "nonGoals.txt";
+	private static final String GOALFILE = "goals.txt";
+	private static final String ALLOWEDFILE = "allowedWords.txt";
 	private static final String SOLUTIONFILE = "solutions.txt";
 	private static final String OLDSOLUTIONFILE = "oldsolutions.txt";
 
