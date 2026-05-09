@@ -379,12 +379,11 @@ class ConstraintSetTest {
         cs.updatedBy(new Word("ABCDE"),
                      Feedback.of(PRESENT, ABSENT, ABSENT, ABSENT, ABSENT));
 
-        // This should NOT forbid globally — only forbid at this position
-        cs.updatedBy(new Word("ABCDE"),
-                     Feedback.of(ABSENT, ABSENT, ABSENT, ABSENT, ABSENT));
 
-        assertTrue(cs.cannotBe[0].contains('A'));
-        assertFalse(cs.cannotContain.contains('A'));
+        assertThrows(IllegalStateException.class, () ->
+                cs.updatedBy(new Word("ABCDE"),
+                        Feedback.of(ABSENT, ABSENT, ABSENT, ABSENT, ABSENT))
+        );
     }
 
     @Test
