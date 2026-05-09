@@ -5,19 +5,28 @@ import dictionary.WordRepository;
 import word.Word;
 import feedback.Feedback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Solver {
 
-//	private final List<Constraint> constraints = new ArrayList<>();
 	private List<Word> goalWords;
 	private List<Word> allowedWords;
 
 	public Solver(WordRepository repository) {
+		this(repository, false);
+	}
+
+	public Solver(WordRepository repository, boolean archive) {
 		if (repository == null) {
 			throw new IllegalArgumentException("Repository cannot be null");
 		}
-		this.goalWords = repository.getGoalWords();
+		if (archive) {
+			this.goalWords = repository.getPastSolutionWords();
+		} else {
+			this.goalWords = new ArrayList<Word>(repository.getGoalWords());
+			this.goalWords.removeAll(repository.getPastSolutionWords());
+		}
 		this.allowedWords = repository.getAllowedWords();
 
 	}
@@ -28,31 +37,25 @@ public class Solver {
 	public List<Word> remainingCandidates() {
 		return goalWords;
 	}
-	
+
 	/**
-	 * Returns all candidate words that satisfy the given constraint.
-	 * Don't update the state.
+	 * Returns all candidate words that satisfy the given constraint. Don't update
+	 * the state.
 	 */
 	public List<Word> remainingCandidates(Constraint constraint) {
-	    return goalWords.stream()
-	            .filter(constraint::allows)
-	            .toList();
+		return goalWords.stream().filter(constraint::allows).toList();
 	}
 
-	
 	/**
 	 * Adds new constraints derived from feedback.
 	 */
 	public void applyFeedback(Word guess, Feedback feedback) {
 		Constraint constraint = new Constraint(guess, feedback);
-	    goalWords = goalWords.stream()
-	            .filter(constraint::allows)
-	            .toList();
+		goalWords = goalWords.stream().filter(constraint::allows).toList();
 	}
 
 	/**
-	 * Chooses the next guess.
-	 * Just pick one.
+	 * Chooses the next guess. Just pick one.
 	 */
 	public Word nextGuessSimple() {
 		List<Word> candidates = remainingCandidates();
@@ -60,8 +63,8 @@ public class Solver {
 	}
 
 	/**
-	 * Chooses the next guess using an estimate for which word will
-	 * eliminate the most goal words, on average.
+	 * Chooses the next guess using an estimate for which word will eliminate the
+	 * most goal words, on average.
 	 */
 	public Word nextGuess() {
 		Word result = allowedWords.get(0);
