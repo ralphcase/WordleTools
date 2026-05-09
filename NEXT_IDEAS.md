@@ -61,18 +61,6 @@ Shape of done
 - Remove or archive
 - Ensure tests still pass
 
-### Mark the current state of the main branch
-What it is  
-Preserve the pre-refactor version in a clear, discoverable way.
-
-Why it matters  
-Future debugging or archaeology becomes easier.
-
-Shape of done  
-- Tag the commit (for example: pre-refactor-2026)
-- Optionally create a legacy branch
-- Document this in README
-
 ### Add JavaDoc
 What it is  
 Document public classes and methods.
