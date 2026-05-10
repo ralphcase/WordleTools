@@ -13,6 +13,7 @@ public class Solver {
     private final boolean hardmode;
     private List<Word> goalWords;
     private List<Word> allowedWords;
+
     public Solver(WordRepository repository) {
         this(repository, false, Mode.ALL);
     }
@@ -80,24 +81,28 @@ public class Solver {
     public Word nextGuess() {
         Word result = allowedWords.getFirst();
         List<Word> goals = remainingCandidates();
+        // Track the minimum total across all candidates
         int minTotal = Integer.MAX_VALUE;
         for (Word poss : allowedWords) {
+            // Calculate the sum of remaining candidates for this word across all goals
             int total = 0;
             for (Word target : goals) {
                 if (!target.equals(poss)) {
+                    // Simulate feedback for this guess against this target
+                    // and count how many candidates would remain after applying that constraint
                     List<Word> r = remainingCandidates(new Constraint(poss, Feedback.from(poss, target)));
                     total += r.size();
                 }
             }
-            System.out.print(".");
+//            System.out.print(".");
             if (total < minTotal) {
-                System.out.println();
-                System.out.println(poss + " (" + total + ")");
+//                System.out.println();
+//                System.out.println(poss + " (" + total + ")");
                 minTotal = total;
                 result = poss;
             }
         }
-        System.out.println();
+//        System.out.println();
         return result;
     }
 
