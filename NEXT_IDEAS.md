@@ -22,18 +22,6 @@ Shape of done
 - remainingCandidates uses a single allows() call
 
 
-### Implement Hard Mode
-What it is  
-Guess list is filtered by the same constraints as the goal list.
-
-Why it matters  
-Matches Wordle Hard Mode semantics; simplifies solver behavior.
-
-Shape of done  
-- Maintain guessCandidates
-- Filter using ConstraintSet
-- Solver chooses from this list when Hard Mode is enabled
-
 ---------------------------------------------------------------------
 
 ## Codebase Hygiene
