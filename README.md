@@ -4,5 +4,6 @@
 
  ## Pre‑Refactor Code
 
+There was a major refactor in May 2026 that changed almost everything.
 The state of the codebase before the 2026 refactor is tagged as `pre-refactor-2026`.
  
