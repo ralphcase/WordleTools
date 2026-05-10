@@ -13,15 +13,18 @@ public class Solver {
 	public enum Mode {
 		ARCHIVE, NEW, ALL, SMART
 	}
+	private final boolean hardmode;
 
 	private List<Word> goalWords;
 	private List<Word> allowedWords;
 
 	public Solver(WordRepository repository) {
-		this(repository, Mode.ALL);
+		this(repository, false, Mode.ALL);
 	}
 
-	public Solver(WordRepository repository, Mode archive) {
+	public Solver(WordRepository repository, boolean hardmode, Mode archive) {
+		this.hardmode = hardmode;
+
 		if (repository == null) {
 			throw new IllegalArgumentException("Repository cannot be null");
 		}
@@ -63,6 +66,11 @@ public class Solver {
 	public void applyFeedback(Word guess, Feedback feedback) {
 		Constraint constraint = new Constraint(guess, feedback);
 		goalWords = goalWords.stream().filter(constraint::allows).toList();
+		if (hardmode) {
+			System.out.print(allowedWords.size() + " allowed words filtered to ");
+			allowedWords = allowedWords.stream().filter(constraint::allows).toList();
+			System.out.println(allowedWords.size() + ".");
+		}
 	}
 
 	/**
