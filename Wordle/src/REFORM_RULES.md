@@ -1,19 +1,12 @@
-# WordleTools Refactor — Development Rules
 
-These rules govern all work performed on the `refactor` branch.  
-The existing `main` branch remains stable and unchanged until the new architecture is ready for production.
+# WordleTools Development Guidelines
 
----
-
-## 1. Branching Strategy
-- All refactor work happens on a dedicated branch named `refactor`.
-- `main` remains untouched and fully functional for daily use.
-- The `refactor` branch is treated as the working mainline for the redesign.
-- Merges into `main` occur only when the new architecture is complete, tested, and ready for production.
+These rules govern all work on the `main` branch.  
+The codebase uses a constraint-driven architecture with legacy components from the previous design coexisting during transition.
 
 ---
 
-## 2. Small, Independent Changes
+## 1. Small, Independent Changes
 - Each commit must represent one conceptual improvement.
 - No large, sweeping changes.
 - No multi-purpose commits.
@@ -21,7 +14,7 @@ The existing `main` branch remains stable and unchanged until the new architectu
 
 ---
 
-## 3. Complete Unit Tests for Every Change
+## 2. Complete Unit Tests for Every Change
 - Every commit must include tests that fully cover the new or modified behavior.
 - Tests must include:
   - positive cases
@@ -32,7 +25,7 @@ The existing `main` branch remains stable and unchanged until the new architectu
 
 ---
 
-## 4. The Project Must Always Build
+## 3. The Project Must Always Build
 - The codebase must compile successfully after every commit.
 - No broken interfaces.
 - No commented-out code left behind.
@@ -40,14 +33,14 @@ The existing `main` branch remains stable and unchanged until the new architectu
 
 ---
 
-## 5. “Always Runnable” Will Be Enforced Later
-- During early architectural work, the solver may not be fully wired into the CLI.
-- Buildability and testability take priority.
-- Once the domain stabilizes, the rule “the project must always run end-to-end” will be added.
+## 4. The Project Must Always Run End-to-End
+- The solver and CLI must be fully wired and runnable after every commit.
+- All integration points must work.
+- No orphaned code or incomplete refactoring on `main`.
 
 ---
 
-## 6. Commit Discipline
+## 5. Commit Discipline
 - Each commit must include:
   - the code change
   - the tests
@@ -57,60 +50,74 @@ The existing `main` branch remains stable and unchanged until the new architectu
 Examples:
 - `[ConstraintSet] Add green-letter constraints and tests`
 - `[Solver] Introduce filterCandidates using ConstraintSet`
-- `[Report] Add conversion to ConstraintSet delta`
+- `[Feedback] Add conversion to ConstraintSet delta`
 
 ---
 
-## 7. Stable Interfaces Within a Commit
+## 6. Stable Interfaces Within a Commit
 - Public method signatures must not change unless the commit is specifically about that change.
 - This prevents cascading breakage and keeps commits conceptually pure.
 
 ---
 
-## 8. Temporary Duplication Is Allowed
-- When introducing new abstractions (e.g., ConstraintSet), the old logic may remain temporarily.
-- This allows incremental migration and safe testing.
-- Duplication must be removed once callers are migrated.
+## 7. Legacy Code Coexistence
+- Legacy classes from the old architecture (located in the default package: e.g., old `Solver`, `Guess`, `Position`, `Report`) may remain in the codebase if they provide functionality not yet re-implemented in the new constraint-driven architecture.
+- **All new code must be in appropriately named packages** (e.g., `solver`, `constraints`, `feedback`, `dictionary`, `word`). The default package is reserved for legacy code only.
+- Legacy code serves three purposes:
+  - **Reference**: Understanding how something worked before.
+  - **Fallback**: Providing optimized or complete functionality until the new architecture catches up (e.g., the old Solver was faster; BestStarter performance is still being developed).
+  - **Gradual migration**: Allowing incremental transition without blocking new work.
+- Legacy classes must be clearly marked as such (in Javadoc or naming convention).
+- Legacy code must not be integrated into new components.
+- Legacy code must not be expanded or enhancedâ€”if functionality is needed, re-implement it in the new architecture.
 
 ---
 
-## 9. No Partially Implemented Classes
-- If a class exists, it must be usable, testable, and internally consistent.
-- Empty shells or “TODO: implement later” are not allowed in production code.
+## 8. No Partially Implemented Classes
+- If a class exists in the new architecture, it must be usable, testable, and internally consistent.
+- Empty shells or "TODO: implement later" are not allowed.
+- (Legacy classes are exempt from this rule while they coexist.)
 
 ---
 
-## 10. Test Organization
+## 9. Test Organization
 Use clear, discoverable test naming:
 
-- `ConstraintSetTest` — unit tests for ConstraintSet
-- `ConstraintSetIntegrationTest` — ConstraintSet + Solver
-- `SolverFilteringTest` — filtering logic
-- `SolverScenarioTest` — full game scenarios
-- `ReportTest` — feedback logic
-- `WordTest` — Position/Word behavior
+- `ConstraintSetTest` â€“ unit tests for ConstraintSet
+- `ConstraintSetIntegrationTest` â€“ ConstraintSet + Solver
+- `SolverFilteringTest` â€“ filtering logic
+- `SolverScenarioTest` â€“ full game scenarios
+- `FeedbackTest` â€“ feedback logic
+- `WordTest` â€“ Word/Position behavior
 
 ---
 
-## 11. Architectural Goal
-The refactor aims to transition from a game-object model (Position, Report, Guess) to a constraint-driven model:
+## 10. Architecture Overview
+The system uses a constraint-driven model:
 
-- `Word` (formerly Position)
-- `Feedback` (formerly Report)
-- `ConstraintSet` (new core abstraction)
-- `Solver` (driven by ConstraintSet)
+- `Word` â€“ represents a 5-letter word with position information
+- `Feedback` â€“ represents the color feedback from a guess (green/yellow/gray)
+- `Constraint` â€“ encodes restrictions derived from feedback
+- `ConstraintSet` â€“ aggregates multiple constraints
+- `Solver` â€“ filters candidates using constraints
 
-`Guess` becomes optional and moves to UI/CLI if needed.
+Legacy classes (`Position`, `Report`, `Guess`) may coexist temporarily during migration in the default package.
 
 ---
 
-## 12. Refactor Philosophy
-- No “big bang” rewrites.
+## 11. Development Philosophy
+- No "big bang" rewrites on `main`.
 - No breaking the build.
 - No skipping tests.
 - Every step moves the architecture forward.
 - Every commit is reversible.
-- The history should read like a clear narrative of the system’s evolution.
+- The history should read like a clear narrative of the system's evolution.
+- Legacy functionality is preserved until intentionally replaced, not discarded.
 
+---
 
-
+## 12. Performance vs. Clarity
+- The new architecture prioritizes **clarity, correctness, and testability** over raw performance.
+- The old Solver is faster; the new Solver is more maintainable.
+- Performance optimization is a future concern, after the architecture stabilizes.
+- Benchmarking and optimization should be done deliberately, not ad-hoc.
