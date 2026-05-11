@@ -47,7 +47,7 @@ public final class WordLoader {
      * Helper: convert buffered characters into a Word if valid.
      */
     private void flushWord(StringBuilder buffer, List<Word> result) {
-        if (buffer.length() > 0) {
+        if (!buffer.isEmpty()) {
             String token = buffer.toString();
             try {
                 result.add(new Word(token));

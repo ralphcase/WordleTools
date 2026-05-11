@@ -32,7 +32,7 @@ public class WordLoaderTest {
     }
 
     @Test
-    void writerRoundTrip(@TempDir Path tempDir) throws Exception {
+    void writerRoundTrip(@TempDir Path tempDir) {
         File f = tempDir.resolve("out.txt").toFile();
 
         List<Word> original = List.of(

@@ -8,7 +8,6 @@ import word.Word;
 import java.io.File;
 import java.io.FileWriter;
 import java.nio.file.Path;
-import java.util.List;
 
 public class DictionaryInitializerTest {
 
@@ -62,7 +61,7 @@ public class DictionaryInitializerTest {
         Assertions.assertEquals(3, repo.getAllowedWords().size());
         Assertions.assertEquals(2, repo.getGoalWords().size());
         Assertions.assertEquals(1, repo.getPastSolutionWords().size());
-        Assertions.assertEquals(new Word("CRANE"), repo.getPastSolutionWords().get(0));
+        Assertions.assertEquals(new Word("CRANE"), repo.getPastSolutionWords().getFirst());
     }
 
     @Test

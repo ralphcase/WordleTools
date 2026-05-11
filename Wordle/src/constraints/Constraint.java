@@ -67,7 +67,7 @@ public final class Constraint {
 		// ------------------------------------------------------------
 		// 2. Duplicate-letter rules (minCount / maxCount per letter)
 		// ------------------------------------------------------------
-		// For each letter A–Z, compute:
+		// For each letter Aï¿½Z, compute:
 		// - how many times it appears in the guess
 		// - how many of those positions are PRESENT or CORRECT
 		// - how many are ABSENT

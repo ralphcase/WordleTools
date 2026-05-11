@@ -159,9 +159,7 @@ public class Position {
 	
 	public static List<Position> getALLWORDS() {
 		Set<Position> result = new HashSet<Position>(ALLWORDS);
-		for (Position word : GOALWORDS) {
-			result.add(word);
-		}
+        result.addAll(GOALWORDS);
 		return new ArrayList<Position>(result);
 	}
 	
