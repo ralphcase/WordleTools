@@ -17,13 +17,10 @@ public class Main {
 
     public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
-		
 
-        // Load dictionary
         DictionaryInitializer initializer = new DictionaryInitializer();
         WordRepository repo = initializer.loadDictionaries();
 
-        // Create solver
         boolean hard = false;
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
         Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
@@ -32,9 +29,9 @@ public class Main {
 
         // Hardcoded example guess + feedback
 
-        solver.applyFeedback(new Word("OATER"), Feedback.of(gray, green, gray, gray, yellow));
-        solver.applyFeedback(new Word("RYPIN"), Feedback.of(yellow, gray, yellow, gray, gray));
-        solver.applyFeedback(new Word("PARCH"), Feedback.of(green, green, green, gray, gray));
+        solver.applyFeedback(new Word("OATER"), Feedback.of(gray, gray, gray, yellow, gray));
+        solver.applyFeedback(new Word("SEINE"), Feedback.of(gray, green, gray, yellow, gray));
+//        solver.applyFeedback(new Word("PARCH"), Feedback.of(green, green, green, gray, gray));
 //        solver.applyFeedback(new Word("HWYLS"), Feedback.of(yellow, gray, gray, yellow, gray));
 //        solver.applyFeedback(new Word("WISER"), Feedback.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT));
 
