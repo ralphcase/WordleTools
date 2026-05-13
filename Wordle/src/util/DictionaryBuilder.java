@@ -18,9 +18,7 @@ public class DictionaryBuilder {
 	
 	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();
-		
 
-//		DictionaryInitializer dict = new DictionaryInitializer();
 		WordLoader loader = new WordLoader();
 		List<Word> glist = loader.loadWords(GOALFILE);
 		List<Word> alist = loader.loadWords(ALLOWEDFILE);
