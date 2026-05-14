@@ -22,15 +22,15 @@ public class Main {
 
         boolean hard = false;
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
-        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
-//        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
+//        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
+        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
 
 
         // Hardcoded example guess + feedback
 
-        solver.applyFeedback(new Word("OATER"), Feedback.of(gray, green, gray, green, green));;;
-        solver.applyFeedback(new Word("GORPS"), Feedback.of(gray, gray, yellow, gray, gray));;
-        solver.applyFeedback(new Word("DRAWL"), Feedback.of(gray, yellow, yellow, yellow, gray));
+        solver.applyFeedback(new Word("OATER"), Feedback.of(gray, green, gray, green, green));
+        solver.applyFeedback(new Word("GORPS"), Feedback.of(gray, gray, yellow, gray, gray));
+//        solver.applyFeedback(new Word("DRAWL"), Feedback.of(gray, yellow, yellow, yellow, gray));
 //        solver.applyFeedback(new Word("CLOWN"), Feedback.of(green, green, green, gray, gray ));
 //        solver.applyFeedback(new Word("WISER"), Feedback.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT));
 

@@ -1,10 +1,20 @@
 package feedback;
 
 import java.util.Arrays;
+import java.util.Map;
 
 import word.Word;
 
 public final class Feedback {
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_GREEN = "\u001B[32m";
+    private static final String ANSI_YELLOW = "\u001B[33m";
+    private static final String ANSI_GRAY = "\u001B[90m";
+    private static final Map<Mark, String> COLOR_MAP = Map.of(
+            Mark.ABSENT, ANSI_GRAY,
+            Mark.PRESENT, ANSI_YELLOW,
+            Mark.CORRECT, ANSI_GREEN
+    );
 
     public static final int LENGTH = 5;
 
@@ -84,9 +94,12 @@ public final class Feedback {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Feedback)) return false;
-        Feedback other = (Feedback) o;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Feedback other)) {
+            return false;
+        }
         return Arrays.equals(this.marks, other.marks);
     }
 
@@ -97,7 +110,19 @@ public final class Feedback {
 
     @Override
     public String toString() {
-        return Arrays.toString(marks);
+        StringBuilder out = new StringBuilder();
+        out.append('[');
+        for (int i = 0; i < marks.length; i++) {
+            Mark mark = marks[i];
+            out.append(COLOR_MAP.get(mark));
+            out.append(mark);
+            out.append(ANSI_RESET);
+            if (i < marks.length - 1) {
+                out.append(", ");
+            }
+        }
+        out.append(']');
+        return out.toString();
     }
 
     public boolean hasAnyPresentOrCorrect(Word guess, char letter) {

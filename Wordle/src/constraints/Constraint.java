@@ -175,4 +175,8 @@ public final class Constraint {
 	public Feedback feedback() {
 		return feedback;
 	}
+
+	public String toString() {
+		return guess + "\t" + feedback;
+	}
 }

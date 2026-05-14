@@ -58,6 +58,7 @@ public class Solver {
      */
     public void applyFeedback(Word guess, Feedback feedback) {
         Constraint constraint = new Constraint(guess, feedback);
+        System.out.println(constraint);
         goalWords = goalWords.stream().filter(constraint::allows).toList();
         if (hardmode) {
             System.out.print(allowedWords.size() + " allowed words filtered to ");
