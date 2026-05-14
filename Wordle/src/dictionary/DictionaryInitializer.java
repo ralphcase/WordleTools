@@ -12,6 +12,7 @@ public final class DictionaryInitializer {
     public static final String ALLOWED_WORDS_FILE = "allowed_words.txt";
     public static final String GOAL_WORDS_FILE = "goals.txt";
     public static final String PAST_SOLUTIONS_FILE = "solutions.txt";
+    public static final String ARCHIVE_SOLUTIONS_FILE = "archive_solutions.txt";
 
     private final File baseDir;
     private final WordLoader loader = new WordLoader();
@@ -29,6 +30,7 @@ public final class DictionaryInitializer {
         File allowedFile = new File(baseDir, ALLOWED_WORDS_FILE);
         File goalsFile = new File(baseDir, GOAL_WORDS_FILE);
         File pastFile = new File(baseDir, PAST_SOLUTIONS_FILE);
+        File archiveFile = new File(baseDir, ARCHIVE_SOLUTIONS_FILE);
 
         List<Word> allowed = loader.loadWords(allowedFile.getPath());
         List<Word> goals = loader.loadWords(goalsFile.getPath());
@@ -38,6 +40,11 @@ public final class DictionaryInitializer {
             pastSolutions = loader.loadWords(pastFile.getPath());
         }
 
-        return new WordRepository(allowed, goals, pastSolutions);
+        List<Word> archiveSolutions = null;
+        if (archiveFile.exists()) {
+            archiveSolutions = loader.loadWords(archiveFile.getPath());
+        }
+
+        return new WordRepository(allowed, goals, pastSolutions, archiveSolutions);
     }
 }

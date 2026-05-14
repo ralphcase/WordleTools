@@ -8,11 +8,20 @@ public final class WordRepository {
     private final List<Word> allowedWords;
     private final List<Word> goalWords;
     private final List<Word> pastSolutionWords;
+    private final List<Word> archiveSolutionWords;
 
     public WordRepository(
             List<Word> allowedWords,
             List<Word> goalWords,
             List<Word> pastSolutionWords) {
+        this(allowedWords, goalWords, pastSolutionWords, null);
+    }
+
+    public WordRepository(
+            List<Word> allowedWords,
+            List<Word> goalWords,
+            List<Word> pastSolutionWords,
+            List<Word> archiveSolutionWords) {
 
         Objects.requireNonNull(allowedWords, "allowed Words must not be null");
         Objects.requireNonNull(goalWords, "goal Words must not be null");
@@ -25,6 +34,7 @@ public final class WordRepository {
         } else {
             this.pastSolutionWords = List.copyOf(pastSolutionWords);
         }
+        this.archiveSolutionWords = List.copyOf(archiveSolutionWords);
       
         // Enforce invariants
         ensureSubset(this.goalWords, this.allowedWords,
@@ -54,4 +64,7 @@ public final class WordRepository {
     public List<Word> getPastSolutionWords() {
         return pastSolutionWords;
     }
+
+    public List<Word> getArchiveSolutionWords() { return archiveSolutionWords; }
+
 }
