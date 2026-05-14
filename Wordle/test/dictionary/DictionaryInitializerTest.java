@@ -55,6 +55,12 @@ public class DictionaryInitializerTest {
             w.write("crane");
         }
 
+        // Create archive_solutions.txt
+        File archive = tempDir.resolve(DictionaryInitializer.ARCHIVE_SOLUTIONS_FILE).toFile();
+        try (FileWriter w = new FileWriter(archive)) {
+            w.write("crane");
+        }
+
         DictionaryInitializer init = new DictionaryInitializer(tempDir.toFile());
         WordRepository repo = init.loadDictionaries();
 

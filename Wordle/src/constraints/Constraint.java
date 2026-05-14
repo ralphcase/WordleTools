@@ -24,50 +24,50 @@ public final class Constraint {
 	}
 
 	private boolean allows_c(Word candidate) {
-		char[] g = guess.letters();
-		char[] c = candidate.letters();
-		Mark[] m = feedback.marks();
+		char[] guessLetters = guess.letters();
+		char[] candidateLetters = candidate.letters();
+		Mark[] marks = feedback.marks();
 
 		// ------------------------------------------------------------
 		// 1. Positional rules (CORRECT, PRESENT, ABSENT)
 		// ------------------------------------------------------------
 		for (int i = 0; i < Word.LENGTH; i++) {
-			char letter = g[i];
-			switch (m[i]) {
+			char letter = guessLetters[i];
+			switch (marks[i]) {
 
-			case CORRECT -> {
-				if (c[i] != letter)
-					return false;
-			}
+				case CORRECT -> {
+					if (candidateLetters[i] != letter)
+						return false;
+				}
 
-			case PRESENT -> {
-				if (c[i] == letter)
-					return false; // cannot be in same position
-				if (!candidate.contains(letter))
-					return false;
-			}
+				case PRESENT -> {
+					if (candidateLetters[i] == letter)
+						return false; // cannot be in same position
+					if (!candidate.contains(letter))
+						return false;
+				}
 
-			case ABSENT -> {
-				boolean candidateHasLetter = candidate.contains(letter);
-				boolean guessHasPositive = feedback.hasAnyPresentOrCorrect(guess, letter);
+				case ABSENT -> {
+					boolean candidateHasLetter = candidate.contains(letter);
+					boolean guessHasPositive = feedback.hasAnyPresentOrCorrect(guess, letter);
 
-				if (!candidateHasLetter)
-					break; // candidate avoids the letter entirely - OK
+					if (!candidateHasLetter)
+						break; // candidate avoids the letter entirely - OK
 
-				if (!guessHasPositive)
-					return false; // pure gray - letter must not appear anywhere
+					if (!guessHasPositive)
+						return false; // pure gray - letter must not appear anywhere
 
-				// mixed marks - ABSENT forbids only this position
-				if (c[i] == letter)
-					return false;
-			}
+					// mixed marks - ABSENT forbids only this position
+					if (candidateLetters[i] == letter)
+						return false;
+				}
 			}
 		}
 
 		// ------------------------------------------------------------
 		// 2. Duplicate-letter rules (minCount / maxCount per letter)
 		// ------------------------------------------------------------
-		// For each letter A�Z, compute:
+		// For each letter A-Z, compute:
 		// - how many times it appears in the guess
 		// - how many of those positions are PRESENT or CORRECT
 		// - how many are ABSENT
@@ -80,9 +80,9 @@ public final class Constraint {
 			int absentCount = 0;
 
 			for (int i = 0; i < Word.LENGTH; i++) {
-				if (g[i] == letter) {
+				if (guessLetters[i] == letter) {
 					guessCount++;
-					if (m[i] == Mark.CORRECT || m[i] == Mark.PRESENT) {
+					if (marks[i] == Mark.CORRECT || marks[i] == Mark.PRESENT) {
 						positiveCount++;
 					} else {
 						absentCount++;

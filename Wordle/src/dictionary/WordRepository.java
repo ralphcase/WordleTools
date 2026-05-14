@@ -34,8 +34,12 @@ public final class WordRepository {
         } else {
             this.pastSolutionWords = List.copyOf(pastSolutionWords);
         }
-        this.archiveSolutionWords = List.copyOf(archiveSolutionWords);
-      
+        if (archiveSolutionWords == null) {
+            this.archiveSolutionWords = List.of();
+        } else {
+            this.archiveSolutionWords = List.copyOf(archiveSolutionWords);
+        }
+
         // Enforce invariants
         ensureSubset(this.goalWords, this.allowedWords,
                 "goalWords must be a subset of allowedWords");

@@ -21,9 +21,9 @@ public class Main {
         WordRepository repo = initializer.loadDictionaries();
 
         boolean hard = false;
-//        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
+        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
 //        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
-        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
+//        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
 
 
         // Hardcoded example guess + feedback
