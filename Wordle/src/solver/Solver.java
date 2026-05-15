@@ -25,7 +25,7 @@ public class Solver {
             throw new IllegalArgumentException("Repository cannot be null");
         }
         switch (archive) {
-            case ARCHIVE -> this.goalWords = repository.getArchiveSolutionWords();
+            case ARCHIVE -> this.goalWords = repository.getPastSolutionWords();
             case NEW -> {
                 this.goalWords = new ArrayList<>(repository.getGoalWords());
                 this.goalWords.removeAll(repository.getPastSolutionWords());

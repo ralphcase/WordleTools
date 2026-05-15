@@ -22,7 +22,7 @@ public final class Word {
     }
     
     public boolean contains(char c) {
-    	return text.indexOf(c) >= 0;
+    	return text.indexOf(Character.toUpperCase(c)) >= 0;
     }
 
     @Override
@@ -33,8 +33,7 @@ public final class Word {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Word)) return false;
-        Word other = (Word) o;
+        if (!(o instanceof Word other)) return false;
         return text.equals(other.text);
     }
 
@@ -52,7 +51,8 @@ public final class Word {
 	}
 
 	public int count(char letter) {
-	    int count = 0;
+	    letter = Character.toUpperCase(letter);
+        int count = 0;
 	    for (int i = 0; i < text.length(); i++) {
 	        if (text.charAt(i) == letter) count++;
 	    }

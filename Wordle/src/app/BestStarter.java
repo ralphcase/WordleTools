@@ -12,7 +12,9 @@ public class BestStarter {
         DictionaryInitializer initializer = new DictionaryInitializer();
         WordRepository repo = initializer.loadDictionaries();
 
-        Solver solver = new Solver(repo);
+        boolean hard = false;
+//        Solver solver = new Solver(repo);
+        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
 
         System.out.println("Best Starting guess: " + solver.nextGuess());
 
