@@ -177,7 +177,6 @@ public class SolverTest {
 		Solver solver = new Solver(repo, false, Solver.Mode.ARCHIVE);
 
 		List<Word> candidates = solver.remainingCandidates();
-		System.out.println("--- test debug ---"+candidates);
 		assertEquals(2, candidates.size());
 		assertTrue(candidates.contains(new Word("CRANE")));
 		assertTrue(candidates.contains(new Word("SLATE")));
