@@ -19,11 +19,6 @@ public final class Constraint {
 	}
 
 	public boolean allows(Word candidate) {
-		return allows_c(candidate);
-//    	return allows_r(candidate);
-	}
-
-	private boolean allows_c(Word candidate) {
 		char[] guessLetters = guess.letters();
 		char[] candidateLetters = candidate.letters();
 		Mark[] marks = feedback.marks();
@@ -117,63 +112,6 @@ public final class Constraint {
 		}
 
 		return true;
-	}
-
-	private boolean allows_r(Word candidate) {
-		boolean[] matched = new boolean[Word.LENGTH];
-
-		return exactMatches(candidate, matched) && presentLetters(candidate, matched)
-				&& absentLetters(candidate, matched);
-	}
-
-	private boolean exactMatches(Word candidate, boolean[] matched) {
-		for (int i = 0; i < Word.LENGTH; i++) {
-			if (feedback.marks()[i] == Mark.CORRECT) {
-				if (candidate.text().charAt(i) != guess.text().charAt(i)) {
-					return false;
-				}
-				matched[i] = true;
-			}
-		}
-		return true;
-	}
-
-	private boolean presentLetters(Word candidate, boolean[] matched) {
-		for (int i = 0; i < Word.LENGTH; i++) {
-			if (feedback.marks()[i] == Mark.PRESENT) {
-				if (candidate.text().charAt(i) == guess.text().charAt(i)) {
-					return false;
-				}
-				for (int j = 0; j < Word.LENGTH; j++) {
-					if (i != j && !matched[j] && candidate.text().charAt(i) == guess.text().charAt(j)) {
-						matched[i] = true;
-						break;
-					}
-				}
-				if (!matched[i])
-					return false;
-			}
-		}
-		return true;
-	}
-
-	private boolean absentLetters(Word candidate, boolean[] matched) {
-		for (int i = 0; i < Word.LENGTH; i++) {
-			if (feedback.marks()[i] == Mark.ABSENT) {
-				if (candidate.contains(guess.text().charAt(i))) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-
-	public Word guess() {
-		return guess;
-	}
-
-	public Feedback feedback() {
-		return feedback;
 	}
 
 	public String toString() {
