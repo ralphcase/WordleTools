@@ -24,15 +24,13 @@ public class Main {
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
         Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
-
+//
 
         // Hardcoded example guess + feedback
 
-        solver.applyFeedback(new Word("OATER"), Feedback.of(gray, gray, gray, yellow, yellow));
-        solver.applyFeedback(new Word("DEICE"), Feedback.of(gray, yellow, gray, green, gray));
-//        solver.applyFeedback(new Word("FYKED"), Feedback.of(gray, yellow, gray, gray, yellow));
-//        solver.applyFeedback(new Word("BEGUM"), Feedback.of(gray, yellow, gray, gray, yellow));
-//        solver.applyFeedback(new Word("CLOWN"), Feedback.of(green, green, green, gray, gray ));
+        solver.applyFeedback(new Word("OATER"), Feedback.of(yellow, yellow, gray, gray, gray));
+        solver.applyFeedback(new Word("MONAL"), Feedback.of(gray, green, gray, green, green));
+//        solver.applyFeedback(new Word("CURLY"), Feedback.of(yellow, gray, gray, gray, gray));
 //        solver.applyFeedback(new Word("WISER"), Feedback.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT));
 
         // Print remaining candidates
