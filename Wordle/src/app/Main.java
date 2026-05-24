@@ -28,9 +28,9 @@ public class Main {
 
         // Hardcoded example guess + feedback
 
-        solver.applyFeedback(new Word("OATER"), Feedback.of(yellow, yellow, gray, gray, gray));
-        solver.applyFeedback(new Word("MONAL"), Feedback.of(gray, green, gray, green, green));
-//        solver.applyFeedback(new Word("CURLY"), Feedback.of(yellow, gray, gray, gray, gray));
+        solver.applyFeedback(new Word("OATER"), Feedback.of(gray, gray, gray, yellow, gray));
+        solver.applyFeedback(new Word("SEINE"), Feedback.of(gray, yellow, yellow, yellow, green));
+//        solver.applyFeedback(new Word("SCIND"), Feedback.of(gray, gray, green, green, gray));
 //        solver.applyFeedback(new Word("WISER"), Feedback.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT));
 
         // Print remaining candidates
