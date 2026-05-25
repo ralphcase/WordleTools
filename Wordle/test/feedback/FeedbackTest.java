@@ -7,34 +7,44 @@ class FeedbackTest {
 
     @Test
     void constructsWithValidMarks() {
-        Feedback fb = new Feedback(new Mark[] {
+        Feedback fb = Feedback.of(
                 Mark.CORRECT, Mark.PRESENT, Mark.ABSENT,
                 Mark.ABSENT, Mark.CORRECT
-        });
+        );
         assertEquals(5, fb.marks().length);
     }
 
     @Test
     void rejectsNullArray() {
-        assertThrows(IllegalArgumentException.class, () -> new Feedback(null));
+        assertThrows(NullPointerException.class,
+                () -> Feedback.of((Mark[]) null));
     }
 
     @Test
     void rejectsWrongLength() {
         assertThrows(IllegalArgumentException.class,
-                () -> new Feedback(new Mark[] { Mark.CORRECT }));
+                () -> Feedback.of(Mark.CORRECT)); // only 1 mark
+    }
+
+    @Test
+    void rejectsNullElements() {
+        assertThrows(NullPointerException.class,
+                () -> Feedback.of(
+                        Mark.CORRECT, null, Mark.ABSENT,
+                        Mark.ABSENT, Mark.CORRECT
+                ));
     }
 
     @Test
     void equalityBasedOnMarks() {
-        Feedback a = new Feedback(new Mark[] {
+        Feedback a = Feedback.of(
                 Mark.CORRECT, Mark.PRESENT, Mark.ABSENT,
                 Mark.ABSENT, Mark.CORRECT
-        });
-        Feedback b = new Feedback(new Mark[] {
+        );
+        Feedback b = Feedback.of(
                 Mark.CORRECT, Mark.PRESENT, Mark.ABSENT,
                 Mark.ABSENT, Mark.CORRECT
-        });
+        );
         assertEquals(a, b);
     }
 }

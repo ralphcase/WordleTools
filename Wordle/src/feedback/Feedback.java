@@ -2,6 +2,7 @@ package feedback;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
 
 import word.Word;
 
@@ -20,37 +21,15 @@ public final class Feedback {
 
     private final Mark[] marks;
 
-    public Feedback(Mark[] marks) {
-        if (marks == null) {
-            throw new IllegalArgumentException("Marks cannot be null");
-        }
-        if (marks.length != LENGTH) {
-            throw new IllegalArgumentException("Feedback must have length " + LENGTH);
-        }
-        // Defensive copy to preserve immutability
-        this.marks = Arrays.copyOf(marks, LENGTH);
+    private Feedback(Mark[] marks) {
+        this.marks = marks;
     }
-    
+
     public static Feedback of(Mark... marks) {
-        if (marks == null) {
-            throw new IllegalArgumentException("Marks array cannot be null");
-        }
-        if (marks.length != Word.LENGTH) {
-            throw new IllegalArgumentException(
-                "Feedback must have exactly " + Word.LENGTH + " marks"
-            );
-        }
-
-        // Defensive copy to preserve immutability
-        Mark[] copy = new Mark[Word.LENGTH];
-        for (int i = 0; i < Word.LENGTH; i++) {
-            if (marks[i] == null) {
-                throw new IllegalArgumentException("Mark at index " + i + " is null");
-            }
-            copy[i] = marks[i];
-        }
-
-        return new Feedback(copy);
+        Objects.requireNonNull(marks);
+        if (marks.length != Word.LENGTH) throw new IllegalArgumentException();
+        for (Mark m : marks) Objects.requireNonNull(m);
+        return new Feedback(marks.clone());
     }
     
     public static Feedback from(Word guess, Word target) {
@@ -85,8 +64,6 @@ public final class Feedback {
 
         return Feedback.of(marks);
     }
-
-
 
     public Mark[] marks() {
         return Arrays.copyOf(marks, LENGTH);
