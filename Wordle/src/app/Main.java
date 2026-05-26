@@ -21,16 +21,16 @@ public class Main {
         WordRepository repo = initializer.loadDictionaries();
 
         boolean hard = false;
-        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
-//        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
+//        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
+        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
 //
 
         // Hardcoded example guess + feedback
 
-        solver.applyFeedback(new Word("ROATE"), Feedback.of(yellow, gray, gray, gray, gray));
-        solver.applyFeedback(new Word("CHUBS"), Feedback.of(green, gray, gray, gray, gray));
-//        solver.applyFeedback(new Word("MISTY"), Feedback.of(gray, green, green, yellow, gray));
+        solver.applyFeedback(new Word("OATER"), Feedback.of(yellow, gray, gray, gray, gray));
+        solver.applyFeedback(new Word("LOONY"), Feedback.of(gray, green, gray, gray, gray));
+        solver.applyFeedback(new Word("CHUGS"), Feedback.of(green, yellow, green, gray, gray));
 //        solver.applyFeedback(new Word("WISER"), Feedback.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT));
 
         // Print remaining candidates
