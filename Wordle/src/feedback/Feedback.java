@@ -1,12 +1,13 @@
 package feedback;
 
+import word.Word;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 
-import word.Word;
-
 public final class Feedback {
+    public static final int LENGTH = 5;
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_GREEN = "\u001B[32m";
     private static final String ANSI_YELLOW = "\u001B[33m";
@@ -16,9 +17,6 @@ public final class Feedback {
             Mark.PRESENT, ANSI_YELLOW,
             Mark.CORRECT, ANSI_GREEN
     );
-
-    public static final int LENGTH = 5;
-
     private final Mark[] marks;
 
     private Feedback(Mark[] marks) {
@@ -31,7 +29,7 @@ public final class Feedback {
         for (Mark m : marks) Objects.requireNonNull(m);
         return new Feedback(marks.clone());
     }
-    
+
     public static Feedback from(Word guess, Word target) {
         Mark[] marks = new Mark[Word.LENGTH];
 
@@ -47,18 +45,14 @@ public final class Feedback {
         // Second pass: PRESENT or ABSENT
         for (int i = 0; i < Word.LENGTH; i++) {
             if (marks[i] == Mark.CORRECT) continue;
-
-            char g = guess.text().charAt(i);
             boolean found = false;
-
             for (int j = 0; j < Word.LENGTH; j++) {
-                if (!used[j] && target.text().charAt(j) == g) {
+                if (!used[j] && guess.text().charAt(i) == target.text().charAt(j)) {
                     found = true;
                     used[j] = true;
                     break;
                 }
             }
-
             marks[i] = found ? Mark.PRESENT : Mark.ABSENT;
         }
 
@@ -105,7 +99,7 @@ public final class Feedback {
     public boolean hasAnyPresentOrCorrect(Word guess, char letter) {
         for (int i = 0; i < marks.length; i++) {
             if (guess.letters()[i] == letter &&
-                (marks[i] == Mark.PRESENT || marks[i] == Mark.CORRECT)) {
+                    (marks[i] == Mark.PRESENT || marks[i] == Mark.CORRECT)) {
                 return true;
             }
         }
