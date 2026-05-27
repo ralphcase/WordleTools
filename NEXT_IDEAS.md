@@ -56,6 +56,62 @@ Shape of done
 - Identify missing edge cases
 - Add dictionary invariants tests
 
+### State‑Coverage Model for Solver Testing
+The current test suite achieves full branch and line coverage, but solver correctness depends on state evolution, not just code paths. To measure how thoroughly tests exercise solver behavior, introduce a lightweight state‑coverage model.
+#### Define an abstract solver state
+Represent solver state using a canonical structure:
+- Green pattern — fixed letters by position (_ A _ M _)
+- Yellow constraints — for each letter, positions it cannot occupy
+- Gray letters — letters known to be absent
+- Letter count constraints — min/max occurrences inferred so far
+- Remaining candidate count — size of the filtered solution set
+This captures the shape of the solver’s knowledge without storing full word lists.
+
+#### Add a test‑only snapshotState() helper
+Expose a structured view of the solver’s current constraints:
+- Called after each applyFeedback()
+- Returns the abstract state described above
+- Does not affect production behavior
+This allows tests to record the solver’s reasoning trajectory.
+
+#### Track state transitions during tests
+Each deep‑state test records:
+- The initial state
+- The state after each feedback application
+- The final converged state
+
+Collect these states across the entire test suite to identify:
+- Distinct states reached
+- Distinct transitions exercised
+- Redundant tests (identical state sequences)
+- Missing scenarios (unreached state classes)
+
+#### Define “state classes” to ensure broad coverage
+Examples:
+- No constraints (initial)
+- Single green
+- Multiple greens
+- Single yellow
+- Multiple yellows
+- Gray elimination
+- Duplicate‑letter constraints (green+gray, yellow+gray, overcount gray)
+- Contradictory constraints resolved (yellow overridden by later green)
+- Hard‑mode restricted guess set
+- Single remaining candidate (converged)
+
+The goal is to ensure the test suite reaches at least one state in each class.
+
+#### Compute a simple state‑coverage metric
+   Two possible metrics:
+
+- State‑class coverage  
+(# of state classes reached) / (total state classes)
+
+- Transition coverage  
+(# of distinct transitions observed) / (total possible transitions)
+
+This provides a semantic measure of solver test completeness, independent of code structure.
+
 ---------------------------------------------------------------------
 
 ## UI and UX
