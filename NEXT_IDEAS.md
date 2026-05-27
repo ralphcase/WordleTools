@@ -24,25 +24,10 @@ Shape of done
 
 ---------------------------------------------------------------------
 
-## Codebase Hygiene
-
-### Clean up garbage files
-What it is  
-Remove unused legacy files from earlier refactors.
-
-Why it matters  
-Reduces noise, improves navigability, prevents confusion.
-
-Shape of done  
-- Identify unused classes
-- Remove or archive
-- Ensure tests still pass
-
-Function that might still be relevant
+## Legacy Function that might still be relevant
 - Add a priorityQueue to BestStarter to return the top N candidates instead of just the best one. This would allow users to see multiple good starting words and choose based on their preferences.
 - Build an example game that picks a random target word and simulates a game using the Solver, showing the guesses and feedback at each step. This would demonstrate how the Solver works in practice and could be used for testing or educational purposes.
 - Look more than one guess ahead in the Solver to evaluate the expected information gain of each candidate word, rather than just the immediate reduction in candidates. This would involve simulating possible feedback for each guess and calculating the resulting candidate sets, which could lead to better long-term strategies.
-- 
 
 ### Add JavaDoc
 What it is  
@@ -69,7 +54,6 @@ Ensures correctness and protects the refactor.
 
 Shape of done  
 - Identify missing edge cases
-- Add tests for Solver candidate shrinking
 - Add dictionary invariants tests
 
 ---------------------------------------------------------------------

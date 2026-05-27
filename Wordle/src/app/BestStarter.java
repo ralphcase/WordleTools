@@ -13,7 +13,6 @@ public class BestStarter {
         WordRepository repo = initializer.loadDictionaries();
 
         boolean hard = false;
-//        Solver solver = new Solver(repo);
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
         Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
 
