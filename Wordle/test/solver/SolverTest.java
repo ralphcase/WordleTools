@@ -515,5 +515,125 @@ public class SolverTest {
         );
     }
 
+    @Test
+    void solver_state_after_one_round_preserves_secret() {
+        List<Word> words = List.of(
+                new Word("CRANE"),
+                new Word("SLATE"),
+                new Word("FLAME")
+        );
+
+        WordRepository repo = new WordRepository(words, words, List.of());
+        Solver solver = new Solver(repo, false, Solver.Mode.ALL);
+
+        Word secret = new Word("FLAME");
+        Word guess1 = new Word("CRANE");
+        Feedback fb1 = Feedback.from(guess1, secret);
+
+        solver.applyFeedback(guess1, fb1);
+
+        List<Word> remaining = solver.remainingCandidates();
+
+        assertEquals(
+                List.of(new Word("SLATE"), new Word("FLAME")),
+                remaining
+        );
+    }
+
+    @Test
+    void solver_multiRoundStateEvolution_convergesOnSecret() {
+        List<Word> words = List.of(
+                new Word("CRANE"),
+                new Word("SLATE"),
+                new Word("FLAME")
+        );
+
+        WordRepository repo = new WordRepository(words, words, List.of());
+        Solver solver = new Solver(repo, false, Solver.Mode.ALL);
+
+        Word secret = new Word("FLAME");
+
+        // ----- Round 1 -----
+        Word g1 = new Word("CRANE");
+        Feedback fb1 = Feedback.from(g1, secret);
+        solver.applyFeedback(g1, fb1);
+
+        assertEquals(
+                List.of(new Word("SLATE"), new Word("FLAME")),
+                solver.remainingCandidates()
+        );
+
+        // ----- Round 2 -----
+        Word g2 = new Word("SLATE");
+        Feedback fb2 = Feedback.from(g2, secret);
+        solver.applyFeedback(g2, fb2);
+
+        assertEquals(
+                List.of(new Word("FLAME")),
+                solver.remainingCandidates()
+        );
+
+        // ----- Round 3 -----
+        Word g3 = solver.nextGuess();
+        assertEquals(new Word("FLAME"), g3);
+    }
+
+    @Test
+    void solver_duplicateLetterGrayDoesNotEliminatePresentLetter() {
+        List<Word> words = List.of(
+                new Word("BALMY"),
+                new Word("MANGO"),
+                new Word("CABAL"),
+                new Word("MAMMA") // guess only
+        );
+
+        WordRepository repo = new WordRepository(words, words, List.of());
+        Solver solver = new Solver(repo, false, Solver.Mode.ALL);
+
+        Word secret = new Word("BALMY");
+        Word guess = new Word("MAMMA");
+
+        Feedback fb = Feedback.from(guess, secret);
+        solver.applyFeedback(guess, fb);
+
+        List<Word> remaining = solver.remainingCandidates();
+
+        assertEquals(
+                List.of(new Word("BALMY")),
+                remaining
+        );
+    }
+
+    @Test
+    void solver_duplicateLetterYellowAndGrayBehavesCorrectly() {
+        List<Word> words = List.of(
+                new Word("CANOE"),  // secret
+                new Word("CARGO"),
+                new Word("CABIN"),
+                new Word("BANAL"),
+                new Word("ALARM")   // guess only
+        );
+
+        WordRepository repo = new WordRepository(words, words, List.of());
+        Solver solver = new Solver(repo, false, Solver.Mode.ALL);
+
+        Word secret = new Word("CANOE");
+        Word guess = new Word("ALARM");
+
+        Feedback fb = Feedback.from(guess, secret);
+        solver.applyFeedback(guess, fb);
+
+        List<Word> remaining = solver.remainingCandidates();
+
+        assertEquals(
+                List.of(
+                        new Word("CANOE"),
+                        new Word("CABIN")
+                ),
+                remaining
+        );
+    }
 
 }
+
+
