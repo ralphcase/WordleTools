@@ -148,4 +148,16 @@ class FeedbackTest {
                 fb.marks()
         );
     }
+
+    @Test
+    public void testEqualsWithNonFeedbackObject() {
+        Feedback f = Feedback.of(
+                Mark.CORRECT, Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.CORRECT
+        );
+
+        assertNotEquals(f, "not feedback");  // different type
+        assertNotEquals(f, new Object());    // arbitrary object
+        assertNotEquals(f, null);            // null check
+    }
+
 }

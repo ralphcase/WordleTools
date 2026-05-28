@@ -1,6 +1,7 @@
 package word;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class WordTest {
@@ -166,4 +167,13 @@ class WordTest {
         assertEquals(w1, w2);
         // No way to mutate w1 through public API
     }
+
+    @Test
+    public void testEqualsWithNonWordObject() {
+        Word w = new Word("SLATE");
+        assertNotEquals(w, "SLATE");     // different type
+        assertNotEquals(w, new Object()); // arbitrary object
+        assertNotEquals(w, null);         // null check
+    }
+
 }

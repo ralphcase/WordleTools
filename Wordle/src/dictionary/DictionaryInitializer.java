@@ -1,8 +1,9 @@
 package dictionary;
 
+import word.Word;
+
 import java.io.File;
 import java.util.List;
-import word.Word;
 
 public final class DictionaryInitializer {
 
@@ -11,7 +12,7 @@ public final class DictionaryInitializer {
     // -----------------------------
     public static final String ALLOWED_WORDS_FILE = "allowed_words.txt";
     public static final String GOAL_WORDS_FILE = "goals.txt";
-//    public static final String PAST_SOLUTIONS_FILE = "solutions.txt";
+    //    public static final String PAST_SOLUTIONS_FILE = "solutions.txt";
     public static final String PAST_SOLUTIONS_FILE = "archive_solutions.txt";
 
     private final File baseDir;
