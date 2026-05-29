@@ -9,13 +9,13 @@ class WordTest {
     @Test
     void constructsWithValidText() {
         Word w = new Word("apple");
-        assertEquals("APPLE", w.text());
+        assertEquals("APPLE", w.toString());
     }
 
     @Test
     void trimsAndUppercases() {
         Word w = new Word("  Apple  ");
-        assertEquals("APPLE", w.text());
+        assertEquals("APPLE", w.toString());
     }
 
     @Test

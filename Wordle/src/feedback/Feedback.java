@@ -36,7 +36,7 @@ public final class Feedback {
         // First pass: CORRECT marks
         boolean[] used = new boolean[Word.LENGTH];
         for (int i = 0; i < Word.LENGTH; i++) {
-            if (guess.text().charAt(i) == target.text().charAt(i)) {
+            if (guess.charAt(i) == target.charAt(i)) {
                 marks[i] = Mark.CORRECT;
                 used[i] = true;
             }
@@ -47,7 +47,7 @@ public final class Feedback {
             if (marks[i] == Mark.CORRECT) continue;
             boolean found = false;
             for (int j = 0; j < Word.LENGTH; j++) {
-                if (!used[j] && guess.text().charAt(i) == target.text().charAt(j)) {
+                if (!used[j] && guess.charAt(i) == target.charAt(j)) {
                     found = true;
                     used[j] = true;
                     break;
