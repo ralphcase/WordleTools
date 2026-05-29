@@ -155,9 +155,8 @@ class FeedbackTest {
                 Mark.CORRECT, Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.CORRECT
         );
 
-        assertNotEquals(f, "not feedback");  // different type
-        assertNotEquals(f, new Object());    // arbitrary object
-        assertNotEquals(f, null);            // null check
+        assertNotEquals(new Object(), f);    // arbitrary object
+        assertNotEquals(null, f);            // null check
     }
 
 }

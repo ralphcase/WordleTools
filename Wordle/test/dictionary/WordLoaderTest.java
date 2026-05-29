@@ -1,8 +1,8 @@
 package dictionary;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.junit.jupiter.api.Assertions;
 import word.Word;
 
 import java.io.File;

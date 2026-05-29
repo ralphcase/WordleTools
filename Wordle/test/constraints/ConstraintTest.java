@@ -1,11 +1,11 @@
 package constraints;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
-import static feedback.Mark.*;
-
 import feedback.Feedback;
+import org.junit.jupiter.api.Test;
 import word.Word;
+
+import static feedback.Mark.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ConstraintTest {
 

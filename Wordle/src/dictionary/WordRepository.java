@@ -1,7 +1,11 @@
 package dictionary;
 
-import java.util.*;
 import word.Word;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 public record WordRepository(List<Word> allowedWords, List<Word> goalWords, List<Word> pastSolutionWords) {
 

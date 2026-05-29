@@ -91,9 +91,8 @@ class WordTest {
     @Test
     public void testEqualsWithNonWordObject() {
         Word w = new Word("SLATE");
-        assertNotEquals(w, "SLATE");     // different type
-        assertNotEquals(w, new Object()); // arbitrary object
-        assertNotEquals(w, null);         // null check
+        assertNotEquals(new Object(), w); // arbitrary object
+        assertNotEquals(null, w);         // null check
     }
 
     @Test

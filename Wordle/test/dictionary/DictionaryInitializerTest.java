@@ -1,12 +1,13 @@
 package dictionary;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.junit.jupiter.api.Assertions;
 import word.Word;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Path;
 
 public class DictionaryInitializerTest {
@@ -44,6 +45,15 @@ public class DictionaryInitializerTest {
         }
 
         // Create goals.txt
+        WordRepository repo = getWordRepository(tempDir);
+
+        Assertions.assertEquals(3, repo.allowedWords().size());
+        Assertions.assertEquals(2, repo.goalWords().size());
+        Assertions.assertEquals(1, repo.pastSolutionWords().size());
+        Assertions.assertEquals(new Word("CRANE"), repo.pastSolutionWords().getFirst());
+    }
+
+    private static WordRepository getWordRepository(Path tempDir) throws IOException {
         File goals = tempDir.resolve(DictionaryInitializer.GOAL_WORDS_FILE).toFile();
         try (FileWriter w = new FileWriter(goals)) {
             w.write("crane slate");
@@ -56,12 +66,7 @@ public class DictionaryInitializerTest {
         }
 
         DictionaryInitializer init = new DictionaryInitializer(tempDir.toFile());
-        WordRepository repo = init.loadDictionaries();
-
-        Assertions.assertEquals(3, repo.allowedWords().size());
-        Assertions.assertEquals(2, repo.goalWords().size());
-        Assertions.assertEquals(1, repo.pastSolutionWords().size());
-        Assertions.assertEquals(new Word("CRANE"), repo.pastSolutionWords().getFirst());
+        return init.loadDictionaries();
     }
 
     @Test

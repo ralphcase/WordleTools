@@ -1,11 +1,11 @@
 package dictionary;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import word.Word;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class WordRepositoryTest {
 
