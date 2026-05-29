@@ -5,6 +5,7 @@ import java.util.Objects;
 public final class Word {
 
     private final String text;
+    private final char[] letters;
     public static final int LENGTH = 5;
 
     public Word(String text) {
@@ -15,6 +16,7 @@ public final class Word {
         if (this.text.length() != LENGTH) {
             throw new IllegalArgumentException("Word must be " + LENGTH + " letters");
         }
+        this.letters = this.text.toCharArray();
     }
 
     public String text() {
@@ -43,12 +45,12 @@ public final class Word {
     }
 
 	public char[] letters() {
-		char[] result = new char[Word.LENGTH];
-		for (int i = 0; i < Word.LENGTH; i++) {
-			result[i] = text.charAt(i);
-		}
-		return result;
+		return letters;
 	}
+
+    public char charAt(int index) {
+        return letters[index];
+    }
 
 	public int count(char letter) {
 	    letter = Character.toUpperCase(letter);

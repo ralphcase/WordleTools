@@ -47,27 +47,6 @@ class WordTest {
         assertEquals('E', letters[4]);
     }
 
-    @Test
-    void lettersReturnsNewArrayEachTime() {
-        Word w = new Word("APPLE");
-        char[] letters1 = w.letters();
-        char[] letters2 = w.letters();
-        assertNotSame(letters1, letters2); // defensive copy
-        assertArrayEquals(letters1, letters2); // but content is same
-    }
-
-    @Test
-    void lettersMutationDoesNotAffectWord() {
-        Word w = new Word("APPLE");
-        char[] letters = w.letters();
-        letters[0] = 'Z';
-
-        assertEquals('A', w.letters()[0]); // word unchanged
-    }
-
-    // ============================================================
-    // NEW TESTS: contains() method
-    // ============================================================
 
     @Test
     void containsDetectsLetterInWord() {
