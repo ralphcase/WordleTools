@@ -8,6 +8,8 @@ public final class Word {
     public static final int LENGTH = 5;
     private final char[] letters;
 
+    private int[] counts; // lazily initialized
+
     public Word(String text) {
         if (text == null || text.isBlank()) {
             throw new IllegalArgumentException("Word cannot be null or blank");
@@ -52,6 +54,21 @@ public final class Word {
 
     public char charAt(int index) {
         return letters[index];
+    }
+
+    /**
+     * Returns a cached array of size 26 containing the count of each letter A–Z.
+     * This array is computed once and reused.
+     */
+    public int[] letterCounts() {
+        if (counts == null) {
+            int[] c = new int[26];
+            for (char ch : letters) {
+                c[ch - 'A']++;
+            }
+            counts = c;
+        }
+        return counts;
     }
 
     public int count(char letter) {

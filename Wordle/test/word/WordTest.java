@@ -155,4 +155,52 @@ class WordTest {
         assertNotEquals(w, null);         // null check
     }
 
+    @Test
+    void letterCountsSimpleWord() {
+        Word w = new Word("APPLE");
+        int[] counts = w.letterCounts();
+
+        assertEquals(1, counts['A' - 'A']);
+        assertEquals(2, counts['P' - 'A']);
+        assertEquals(1, counts['L' - 'A']);
+        assertEquals(1, counts['E' - 'A']);
+
+        // all others zero
+        for (int i = 0; i < 26; i++) {
+            if ("APLE".indexOf('A' + i) < 0) {
+                assertEquals(0, counts[i]);
+            }
+        }
+    }
+
+    @Test
+    void letterCountsHandlesDuplicates() {
+        Word w = new Word("BANAN");
+        int[] counts = w.letterCounts();
+
+        assertEquals(2, counts['A' - 'A']);
+        assertEquals(2, counts['N' - 'A']);
+        assertEquals(1, counts['B' - 'A']);
+    }
+
+    @Test
+    void letterCountsIsCached() {
+        Word w = new Word("APPLE");
+        int[] c1 = w.letterCounts();
+        int[] c2 = w.letterCounts();
+
+        assertSame(c1, c2);
+    }
+
+    @Test
+    void letterCountsIsCaseInsensitive() {
+        Word w = new Word("Apple");
+        int[] counts = w.letterCounts();
+
+        assertEquals(1, counts['A' - 'A']);
+        assertEquals(2, counts['P' - 'A']);
+        assertEquals(1, counts['L' - 'A']);
+        assertEquals(1, counts['E' - 'A']);
+    }
+
 }

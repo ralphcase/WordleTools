@@ -6,115 +6,113 @@ import word.Word;
 
 public final class Constraint {
 
-	private final Word guess;
-	private final Feedback feedback;
+    private final Word guess;
+    private final Feedback feedback;
 
-	public Constraint(Word guess, Feedback feedback) {
-		if (guess == null)
-			throw new IllegalArgumentException("Guess cannot be null");
-		if (feedback == null)
-			throw new IllegalArgumentException("Feedback cannot be null");
-		this.guess = guess;
-		this.feedback = feedback;
-	}
+    public Constraint(Word guess, Feedback feedback) {
+        if (guess == null) throw new IllegalArgumentException("Guess cannot be null");
+        if (feedback == null) throw new IllegalArgumentException("Feedback cannot be null");
+        this.guess = guess;
+        this.feedback = feedback;
+    }
 
-	public boolean allows(Word candidate) {
-		char[] guessLetters = guess.letters();
-		char[] candidateLetters = candidate.letters();
-		Mark[] marks = feedback.marks();
+    public boolean allows(Word candidate) {
+        char[] guessLetters = guess.letters();
+        char[] candidateLetters = candidate.letters();
+        Mark[] marks = feedback.marks();
 
-		// ------------------------------------------------------------
-		// 1. Positional rules (CORRECT, PRESENT, ABSENT)
-		// ------------------------------------------------------------
-		for (int i = 0; i < Word.LENGTH; i++) {
-			char letter = guessLetters[i];
-			switch (marks[i]) {
+        // ------------------------------------------------------------
+        // Precompute guess letter stats (one pass)
+        // ------------------------------------------------------------
+        int[] guessCount = new int[26];
+        int[] positiveCount = new int[26];
+        int[] absentCount = new int[26];
 
-				case CORRECT -> {
-					if (candidateLetters[i] != letter)
-						return false;
-				}
+        boolean[] seen = new boolean[26];
+        char[] distinct = new char[5];
+        int distinctCount = 0;
 
-				case PRESENT -> {
-					if (candidateLetters[i] == letter)
-						return false; // cannot be in same position
-					if (!candidate.contains(letter))
-						return false;
-				}
+        for (int i = 0; i < Word.LENGTH; i++) {
+            char g = guessLetters[i];
+            int idx = g - 'A';
 
-				case ABSENT -> {
-					boolean candidateHasLetter = candidate.contains(letter);
-					boolean guessHasPositive = feedback.hasAnyPresentOrCorrect(guess, letter);
+            if (!seen[idx]) {
+                seen[idx] = true;
+                distinct[distinctCount++] = g;
+            }
 
-					if (!candidateHasLetter)
-						break; // candidate avoids the letter entirely - OK
+            guessCount[idx]++;
+            if (marks[i] == Mark.CORRECT || marks[i] == Mark.PRESENT)
+                positiveCount[idx]++;
+            else
+                absentCount[idx]++;
+        }
 
-					if (!guessHasPositive)
-						return false; // pure gray - letter must not appear anywhere
+        // ------------------------------------------------------------
+        // Precompute candidate letter counts (cached in Word)
+        // ------------------------------------------------------------
+        int[] candidateCount = candidate.letterCounts();
 
-					// mixed marks - ABSENT forbids only this position
-					if (candidateLetters[i] == letter)
-						return false;
-				}
-			}
-		}
+        // ------------------------------------------------------------
+        // 1. Positional rules (CORRECT, PRESENT, ABSENT)
+        // ------------------------------------------------------------
+        for (int i = 0; i < Word.LENGTH; i++) {
+            char letter = guessLetters[i];
+            int idx = letter - 'A';
 
-		// ------------------------------------------------------------
-		// 2. Duplicate-letter rules (minCount / maxCount per letter)
-		// ------------------------------------------------------------
-		// For each letter A-Z, compute:
-		// - how many times it appears in the guess
-		// - how many of those positions are PRESENT or CORRECT
-		// - how many are ABSENT
-		// Then enforce Wordle's per-letter multiplicity rules.
-		// ------------------------------------------------------------
+            switch (marks[i]) {
+                case CORRECT -> {
+                    if (candidateLetters[i] != letter)
+                        return false;
+                }
+                case PRESENT -> {
+                    if (candidateLetters[i] == letter)
+                        return false; // cannot be in same position
+                    if (candidateCount[idx] == 0)
+                        return false;
+                }
+                case ABSENT -> {
+                    if (candidateLetters[i] == letter)
+                        return false;
+                    if (candidateCount[idx] == 0)
+                        break; // candidate avoids letter entirely — OK
+                    if (positiveCount[idx] == 0)
+                        return false; // pure gray — letter must not appear
+                }
+            }
+        }
 
-		for (char letter = 'A'; letter <= 'Z'; letter++) {
-			int guessCount = 0;
-			int positiveCount = 0; // PRESENT or CORRECT
-			int absentCount = 0;
+        // ------------------------------------------------------------
+        // 2. Duplicate-letter rules (only for letters in the guess)
+        // ------------------------------------------------------------
+        for (int k = 0; k < distinctCount; k++) {
+            char letter = distinct[k];
+            int idx = letter - 'A';
 
-			for (int i = 0; i < Word.LENGTH; i++) {
-				if (guessLetters[i] == letter) {
-					guessCount++;
-					if (marks[i] == Mark.CORRECT || marks[i] == Mark.PRESENT) {
-						positiveCount++;
-					} else {
-						absentCount++;
-					}
-				}
-			}
+            int pos = positiveCount[idx];
+            int abs = absentCount[idx];
+            int cand = candidateCount[idx];
 
-			if (guessCount == 0)
-				continue; // letter not in guess - no constraints
+            // Case 1: All marks for this letter are ABSENT
+            if (pos == 0) {
+                if (cand > 0) return false;
+                continue;
+            }
 
-			int candidateCount = candidate.count(letter);
+            // Case 2: Mixed marks (some PRESENT/CORRECT, some ABSENT)
+            if (abs > 0) {
+                if (cand != pos) return false;
+                continue;
+            }
 
-			// Case 1: All marks for this letter are ABSENT - letter must not appear
-			if (positiveCount == 0) {
-				if (candidateCount > 0)
-					return false;
-				continue;
-			}
+            // Case 3: All marks are PRESENT or CORRECT
+            if (cand < pos) return false;
+        }
 
-			// Case 2: Mixed marks (some PRESENT/CORRECT, some ABSENT)
-			// Wordle rule: candidate must contain EXACTLY positiveCount copies
-			if (absentCount > 0) {
-				if (candidateCount != positiveCount)
-					return false;
-				continue;
-			}
+        return true;
+    }
 
-			// Case 3: All marks for this letter are PRESENT or CORRECT
-			// Wordle rule: candidate must contain AT LEAST positiveCount copies
-			if (candidateCount < positiveCount)
-				return false;
-		}
-
-		return true;
-	}
-
-	public String toString() {
-		return guess + "\t" + feedback;
-	}
+    public String toString() {
+        return guess + "\t" + feedback;
+    }
 }
