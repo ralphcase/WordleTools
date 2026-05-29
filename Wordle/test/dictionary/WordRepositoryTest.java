@@ -16,8 +16,8 @@ public class WordRepositoryTest {
 
         WordRepository repo = new WordRepository(allowed, goals, null);
 
-        Assertions.assertNotNull(repo.getPastSolutionWords());
-        Assertions.assertTrue(repo.getPastSolutionWords().isEmpty());
+        Assertions.assertNotNull(repo.pastSolutionWords());
+        Assertions.assertTrue(repo.pastSolutionWords().isEmpty());
     }
 
     @Test
@@ -56,9 +56,9 @@ public class WordRepositoryTest {
         goals.clear();
         past.clear();
 
-        Assertions.assertEquals(1, repo.getAllowedWords().size());
-        Assertions.assertEquals(1, repo.getGoalWords().size());
-        Assertions.assertEquals(1, repo.getPastSolutionWords().size());
+        Assertions.assertEquals(1, repo.allowedWords().size());
+        Assertions.assertEquals(1, repo.goalWords().size());
+        Assertions.assertEquals(1, repo.pastSolutionWords().size());
     }
 
     @Test
@@ -69,6 +69,6 @@ public class WordRepositoryTest {
         WordRepository repo = new WordRepository(allowed, goals, null);
 
         Assertions.assertThrows(UnsupportedOperationException.class, () ->
-                List.copyOf(repo.getAllowedWords()).add(new Word("SLATE")));
+                List.copyOf(repo.allowedWords()).add(new Word("SLATE")));
     }
 }

@@ -30,9 +30,9 @@ public class DictionaryInitializerTest {
         DictionaryInitializer init = new DictionaryInitializer(tempDir.toFile());
         WordRepository repo = init.loadDictionaries();
 
-        Assertions.assertEquals(2, repo.getAllowedWords().size());
-        Assertions.assertEquals(1, repo.getGoalWords().size());
-        Assertions.assertTrue(repo.getPastSolutionWords().isEmpty());
+        Assertions.assertEquals(2, repo.allowedWords().size());
+        Assertions.assertEquals(1, repo.goalWords().size());
+        Assertions.assertTrue(repo.pastSolutionWords().isEmpty());
     }
 
     @Test
@@ -58,10 +58,10 @@ public class DictionaryInitializerTest {
         DictionaryInitializer init = new DictionaryInitializer(tempDir.toFile());
         WordRepository repo = init.loadDictionaries();
 
-        Assertions.assertEquals(3, repo.getAllowedWords().size());
-        Assertions.assertEquals(2, repo.getGoalWords().size());
-        Assertions.assertEquals(1, repo.getPastSolutionWords().size());
-        Assertions.assertEquals(new Word("CRANE"), repo.getPastSolutionWords().getFirst());
+        Assertions.assertEquals(3, repo.allowedWords().size());
+        Assertions.assertEquals(2, repo.goalWords().size());
+        Assertions.assertEquals(1, repo.pastSolutionWords().size());
+        Assertions.assertEquals(new Word("CRANE"), repo.pastSolutionWords().getFirst());
     }
 
     @Test

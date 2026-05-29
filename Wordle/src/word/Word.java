@@ -1,7 +1,6 @@
 package word;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 public final class Word {
 
@@ -71,12 +70,4 @@ public final class Word {
         return counts;
     }
 
-    public int count(char letter) {
-        letter = Character.toUpperCase(letter);
-        int count = 0;
-        for (int i = 0; i < letters.length; i++) {
-            if (letters[i] == letter) count++;
-        }
-        return count;
-    }
 }

@@ -24,12 +24,11 @@ public final class Constraint {
         // ------------------------------------------------------------
         // Precompute guess letter stats (one pass)
         // ------------------------------------------------------------
-        int[] guessCount = new int[26];
         int[] positiveCount = new int[26];
         int[] absentCount = new int[26];
 
         boolean[] seen = new boolean[26];
-        char[] distinct = new char[5];
+        char[] distinct = new char[Word.LENGTH];
         int distinctCount = 0;
 
         for (int i = 0; i < Word.LENGTH; i++) {
@@ -41,7 +40,6 @@ public final class Constraint {
                 distinct[distinctCount++] = g;
             }
 
-            guessCount[idx]++;
             if (marks[i] == Mark.CORRECT || marks[i] == Mark.PRESENT)
                 positiveCount[idx]++;
             else

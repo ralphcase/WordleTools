@@ -80,65 +80,6 @@ class WordTest {
         assertTrue(w.contains('E'));
     }
 
-    // ============================================================
-    // NEW TESTS: count() method
-    // ============================================================
-
-    @Test
-    void countReturnsSingleOccurrence() {
-        Word w = new Word("CRANE");
-        assertEquals(1, w.count('C'));
-        assertEquals(1, w.count('R'));
-        assertEquals(1, w.count('A'));
-        assertEquals(1, w.count('N'));
-        assertEquals(1, w.count('E'));
-    }
-
-    @Test
-    void countReturnsDuplicateOccurrences() {
-        Word w = new Word("APPLE");
-        assertEquals(1, w.count('A'));
-        assertEquals(2, w.count('P'));
-        assertEquals(1, w.count('L'));
-        assertEquals(1, w.count('E'));
-    }
-
-    @Test
-    void countReturnsZeroForLetterNotInWord() {
-        Word w = new Word("CRANE");
-        assertEquals(0, w.count('Z'));
-        assertEquals(0, w.count('X'));
-    }
-
-    @Test
-    void countReturnsManyOccurrences() {
-        Word w = new Word("GEESE");
-        assertEquals(3, w.count('E'));
-        assertEquals(1, w.count('G'));
-        assertEquals(0, w.count('Z'));
-    }
-
-    @Test
-    void countIsCaseInsensitive() {
-        Word w = new Word("apple");
-        assertEquals(2, w.count('p'));
-        assertEquals(2, w.count('P'));
-    }
-
-    @Test
-    void countHandlesAllLettersInWord() {
-        Word w = new Word("ABBEY");
-        assertEquals(1, w.count('A'));
-        assertEquals(2, w.count('B'));
-        assertEquals(1, w.count('E'));
-        assertEquals(1, w.count('Y'));
-        assertEquals(0, w.count('Z'));
-    }
-
-    // ============================================================
-    // NEW TESTS: Immutability and defensive copying
-    // ============================================================
-
     @Test
     void wordIsImmutable() {
         Word w1 = new Word("CRANE");
@@ -160,7 +101,7 @@ class WordTest {
         Word w = new Word("APPLE");
         int[] counts = w.letterCounts();
 
-        assertEquals(1, counts['A' - 'A']);
+        assertEquals(1, counts[0]);
         assertEquals(2, counts['P' - 'A']);
         assertEquals(1, counts['L' - 'A']);
         assertEquals(1, counts['E' - 'A']);
@@ -178,7 +119,7 @@ class WordTest {
         Word w = new Word("BANAN");
         int[] counts = w.letterCounts();
 
-        assertEquals(2, counts['A' - 'A']);
+        assertEquals(2, counts[0]);
         assertEquals(2, counts['N' - 'A']);
         assertEquals(1, counts['B' - 'A']);
     }
@@ -197,7 +138,7 @@ class WordTest {
         Word w = new Word("Apple");
         int[] counts = w.letterCounts();
 
-        assertEquals(1, counts['A' - 'A']);
+        assertEquals(1, counts[0]);
         assertEquals(2, counts['P' - 'A']);
         assertEquals(1, counts['L' - 'A']);
         assertEquals(1, counts['E' - 'A']);

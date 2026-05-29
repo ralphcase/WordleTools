@@ -3,11 +3,7 @@ package dictionary;
 import java.util.*;
 import word.Word;
 
-public final class WordRepository {
-
-    private final List<Word> allowedWords;
-    private final List<Word> goalWords;
-    private final List<Word> pastSolutionWords;
+public record WordRepository(List<Word> allowedWords, List<Word> goalWords, List<Word> pastSolutionWords) {
 
     public WordRepository(
             List<Word> allowedWords,
@@ -16,7 +12,7 @@ public final class WordRepository {
 
         Objects.requireNonNull(allowedWords, "allowed Words must not be null");
         Objects.requireNonNull(goalWords, "goal Words must not be null");
-  
+
         // Defensive copies
         this.allowedWords = List.copyOf(allowedWords);
         this.goalWords = List.copyOf(goalWords);
@@ -41,18 +37,6 @@ public final class WordRepository {
                 throw new IllegalArgumentException(message + ": " + w);
             }
         }
-    }
-
-    public List<Word> getAllowedWords() {
-        return allowedWords;
-    }
-
-    public List<Word> getGoalWords() {
-        return goalWords;
-    }
-
-    public List<Word> getPastSolutionWords() {
-        return pastSolutionWords;
     }
 
 }

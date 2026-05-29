@@ -25,17 +25,17 @@ public class Solver {
             throw new IllegalArgumentException("Repository cannot be null");
         }
         switch (archive) {
-            case ARCHIVE -> this.goalWords = repository.getPastSolutionWords();
+            case ARCHIVE -> this.goalWords = repository.pastSolutionWords();
             case NEW -> {
-                this.goalWords = new ArrayList<>(repository.getGoalWords());
-                this.goalWords.removeAll(repository.getPastSolutionWords());
+                this.goalWords = new ArrayList<>(repository.goalWords());
+                this.goalWords.removeAll(repository.pastSolutionWords());
             }
-            case ALL -> this.goalWords = repository.getGoalWords();
+            case ALL -> this.goalWords = repository.goalWords();
             case SMART ->
                     throw new UnsupportedOperationException("SMART selection of next word is not yet implemented.");
         }
 
-        this.allowedWords = repository.getAllowedWords();
+        this.allowedWords = repository.allowedWords();
     }
 
     /**
