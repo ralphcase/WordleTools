@@ -4,6 +4,7 @@ import dictionary.DictionaryInitializer;
 import dictionary.WordRepository;
 import feedback.Feedback;
 import feedback.Mark;
+import solver.GuessScore;
 import solver.Solver;
 import word.Word;
 
@@ -22,12 +23,12 @@ public class Main {
 
         boolean hard = false;
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
-//        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
-        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
+        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
+//        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
 
-        solver.applyFeedback(new Word("OATER"), Feedback.of(gray, gray, gray, yellow, gray));
-        solver.applyFeedback(new Word("SEINE"), Feedback.of(green, gray, green, gray, green));
-        solver.applyFeedback(new Word("SLIDE"), Feedback.of(green, yellow, green, gray, green));
+        solver.applyFeedback(new Word("SANER"), Feedback.of(green, gray, gray, yellow, gray));
+//        solver.applyFeedback(new Word("SPELT"), Feedback.of(green, gray, yellow, green, gray));
+//        solver.applyFeedback(new Word("ALACK"), Feedback.of(gray, yellow, gray, gray, gray));
 //        solver.applyFeedback(new Word("CUPRO"), Feedback.of(gray, gray, yellow, yellow, gray));;
 //        solver.applyFeedback(new Word("WISER"), Feedback.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT));
 
@@ -35,7 +36,8 @@ public class Main {
         List<Word> candidates = solver.remainingCandidates();
         System.out.println(candidates.size() + " Remaining candidates: " + candidates);
 
-        System.out.println("Next Guess: " + solver.nextGuess());
+//        System.out.println("Next Guess: " + solver.nextGuess());
+        System.out.println("Next Guess: " + solver.rankedGuesses(10));
 
         long endTime = System.currentTimeMillis();
         System.out.println("It took " + (endTime - startTime) / 1000.0 + " seconds.");

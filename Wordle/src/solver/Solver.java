@@ -6,13 +6,17 @@ import feedback.Feedback;
 import word.Word;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class Solver {
 
     private final boolean hardmode;
     private List<Word> goalWords;
     private List<Word> allowedWords;
+
+    private int constraints;
 
     public Solver(WordRepository repository) {
         this(repository, false, Mode.ALL);
@@ -36,6 +40,8 @@ public class Solver {
         }
 
         this.allowedWords = repository.allowedWords();
+
+        constraints = 0;
     }
 
     /**
@@ -58,6 +64,7 @@ public class Solver {
      */
     public void applyFeedback(Word guess, Feedback feedback) {
         Constraint constraint = new Constraint(guess, feedback);
+        constraints++;
         System.out.println(constraint);
         goalWords = goalWords.stream().filter(constraint::allows).toList();
         if (hardmode) {
@@ -80,31 +87,40 @@ public class Solver {
      * most goal words, on average.
      */
     public Word nextGuess() {
-        Word result = allowedWords.getFirst();
-        List<Word> goals = remainingCandidates();
-        // Track the minimum total across all candidates
-        int minTotal = Integer.MAX_VALUE;
-        for (Word poss : allowedWords) {
-            // Calculate the sum of remaining candidates for this word across all goals
-            int total = 0;
-            for (Word target : goals) {
-                if (!target.equals(poss)) {
-                    // Simulate feedback for this guess against this target
-                    // and count how many candidates would remain after applying that constraint
-                    List<Word> r = remainingCandidates(new Constraint(poss, Feedback.from(poss, target)));
-                    total += r.size();
-                }
-            }
-//            System.out.print(".");
-            if (total < minTotal) {
-//                System.out.println();
-//                System.out.println(poss + " (" + total + ")");
-                minTotal = total;
-                result = poss;
+        return rankedGuesses(1).get(0).word();
+    }
+
+    public List<GuessScore> rankedGuesses(int top) {
+        PriorityQueue<GuessScore> pq =
+                new PriorityQueue<>(Comparator.comparingDouble(GuessScore::score));
+
+        for (Word w : allowedWords) {
+            pq.add(new GuessScore(w, scoreWord(w)));
+        }
+
+        List<GuessScore> result = new ArrayList<>(pq.size());
+        while (!pq.isEmpty() && top > 0) {
+            top--;
+            result.add(pq.poll());   // poll returns lowest score first
+        }
+
+        return result;
+    }
+
+    private double scoreWord(Word w) {
+        double score = 0;
+        for (Word target : goalWords) {
+            if (!target.equals(w)) {
+                // Simulate feedback for this guess against this target
+                // and count how many candidates would remain after applying that constraint
+                List<Word> r = remainingCandidates(new Constraint(w, Feedback.from(w, target)));
+                score += r.size();
             }
         }
-//        System.out.println();
-        return result;
+        if (!goalWords.contains(w)) {
+            score *= (double) (constraints + 2) / (constraints + 1);
+        }
+        return score;
     }
 
     public enum Mode {

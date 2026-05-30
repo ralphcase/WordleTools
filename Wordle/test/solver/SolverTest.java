@@ -7,7 +7,9 @@ import feedback.Mark;
 import org.junit.jupiter.api.Test;
 import word.Word;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static feedback.Mark.ABSENT;
 import static feedback.Mark.CORRECT;
@@ -632,6 +634,80 @@ public class SolverTest {
                 ),
                 remaining
         );
+    }
+
+    @Test
+    void rankedGuessesReturnsRequestedCount() {
+        List<Word> words = List.of(
+                new Word("SLATE"),
+                new Word("CRANE"),
+                new Word("BRINE"),
+                new Word("STONE")
+        );
+
+        WordRepository repo = new WordRepository(words, words, List.of());
+        Solver solver = new Solver(repo, false, Solver.Mode.ALL);
+
+        List<GuessScore> top3 = solver.rankedGuesses(3);
+
+        assertEquals(3, top3.size());
+    }
+
+    @Test
+    void rankedGuessesClampsToListSize() {
+        List<Word> words = List.of(
+                new Word("SLATE"),
+                new Word("CRANE")
+        );
+
+        WordRepository repo = new WordRepository(words, words, List.of());
+        Solver solver = new Solver(repo);
+
+        List<GuessScore> all = solver.rankedGuesses(10);
+
+        assertEquals(2, all.size());
+    }
+
+    @Test
+    void rankedGuessesIsSortedAscending() {
+        List<Word> words = List.of(
+                new Word("SLATE"),
+                new Word("CRANE"),
+                new Word("BRINE"),
+                new Word("STONE")
+        );
+
+        WordRepository repo = new WordRepository(words, words, List.of());
+        Solver solver = new Solver(repo);
+
+        List<GuessScore> ranked = solver.rankedGuesses(4);
+
+        for (int i = 1; i < ranked.size(); i++) {
+            assertTrue(
+                    ranked.get(i - 1).score() <= ranked.get(i).score(),
+                    "List is not sorted in ascending score order"
+            );
+        }
+    }
+
+    @Test
+    void rankedGuessesContainOnlyCandidateWords() {
+        List<Word> words = List.of(
+                new Word("SLATE"),
+                new Word("CRANE"),
+                new Word("BRINE")
+        );
+
+        WordRepository repo = new WordRepository(words, words, List.of());
+        Solver solver = new Solver(repo);
+
+        Set<Word> candidates = new HashSet<>(words);
+
+        List<GuessScore> ranked = solver.rankedGuesses(5);
+
+        for (GuessScore gs : ranked) {
+            assertTrue(candidates.contains(gs.word()));
+        }
     }
 
 }

@@ -16,7 +16,8 @@ public class BestStarter {
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
         Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
 
-        System.out.println("Best Starting guess: " + solver.nextGuess());
+//        System.out.println("Best Starting guess: " + solver.nextGuess());
+        System.out.println("Best Starting guess: " + solver.rankedGuesses(100));
 
         long endTime = System.currentTimeMillis();
         System.out.println("It took " + (endTime - startTime) / 1000.0 + " seconds.");
