@@ -93,7 +93,7 @@ public final class Constraint {
 
             // Case 1: All marks for this letter are ABSENT
             if (pos == 0) {
-                if (cand > 0) return false;
+                // If pos == 0 and cand > 0, we would have rejected earlier in the ABSENT branch.
                 continue;
             }
 

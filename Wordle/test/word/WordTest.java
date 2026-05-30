@@ -91,8 +91,8 @@ class WordTest {
     @Test
     public void testEqualsWithNonWordObject() {
         Word w = new Word("SLATE");
-        assertNotEquals(new Object(), w); // arbitrary object
-        assertNotEquals(null, w);         // null check
+        assertNotEquals(w, new Object()); // arbitrary object
+        assertNotEquals(w, null);         // null check
     }
 
     @Test
@@ -100,7 +100,7 @@ class WordTest {
         Word w = new Word("APPLE");
         int[] counts = w.letterCounts();
 
-        assertEquals(1, counts[0]);
+        assertEquals(1, counts['A' - 'A']);
         assertEquals(2, counts['P' - 'A']);
         assertEquals(1, counts['L' - 'A']);
         assertEquals(1, counts['E' - 'A']);
@@ -118,7 +118,7 @@ class WordTest {
         Word w = new Word("BANAN");
         int[] counts = w.letterCounts();
 
-        assertEquals(2, counts[0]);
+        assertEquals(2, counts['A' - 'A']);
         assertEquals(2, counts['N' - 'A']);
         assertEquals(1, counts['B' - 'A']);
     }
@@ -137,7 +137,7 @@ class WordTest {
         Word w = new Word("Apple");
         int[] counts = w.letterCounts();
 
-        assertEquals(1, counts[0]);
+        assertEquals(1, counts['A' - 'A']);
         assertEquals(2, counts['P' - 'A']);
         assertEquals(1, counts['L' - 'A']);
         assertEquals(1, counts['E' - 'A']);

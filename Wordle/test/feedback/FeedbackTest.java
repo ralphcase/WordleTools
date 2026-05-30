@@ -150,13 +150,31 @@ class FeedbackTest {
     }
 
     @Test
+    public void testEquals() {
+        Feedback f = Feedback.of(
+                Mark.CORRECT, Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.CORRECT
+        );
+        Feedback g = Feedback.of(
+                Mark.CORRECT, Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.CORRECT
+        );
+        Feedback h = Feedback.of(
+                Mark.ABSENT, Mark.CORRECT, Mark.PRESENT, Mark.ABSENT, Mark.CORRECT
+        );
+        assertEquals(f, f);
+        assertEquals(f, g);
+        assertNotEquals(f, h);
+        assertEquals(f.hashCode(), f.hashCode());
+        assertNotEquals(f.hashCode(), h.hashCode());
+    }
+
+    @Test
     public void testEqualsWithNonFeedbackObject() {
         Feedback f = Feedback.of(
                 Mark.CORRECT, Mark.ABSENT, Mark.PRESENT, Mark.ABSENT, Mark.CORRECT
         );
 
-        assertNotEquals(new Object(), f);    // arbitrary object
-        assertNotEquals(null, f);            // null check
+        assertNotEquals(f, new Object());    // arbitrary object
+        assertNotEquals(f,null);            // null check
     }
 
 }
