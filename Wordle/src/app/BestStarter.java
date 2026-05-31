@@ -13,8 +13,8 @@ public class BestStarter {
         WordRepository repo = initializer.loadDictionaries();
 
         boolean hard = false;
-//        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
-        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
+        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
+//        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
 
 //        System.out.println("Best Starting guess: " + solver.nextGuess());
         System.out.println("Best Starting guess: " + solver.rankedGuesses(100));
