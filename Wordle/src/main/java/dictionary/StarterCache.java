@@ -2,9 +2,13 @@ package dictionary;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import solver.GuessScore;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,56 +17,72 @@ import java.util.Optional;
 public class StarterCache {
 
     private final File file;
-    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private final Gson gson;
+
+    // Map<cacheKey, List<GuessScore>>
+    private Map<String, List<GuessScore>> cacheMap;
+
+    private static final Type MAP_TYPE =
+            new TypeToken<Map<String, List<GuessScore>>>() {}.getType();
 
     public StarterCache(File file) {
         this.file = file;
+        this.gson = new GsonBuilder().setPrettyPrinting().create();
+        this.cacheMap = new HashMap<>();
+        loadFromDisk();
     }
 
-    private static class CacheEntry {
-        String dictionaryHash;
-        List<GuessScore> starters;
+    // ------------------------------------------------------------
+    // Public API
+    // ------------------------------------------------------------
+
+    public Optional<List<GuessScore>> load(String solverMode,
+                                           String starterWord,
+                                           String dictHash) {
+        String key = makeKey(solverMode, starterWord, dictHash);
+        return Optional.ofNullable(cacheMap.get(key));
     }
 
-    private static class CacheRoot {
-        Map<String, CacheEntry> modes = new HashMap<>();
+    public void save(String solverMode,
+                     String starterWord,
+                     String dictHash,
+                     List<GuessScore> starters) {
+        String key = makeKey(solverMode, starterWord, dictHash);
+        cacheMap.put(key, starters);
+        writeToDisk();
     }
 
-    public Optional<List<GuessScore>> load(String mode, String dictHash) {
-        if (!file.exists()) return Optional.empty();
+    // ------------------------------------------------------------
+    // Key format
+    // ------------------------------------------------------------
 
-        try (Reader r = new FileReader(file)) {
-            CacheRoot root = gson.fromJson(r, CacheRoot.class);
-            CacheEntry entry = root.modes.get(mode);
+    private String makeKey(String solverMode, String starterWord, String dictHash) {
+        return solverMode + ":" + starterWord + ":" + dictHash;
+    }
 
-            if (entry != null && dictHash.equals(entry.dictionaryHash)) {
-                return Optional.of(entry.starters);
-            }
-        } catch (IOException e) {
-            // ignore, treat as cache miss
+    // ------------------------------------------------------------
+    // Persistence
+    // ------------------------------------------------------------
+
+    private void loadFromDisk() {
+        if (!file.exists()) {
+            cacheMap = new HashMap<>();
+            return;
         }
-
-        return Optional.empty();
+        try (FileReader reader = new FileReader(file)) {
+            Map<String, List<GuessScore>> loaded = gson.fromJson(reader, MAP_TYPE);
+            cacheMap = (loaded != null) ? loaded : new HashMap<>();
+        } catch (Exception e) {
+            // If the file is corrupted, start fresh
+            cacheMap = new HashMap<>();
+        }
     }
 
-    public void save(String mode, String dictHash, List<GuessScore> starters) {
-        CacheRoot root = new CacheRoot();
-
-        if (file.exists()) {
-            try (Reader r = new FileReader(file)) {
-                root = gson.fromJson(r, CacheRoot.class);
-                if (root == null) root = new CacheRoot();
-            } catch (IOException ignored) {}
+    private void writeToDisk() {
+        try (FileWriter writer = new FileWriter(file)) {
+            gson.toJson(cacheMap, writer);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to write starter cache", e);
         }
-
-        CacheEntry entry = new CacheEntry();
-        entry.dictionaryHash = dictHash;
-        entry.starters = starters;
-
-        root.modes.put(mode, entry);
-
-        try (Writer w = new FileWriter(file)) {
-            gson.toJson(root, w);
-        } catch (IOException ignored) {}
     }
 }
