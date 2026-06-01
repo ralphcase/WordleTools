@@ -1,6 +1,5 @@
 package dictionary;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import word.Word;
@@ -9,6 +8,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DictionaryInitializerTest {
 
@@ -31,9 +32,9 @@ public class DictionaryInitializerTest {
         DictionaryInitializer init = new DictionaryInitializer(tempDir.toFile());
         WordRepository repo = init.loadDictionaries();
 
-        Assertions.assertEquals(2, repo.allowedWords().size());
-        Assertions.assertEquals(1, repo.goalWords().size());
-        Assertions.assertTrue(repo.pastSolutionWords().isEmpty());
+        assertEquals(2, repo.allowedWords().size());
+        assertEquals(1, repo.goalWords().size());
+        assertTrue(repo.pastSolutionWords().isEmpty());
     }
 
     @Test
@@ -47,10 +48,10 @@ public class DictionaryInitializerTest {
         // Create goals.txt
         WordRepository repo = getWordRepository(tempDir);
 
-        Assertions.assertEquals(3, repo.allowedWords().size());
-        Assertions.assertEquals(2, repo.goalWords().size());
-        Assertions.assertEquals(1, repo.pastSolutionWords().size());
-        Assertions.assertEquals(new Word("CRANE"), repo.pastSolutionWords().getFirst());
+        assertEquals(3, repo.allowedWords().size());
+        assertEquals(2, repo.goalWords().size());
+        assertEquals(1, repo.pastSolutionWords().size());
+        assertEquals(new Word("CRANE"), repo.pastSolutionWords().getFirst());
     }
 
     private static WordRepository getWordRepository(Path tempDir) throws IOException {
@@ -81,7 +82,7 @@ public class DictionaryInitializerTest {
 
         DictionaryInitializer init = new DictionaryInitializer(tempDir.toFile());
 
-        Assertions.assertThrows(RuntimeException.class, init::loadDictionaries);
+        assertThrows(RuntimeException.class, init::loadDictionaries);
     }
 
     @Test
@@ -96,6 +97,24 @@ public class DictionaryInitializerTest {
 
         DictionaryInitializer init = new DictionaryInitializer(tempDir.toFile());
 
-        Assertions.assertThrows(RuntimeException.class, init::loadDictionaries);
+        assertThrows(RuntimeException.class, init::loadDictionaries);
     }
+    @Test
+    void defaultConstructorUsesWorkingDirectory() {
+        // Arrange
+        File cwd = new File(".");
+
+        DictionaryInitializer a = new DictionaryInitializer();
+        DictionaryInitializer b = new DictionaryInitializer(cwd);
+
+        // Act
+        WordRepository repoA = a.loadDictionaries();
+        WordRepository repoB = b.loadDictionaries();
+
+        // Assert
+        assertEquals(repoB.allowedWords(), repoA.allowedWords());
+        assertEquals(repoB.goalWords(), repoA.goalWords());
+        assertEquals(repoB.pastSolutionWords(), repoA.pastSolutionWords());
+    }
+
 }

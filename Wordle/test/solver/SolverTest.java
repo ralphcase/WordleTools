@@ -710,6 +710,17 @@ public class SolverTest {
         }
     }
 
+    @Test
+    void guessScoreToStringFormatsCorrectly() {
+        Word w = new Word("SLATE");
+        GuessScore gs = new GuessScore(w, 1.23456);
+
+        String s = gs.toString();
+
+        assertTrue(s.startsWith("SLATE: "));
+        assertTrue(s.matches("SLATE: \\d+\\.\\d{3}"));
+    }
+
 }
 
 
