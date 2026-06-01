@@ -4,7 +4,6 @@ import dictionary.DictionaryInitializer;
 import dictionary.WordRepository;
 import feedback.Feedback;
 import feedback.Mark;
-import solver.GuessScore;
 import solver.Solver;
 import word.Word;
 

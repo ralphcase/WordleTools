@@ -96,4 +96,11 @@ public final class Feedback {
         return out.toString();
     }
 
+    public boolean isSolved() {
+        for (Mark mark : marks) {
+            if (mark == Mark.PRESENT) return false;
+        }
+        return true;
+    }
+
 }
