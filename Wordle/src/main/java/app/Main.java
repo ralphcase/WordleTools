@@ -22,12 +22,13 @@ public class Main {
 
         boolean hard = false;
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
-//        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
-        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
+        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
+//        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
 
-        solver.applyFeedback(new Word("SANER"), Feedback.of(gray, gray, gray, gray, gray));
-        solver.applyFeedback(new Word("DOILY"), Feedback.of(gray, gray, green, green, gray));
-        solver.applyFeedback(new Word("QUILT"), Feedback.of(gray, gray, green, green, gray));
+        solver.applyFeedback(new Word("SANER"), Feedback.of(yellow, green, gray, gray, gray));
+        solver.applyFeedback(new Word("PALSY"), Feedback.of(gray, green, gray, yellow, gray));
+        solver.applyFeedback(new Word("OASIS"), Feedback.of(gray, green, green, green, green));
+//        solver.applyFeedback(new Word("QUILT"), Feedback.of(gray, gray, green, green, gray));
 //        solver.applyFeedback(new Word("SWEAT"), Feedback.of(gray, gray, green, green, green));
 //        solver.applyFeedback(new Word("ALACK"), Feedback.of(gray, yellow, gray, gray, gray));
 //        solver.applyFeedback(new Word("CUPRO"), Feedback.of(gray, gray, yellow, yellow, gray));;
