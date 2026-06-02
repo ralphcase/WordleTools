@@ -3,6 +3,7 @@ package dictionary;
 import word.Word;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 
 public final class DictionaryInitializer {
@@ -40,6 +41,12 @@ public final class DictionaryInitializer {
             pastSolutions = loader.loadWords(pastFile.getPath());
         }
 
-        return new WordRepository(allowed, goals, pastSolutions);
+        String dictHash = DictionaryHash.compute(
+                Path.of(ALLOWED_WORDS_FILE),
+                Path.of(GOAL_WORDS_FILE)
+        );
+        StarterCache cache = new StarterCache(new File("starter-cache.json"));
+
+        return new WordRepository(allowed, goals, pastSolutions, dictHash, cache);
     }
 }

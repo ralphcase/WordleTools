@@ -1,22 +1,21 @@
 package solver;
 
 import constraints.Constraint;
+import dictionary.StarterCache;
 import dictionary.WordRepository;
 import feedback.Feedback;
 import word.Word;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class Solver {
 
     private final boolean hardmode;
     private List<Word> goalWords;
     private List<Word> allowedWords;
-
+    private WordRepository wordRepository;
     private int constraints;
+    private Mode scope;
 
     public Solver(WordRepository repository) {
         this(repository, false, Mode.ALL);
@@ -24,6 +23,8 @@ public class Solver {
 
     public Solver(WordRepository repository, boolean hardmode, Mode archive) {
         this.hardmode = hardmode;
+        this.scope = archive;
+        this.wordRepository = repository;
 
         if (repository == null) {
             throw new IllegalArgumentException("Repository cannot be null");
@@ -87,6 +88,25 @@ public class Solver {
      * most goal words, on average.
      */
     public Word nextGuess() {
+        if (constraints ==0) {
+
+            StarterCache cache = wordRepository.getStarterCache();
+            String dictHash = wordRepository.getDictionaryHash();
+
+            Optional<GuessScore> cached =
+                    cache.load(scope.name(), dictHash);
+
+            if (cached.isPresent()) {
+                return cached.get().word();
+            }
+
+            GuessScore best = rankedGuesses(1).get(0);
+
+            cache.save(scope.name(), dictHash, best);
+
+            return best.word();
+        }
+
         return rankedGuesses(1).get(0).word();
     }
 

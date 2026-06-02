@@ -10,7 +10,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -19,50 +18,30 @@ public class StarterCache {
     private final File file;
     private final Gson gson;
 
-    // Map<cacheKey, List<GuessScore>>
-    private Map<String, List<GuessScore>> cacheMap;
+    // Map<cacheKey, GuessScore>
+    private Map<String, GuessScore> cacheMap;
 
     private static final Type MAP_TYPE =
-            new TypeToken<Map<String, List<GuessScore>>>() {}.getType();
+            new TypeToken<Map<String, GuessScore>>() {}.getType();
 
     public StarterCache(File file) {
         this.file = file;
         this.gson = new GsonBuilder().setPrettyPrinting().create();
-        this.cacheMap = new HashMap<>();
         loadFromDisk();
     }
 
-    // ------------------------------------------------------------
-    // Public API
-    // ------------------------------------------------------------
-
-    public Optional<List<GuessScore>> load(String solverMode,
-                                           String starterWord,
-                                           String dictHash) {
-        String key = makeKey(solverMode, starterWord, dictHash);
-        return Optional.ofNullable(cacheMap.get(key));
+    public Optional<GuessScore> load(String solverMode, String dictHash) {
+        return Optional.ofNullable(cacheMap.get(makeKey(solverMode, dictHash)));
     }
 
-    public void save(String solverMode,
-                     String starterWord,
-                     String dictHash,
-                     List<GuessScore> starters) {
-        String key = makeKey(solverMode, starterWord, dictHash);
-        cacheMap.put(key, starters);
+    public void save(String solverMode, String dictHash, GuessScore bestStarter) {
+        cacheMap.put(makeKey(solverMode, dictHash), bestStarter);
         writeToDisk();
     }
 
-    // ------------------------------------------------------------
-    // Key format
-    // ------------------------------------------------------------
-
-    private String makeKey(String solverMode, String starterWord, String dictHash) {
-        return solverMode + ":" + starterWord + ":" + dictHash;
+    private String makeKey(String solverMode, String dictHash) {
+        return solverMode + ":" + dictHash;
     }
-
-    // ------------------------------------------------------------
-    // Persistence
-    // ------------------------------------------------------------
 
     private void loadFromDisk() {
         if (!file.exists()) {
@@ -70,10 +49,9 @@ public class StarterCache {
             return;
         }
         try (FileReader reader = new FileReader(file)) {
-            Map<String, List<GuessScore>> loaded = gson.fromJson(reader, MAP_TYPE);
+            Map<String, GuessScore> loaded = gson.fromJson(reader, MAP_TYPE);
             cacheMap = (loaded != null) ? loaded : new HashMap<>();
         } catch (Exception e) {
-            // If the file is corrupted, start fresh
             cacheMap = new HashMap<>();
         }
     }

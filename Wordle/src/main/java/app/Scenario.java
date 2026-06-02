@@ -22,6 +22,7 @@ public class Scenario {
 
         List<Word> goals = repo.goalWords();
         Word target = goals.get(ThreadLocalRandom.current().nextInt(goals.size()));
+        System.out.println("Target: " + target);
 
         ScenarioTester st = new ScenarioTester(solver, target);
         st.run();

@@ -7,12 +7,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-public record WordRepository(List<Word> allowedWords, List<Word> goalWords, List<Word> pastSolutionWords) {
-
+public record WordRepository(List<Word> allowedWords, List<Word> goalWords, List<Word> pastSolutionWords,
+                             String dictionaryHash, StarterCache starterCache) {
     public WordRepository(
             List<Word> allowedWords,
             List<Word> goalWords,
-            List<Word> pastSolutionWords) {
+            List<Word> pastSolutionWords,
+            String dictionaryHash,
+            StarterCache starterCache) {
 
         Objects.requireNonNull(allowedWords, "allowed Words must not be null");
         Objects.requireNonNull(goalWords, "goal Words must not be null");
@@ -25,7 +27,8 @@ public record WordRepository(List<Word> allowedWords, List<Word> goalWords, List
         } else {
             this.pastSolutionWords = List.copyOf(pastSolutionWords);
         }
-
+        this.dictionaryHash = dictionaryHash;
+        this.starterCache = starterCache;
         // Enforce invariants
         ensureSubset(this.goalWords, this.allowedWords,
                 "goalWords must be a subset of allowedWords");
@@ -41,6 +44,14 @@ public record WordRepository(List<Word> allowedWords, List<Word> goalWords, List
                 throw new IllegalArgumentException(message + ": " + w);
             }
         }
+    }
+
+    public String getDictionaryHash() {
+        return dictionaryHash;
+    }
+
+    public StarterCache getStarterCache() {
+        return starterCache;
     }
 
 }
