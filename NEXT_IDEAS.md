@@ -157,6 +157,19 @@ Allow:
 - frequency scoring
 - hybrid heuristics
 
+Starter: RAISE
+prefer goal words
+ALL 
+| Guesses | Count |
+|---------|-------|
+|       1 |     1 |
+|       2 |   109 |
+|       3 |  1137 |
+|       4 |  1607 |
+|       5 |   343 |
+|       6 |    19 |
+Histogram of number of guesses:[0, 1, 109, 1137, 1607, 343, 19, 0, 0, 0]
+
 References:
 * https://sonorouschocolate.com/notes/index.php?title=The_best_strategies_for_Wordle
 * https://www.youtube.com/watch?v=v68zYyaEmEA

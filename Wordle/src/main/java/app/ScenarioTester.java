@@ -14,7 +14,11 @@ public class ScenarioTester {
         this.goal = goal;
     }
 
-    public void run() {
+    /*
+    Use the Solver to find the goal.
+    Return the number of guesses.
+     */
+    public int run() {
         int step = 1;
 
         while (true) {
@@ -25,7 +29,7 @@ public class ScenarioTester {
 
             if (report.isSolved()) {
                 System.out.println("Solved in " + step + " steps");
-                return;
+                return step;
             }
 
             solver.applyFeedback(guess, report);

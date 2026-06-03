@@ -5,6 +5,7 @@ import dictionary.WordRepository;
 import solver.Solver;
 import word.Word;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -18,15 +19,20 @@ public class Scenario {
         boolean hard = false;
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
 //        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
-        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
+//        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
 
         List<Word> goals = repo.goalWords();
-        Word target = goals.get(ThreadLocalRandom.current().nextInt(goals.size()));
-        System.out.println("Target: " + target);
+//        Word target = goals.get(ThreadLocalRandom.current().nextInt(goals.size()));
+        int[] histogram = new int[10];
+//        for (Word target : goals.subList(0, 50)) {
+        for (Word target : goals) {
+            System.out.println("Target: " + target);
 
-        ScenarioTester st = new ScenarioTester(solver, target);
-        st.run();
-
+            ScenarioTester st = new ScenarioTester(new Solver(repo, hard, Solver.Mode.ALL), target);
+            int num = st.run();
+            histogram[num]++;
+        }
+        System.out.println("Histogram of number of guesses:" + Arrays.toString(histogram));
 
         long endTime = System.currentTimeMillis();
         System.out.println("It took " + (endTime - startTime) / 1000.0 + " seconds.");

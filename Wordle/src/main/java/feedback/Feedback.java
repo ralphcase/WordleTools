@@ -98,7 +98,7 @@ public final class Feedback {
 
     public boolean isSolved() {
         for (Mark mark : marks) {
-            if (mark == Mark.PRESENT || mark == Mark.ABSENT) return false;
+            if (mark != Mark.CORRECT) return false;
         }
         return true;
     }
