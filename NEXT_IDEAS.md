@@ -160,15 +160,20 @@ Allow:
 Starter: RAISE
 prefer goal words
 ALL 
-| Guesses | Count |
-|---------|-------|
-|       1 |     1 |
-|       2 |   109 |
-|       3 |  1137 |
-|       4 |  1607 |
-|       5 |   343 |
-|       6 |    19 |
+
+| Guesses | Prefer Goal words | Best words   |
+|---------|-------------------|--------------|
+|         | ALL               | ALL          |
+| Starter | RAISE             | ROATE        |
+| 1       | 1                 | 0            |
+| 2       | 109               | 56           |  
+| 3       | 1137              | 1224         |
+| 4       | 1607              | 1729         |
+| 5       | 343               | 200          |
+| 6       | 19                | 7            |      
+
 Histogram of number of guesses:[0, 1, 109, 1137, 1607, 343, 19, 0, 0, 0]
+Histogram of number of guesses:[0, 0, 56, 1224, 1729, 200, 7, 0, 0, 0]
 
 References:
 * https://sonorouschocolate.com/notes/index.php?title=The_best_strategies_for_Wordle

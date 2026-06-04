@@ -138,9 +138,9 @@ public class Solver {
             }
         }
         // Prefer words that could be the solution over other possible guesses.
-        if (!goalWords.contains(w)) {
-            score *= (double) (constraints + 2) / (constraints + 1);
-        }
+//        if (!goalWords.contains(w)) {
+//            score *= (double) (constraints + 2) / (constraints + 1);
+//        }
         return score;
     }
 
