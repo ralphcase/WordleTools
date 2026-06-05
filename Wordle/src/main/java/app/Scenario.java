@@ -5,9 +5,9 @@ import dictionary.WordRepository;
 import solver.Solver;
 import word.Word;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Scenario {
     public static void main(String[] args) {
@@ -21,14 +21,16 @@ public class Scenario {
 //        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
 
-        List<Word> goals = repo.goalWords();
+//        List<Word> goals = repo.goalWords();
+        List<Word> goals = new ArrayList<Word>(repo.goalWords());
+        goals.removeAll(repo.pastSolutionWords());
 //        Word target = goals.get(ThreadLocalRandom.current().nextInt(goals.size()));
         int[] histogram = new int[10];
 //        for (Word target : goals.subList(0, 50)) {
         for (Word target : goals) {
             System.out.println("Target: " + target);
 
-            ScenarioTester st = new ScenarioTester(new Solver(repo, hard, Solver.Mode.ALL), target);
+            ScenarioTester st = new ScenarioTester(new Solver(repo, hard, Solver.Mode.NEW), target);
             int num = st.run();
             histogram[num]++;
         }
@@ -36,7 +38,5 @@ public class Scenario {
 
         long endTime = System.currentTimeMillis();
         System.out.println("It took " + (endTime - startTime) / 1000.0 + " seconds.");
-
     }
-
 }
