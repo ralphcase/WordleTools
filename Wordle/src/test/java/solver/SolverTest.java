@@ -22,7 +22,7 @@ public class SolverTest {
         WordRepository repo = new WordRepository(
                 List.of(new Word("CRANE"), new Word("SLATE"), new Word("BRICK")),
                 List.of(new Word("CRANE"), new Word("SLATE"), new Word("BRICK")),
-                List.of());
+                List.of(), null, null);
 
         Solver solver = new Solver(repo);
 
@@ -48,7 +48,7 @@ public class SolverTest {
         WordRepository repo = new WordRepository(
                 List.of(new Word("MISER"), new Word("WISER"), new Word("RISER")),
                 List.of(new Word("MISER"), new Word("WISER"), new Word("RISER")),
-                List.of());
+                List.of(), null, null);
 
         Solver solver = new Solver(repo);
 

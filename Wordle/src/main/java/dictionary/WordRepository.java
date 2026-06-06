@@ -9,6 +9,11 @@ import java.util.Set;
 
 public record WordRepository(List<Word> allowedWords, List<Word> goalWords, List<Word> pastSolutionWords,
                              String dictionaryHash, StarterCache starterCache) {
+
+    public WordRepository(List<Word> allowedWords, List<Word> goalWords, List<Word> of) {
+        this(allowedWords, goalWords, of, null, null);
+    }
+
     public WordRepository(
             List<Word> allowedWords,
             List<Word> goalWords,
@@ -28,6 +33,9 @@ public record WordRepository(List<Word> allowedWords, List<Word> goalWords, List
             this.pastSolutionWords = List.copyOf(pastSolutionWords);
         }
         this.dictionaryHash = dictionaryHash;
+        if (starterCache == null) {
+            starterCache = new StarterCache(null);
+        }
         this.starterCache = starterCache;
         // Enforce invariants
         ensureSubset(this.goalWords, this.allowedWords,

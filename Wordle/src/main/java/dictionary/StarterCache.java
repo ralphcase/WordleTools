@@ -15,14 +15,13 @@ import java.util.Optional;
 
 public class StarterCache {
 
+    private static final Type MAP_TYPE =
+            new TypeToken<Map<String, GuessScore>>() {
+            }.getType();
     private final File file;
     private final Gson gson;
-
     // Map<cacheKey, GuessScore>
     private Map<String, GuessScore> cacheMap;
-
-    private static final Type MAP_TYPE =
-            new TypeToken<Map<String, GuessScore>>() {}.getType();
 
     public StarterCache(File file) {
         this.file = file;
@@ -44,10 +43,6 @@ public class StarterCache {
     }
 
     private void loadFromDisk() {
-        if (!file.exists()) {
-            cacheMap = new HashMap<>();
-            return;
-        }
         try (FileReader reader = new FileReader(file)) {
             Map<String, GuessScore> loaded = gson.fromJson(reader, MAP_TYPE);
             cacheMap = (loaded != null) ? loaded : new HashMap<>();
@@ -57,10 +52,12 @@ public class StarterCache {
     }
 
     private void writeToDisk() {
-        try (FileWriter writer = new FileWriter(file)) {
-            gson.toJson(cacheMap, writer);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to write starter cache", e);
+        if (file != null) {
+            try (FileWriter writer = new FileWriter(file)) {
+                gson.toJson(cacheMap, writer);
+            } catch (Exception e) {
+                throw new RuntimeException("Failed to write starter cache", e);
+            }
         }
     }
 }

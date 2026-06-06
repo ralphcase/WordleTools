@@ -14,7 +14,7 @@ public class WordRepositoryTest {
         List<Word> allowed = List.of(new Word("CRANE"));
         List<Word> goals = List.of(new Word("CRANE"));
 
-        WordRepository repo = new WordRepository(allowed, goals, null);
+        WordRepository repo = new WordRepository(allowed, goals, null, null, null   );
 
         Assertions.assertNotNull(repo.pastSolutionWords());
         Assertions.assertTrue(repo.pastSolutionWords().isEmpty());
@@ -26,7 +26,7 @@ public class WordRepositoryTest {
         List<Word> goals = List.of(new Word("SLATE")); // not in allowed
 
         Assertions.assertThrows(IllegalArgumentException.class, () ->
-                new WordRepository(allowed, goals, null));
+                new WordRepository(allowed, goals, null, null, null));
     }
 
     @Test
@@ -36,7 +36,7 @@ public class WordRepositoryTest {
         List<Word> past = List.of(new Word("SLATE")); // not in goals
 
         Assertions.assertThrows(IllegalArgumentException.class, () ->
-                new WordRepository(allowed, goals, past));
+                new WordRepository(allowed, goals, past,  null, null));
     }
 
     @Test
@@ -50,7 +50,7 @@ public class WordRepositoryTest {
         List<Word> past = new ArrayList<>();
         past.add(new Word("CRANE"));
 
-        WordRepository repo = new WordRepository(allowed, goals, past);
+        WordRepository repo = new WordRepository(allowed, goals, past,  null, null );
 
         allowed.clear();
         goals.clear();
@@ -66,7 +66,7 @@ public class WordRepositoryTest {
         List<Word> allowed = List.of(new Word("CRANE"));
         List<Word> goals = List.of(new Word("CRANE"));
 
-        WordRepository repo = new WordRepository(allowed, goals, null);
+        WordRepository repo = new WordRepository(allowed, goals, null, null, null );
 
         Assertions.assertThrows(UnsupportedOperationException.class, () ->
                 List.copyOf(repo.allowedWords()).add(new Word("SLATE")));

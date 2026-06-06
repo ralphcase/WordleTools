@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -20,11 +21,11 @@ public final class WordLoader {
      * Lowercase is allowed; Word constructor enforces uppercase and validity.
      * Invalid words are skipped with a console message.
      */
-    public List<Word> loadWords(String filename) {
+    public List<Word> loadWords(Path filePath) {
         List<Word> result = new ArrayList<>();
         StringBuilder buffer = new StringBuilder();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath.toFile()))) {
             int ch;
             while ((ch = reader.read()) != -1) {
                 char c = (char) ch;
@@ -37,9 +38,10 @@ public final class WordLoader {
             }
             flushWord(buffer, result); // flush last token
         } catch (IOException e) {
-            throw new RuntimeException("Error reading dictionary file: " + filename, e);
+            throw new RuntimeException("Error reading dictionary file: " + filePath, e);
         }
 
+        System.out.println(filePath + " has "+result.size() +" words.");
         return result;
     }
 
@@ -62,8 +64,8 @@ public final class WordLoader {
      * Write a collection of Word objects to a file.
      * Words are written space-separated with occasional newlines for readability.
      */
-    public void writeWords(Collection<Word> words, String filename) {
-        try (FileWriter writer = new FileWriter(filename)) {
+    public void writeWords(Collection<Word> words, Path filename) {
+        try (FileWriter writer = new FileWriter(filename.toFile())) {
             int count = 0;
             for (Word w : words) {
                 writer.write(w.toString());

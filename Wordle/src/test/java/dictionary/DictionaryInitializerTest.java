@@ -16,20 +16,23 @@ public class DictionaryInitializerTest {
     @Test
     void loadsAllowedAndGoalsWithoutPastSolutions(@TempDir Path tempDir) throws Exception {
         // Create allowed_words.txt
-        File allowed = tempDir.resolve(DictionaryInitializer.ALLOWED_WORDS_FILE).toFile();
+        DictionaryConfig config = DictionaryConfig.testConfig(tempDir);
+        System.out.println("Allowed path = " + config.allowedWordsPath());
+
+        File allowed = config.allowedWordsPath().toFile();
         try (FileWriter w = new FileWriter(allowed)) {
             w.write("crane slate");
         }
 
         // Create goals.txt
-        File goals = tempDir.resolve(DictionaryInitializer.GOAL_WORDS_FILE).toFile();
+        File goals = config.goalWordsPath().toFile();
         try (FileWriter w = new FileWriter(goals)) {
             w.write("crane");
         }
 
         // Do NOT create past_solutions.txt
 
-        DictionaryInitializer init = new DictionaryInitializer(tempDir.toFile());
+        DictionaryInitializer init = new DictionaryInitializer(config);
         WordRepository repo = init.loadDictionaries();
 
         assertEquals(2, repo.allowedWords().size());
@@ -40,7 +43,8 @@ public class DictionaryInitializerTest {
     @Test
     void loadsPastSolutionsWhenPresent(@TempDir Path tempDir) throws Exception {
         // Create allowed_words.txt
-        File allowed = tempDir.resolve(DictionaryInitializer.ALLOWED_WORDS_FILE).toFile();
+        DictionaryConfig config = DictionaryConfig.testConfig(tempDir);
+        File allowed = config.allowedWordsPath().toFile();
         try (FileWriter w = new FileWriter(allowed)) {
             w.write("crane slate rebus");
         }
@@ -55,32 +59,35 @@ public class DictionaryInitializerTest {
     }
 
     private static WordRepository getWordRepository(Path tempDir) throws IOException {
-        File goals = tempDir.resolve(DictionaryInitializer.GOAL_WORDS_FILE).toFile();
+        DictionaryConfig config = DictionaryConfig.testConfig(tempDir);
+        File goals = config.goalWordsPath().toFile();
         try (FileWriter w = new FileWriter(goals)) {
             w.write("crane slate");
         }
 
         // Create past_solutions.txt
-        File past = tempDir.resolve(DictionaryInitializer.PAST_SOLUTIONS_FILE).toFile();
+        File past = config.pastSolutionsPath().toFile();
         try (FileWriter w = new FileWriter(past)) {
             w.write("crane");
         }
 
-        DictionaryInitializer init = new DictionaryInitializer(tempDir.toFile());
+        DictionaryInitializer init = new DictionaryInitializer(config);
         return init.loadDictionaries();
     }
 
     @Test
     void throwsIfAllowedWordsMissing(@TempDir Path tempDir) {
         // Create goals.txt only
-        File goals = tempDir.resolve(DictionaryInitializer.GOAL_WORDS_FILE).toFile();
+        DictionaryConfig config = DictionaryConfig.testConfig(tempDir);
+
+        File goals = config.goalWordsPath().toFile();
         try (FileWriter w = new FileWriter(goals)) {
             w.write("crane");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        DictionaryInitializer init = new DictionaryInitializer(tempDir.toFile());
+        DictionaryInitializer init = new DictionaryInitializer(config);
 
         assertThrows(RuntimeException.class, init::loadDictionaries);
     }
@@ -88,24 +95,28 @@ public class DictionaryInitializerTest {
     @Test
     void throwsIfGoalWordsMissing(@TempDir Path tempDir) {
         // Create allowed_words.txt only
-        File allowed = tempDir.resolve(DictionaryInitializer.ALLOWED_WORDS_FILE).toFile();
+        DictionaryConfig config = DictionaryConfig.testConfig(tempDir);
+
+        File allowed = config.allowedWordsPath().toFile();
         try (FileWriter w = new FileWriter(allowed)) {
             w.write("crane slate");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        DictionaryInitializer init = new DictionaryInitializer(tempDir.toFile());
+        DictionaryInitializer init = new DictionaryInitializer(config);
 
         assertThrows(RuntimeException.class, init::loadDictionaries);
     }
     @Test
     void defaultConstructorUsesWorkingDirectory() {
         // Arrange
+        DictionaryConfig config = DictionaryConfig.defaultConfig();
+
         File cwd = new File(".");
 
         DictionaryInitializer a = new DictionaryInitializer();
-        DictionaryInitializer b = new DictionaryInitializer(cwd);
+        DictionaryInitializer b = new DictionaryInitializer(config);
 
         // Act
         WordRepository repoA = a.loadDictionaries();

@@ -23,7 +23,7 @@ public class WordLoaderTest {
         }
 
         WordLoader loader = new WordLoader();
-        List<Word> words = loader.loadWords(f.getAbsolutePath());
+        List<Word> words = loader.loadWords(Path.of(f.getAbsolutePath()));
 
         Assertions.assertEquals(3, words.size());
         Assertions.assertTrue(words.contains(new Word("CRANE")));
@@ -42,9 +42,9 @@ public class WordLoaderTest {
         );
 
         WordLoader loader = new WordLoader();
-        loader.writeWords(original, f.getAbsolutePath());
+        loader.writeWords(original, Path.of(f.getAbsolutePath()));
 
-        List<Word> loaded = loader.loadWords(f.getAbsolutePath());
+        List<Word> loaded = loader.loadWords(Path.of(f.getAbsolutePath()));
 
         Assertions.assertEquals(original, loaded);
     }

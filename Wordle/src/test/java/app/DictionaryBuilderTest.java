@@ -1,162 +1,114 @@
 package app;
 
+import dictionary.DictionaryConfig;
+import dictionary.WordLoader;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import word.Word;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class DictionaryBuilderTest {
 
-    @TempDir
-    Path tempDir;
+    @Test
+    void rebuildDictionaries_addsWordlebotWordsToGoals(@TempDir Path tempDir) throws Exception {
+        DictionaryConfig config = DictionaryConfig.testConfig(tempDir);
+        WordLoader loader = new WordLoader();
 
-    /**
-     * Helper: read output files exactly as written by WordLoader.writeWords().
-     * Splits on whitespace, converts tokens to Word objects.
-     */
-    private List<Word> readWords(Path file) throws IOException {
-        return Files.readAllLines(file).stream()
-                .flatMap(line -> Stream.of(line.split("\\s+")))
-                .filter(s -> !s.isBlank())
-                .map(Word::new)
-                .toList();
+        // goals.txt
+        Files.writeString(config.goalWordsPath(), "crane\nslate\n");
+
+        // wordlebot.txt
+        Files.writeString(config.wordlebotPath(), "trace\nslate\n");
+
+        // solutions.txt (required but irrelevant for this test)
+        Files.writeString(config.solutionsWordsPath(), "crane\n");
+
+        DictionaryBuilder.rebuildDictionaries(config);
+
+        List<Word> goals = loader.loadWords(config.goalWordsPath());
+        assertEquals(3, goals.size());
+        assertTrue(goals.contains(new Word("crane")));
+        assertTrue(goals.contains(new Word("slate")));
+        assertTrue(goals.contains(new Word("trace")));
     }
 
     @Test
-    void rebuildDictionaries_writesExpectedOutputs() throws IOException {
-        // Arrange input files
-        Path goals = tempDir.resolve("goals.txt");
-        Path allowed = tempDir.resolve("allowed_words.txt");
-        Path solutions = tempDir.resolve("solutions.txt");
-        Path wordlebot = tempDir.resolve("wordlebot.txt");
+    void rebuildDictionaries_dedupesGoals(@TempDir Path tempDir) throws Exception {
+        DictionaryConfig config = DictionaryConfig.testConfig(tempDir);
+        WordLoader loader = new WordLoader();
 
-        Files.write(goals, List.of("crane", "slate"));
-        Files.write(allowed, List.of("trace"));
-        Files.write(solutions, List.of("crane"));
-        Files.write(wordlebot, List.of("slate"));
+        Files.writeString(config.goalWordsPath(), "crane\ncrane\n");
+        Files.writeString(config.wordlebotPath(), "crane\n");
 
-        // Output files
-        Path outGoals = tempDir.resolve("goals_out.txt");
-        Path outPastSolutions = tempDir.resolve("past_solutions_out.txt");
+        Files.writeString(config.solutionsWordsPath(), "dummy\n");
 
-        // Act
-        DictionaryBuilder.rebuildDictionaries(
-                goals,
-                allowed,
-                solutions,
-                wordlebot,
-                outGoals,
-                outPastSolutions
-        );
+        DictionaryBuilder.rebuildDictionaries(config);
 
-        // Assert: output files exist
-        assertTrue(Files.exists(outGoals));
-        assertTrue(Files.exists(outPastSolutions));
-
-        // Assert: goals_out = union(goals, wordlebot)
-        List<Word> goalsOut = readWords(outGoals);
-        assertEquals(2, goalsOut.size());
-        assertTrue(goalsOut.contains(new Word("crane")));
-        assertTrue(goalsOut.contains(new Word("slate")));
-
-        // Assert: past_solutions_out = unique(solutions)
-        List<Word> pastSolutionsOut = readWords(outPastSolutions);
-        assertEquals(List.of(new Word("crane")), pastSolutionsOut);
+        List<Word> goals = loader.loadWords(config.goalWordsPath());
+        assertEquals(1, goals.size());
+        assertEquals("CRANE", goals.getFirst().toString());
     }
 
     @Test
-    void rebuildDictionaries_handlesEmptyInputFile() throws IOException {
-        Path goals = tempDir.resolve("goals.txt");
-        Path allowed = tempDir.resolve("allowed_words.txt");
-        Path solutions = tempDir.resolve("solutions.txt");
-        Path wordlebot = tempDir.resolve("wordlebot.txt");
+    void rebuildDictionaries_createsPastSolutionsFromSolutions(@TempDir Path tempDir) throws Exception {
+        DictionaryConfig config = DictionaryConfig.testConfig(tempDir);
+        WordLoader loader = new WordLoader();
 
-        // Empty goals file
-        Files.write(goals, List.of());
-        Files.write(allowed, List.of("trace"));
-        Files.write(solutions, List.of("crane"));
-        Files.write(wordlebot, List.of("slate"));
+        Files.writeString(config.goalWordsPath(), "crane\n");
+        Files.writeString(config.wordlebotPath(), "trace\n");
 
-        Path outGoals = tempDir.resolve("goals_out.txt");
-        Path outPastSolutions = tempDir.resolve("past_solutions_out.txt");
+        // solutions.txt
+        Files.writeString(config.solutionsWordsPath(), "alpha\nbeta\nalpha\n");
 
-        DictionaryBuilder.rebuildDictionaries(
-                goals,
-                allowed,
-                solutions,
-                wordlebot,
-                outGoals,
-                outPastSolutions
-        );
+        // DO NOT create past_solutions.txt
 
-        // goals_out should contain only wordlebot words
-        List<Word> goalsOut = readWords(outGoals);
-        assertEquals(List.of(new Word("slate")), goalsOut);
+        DictionaryBuilder.rebuildDictionaries(config);
+
+        List<Word> past = loader.loadWords(config.pastSolutionsPath());
+        assertEquals(1, past.size());
+        assertTrue(past.contains(new Word("alpha")));
     }
 
     @Test
-    void rebuildDictionaries_throwsOnMissingInputFile() {
-        Path missing = tempDir.resolve("does_not_exist.txt");
+    void rebuildDictionaries_overwritesPastSolutions(@TempDir Path tempDir) throws Exception {
+        DictionaryConfig config = DictionaryConfig.testConfig(tempDir);
+        WordLoader loader = new WordLoader();
 
-        Path dummy = tempDir.resolve("dummy.txt");
-        try {
-            Files.write(dummy, List.of("crane"));
-        } catch (IOException e) {
-            fail("Unexpected IO error in test setup");
-        }
+        Files.writeString(config.goalWordsPath(), "crane\n");
+        Files.writeString(config.wordlebotPath(), "trace\n");
 
-        assertThrows(RuntimeException.class, () ->
-                DictionaryBuilder.rebuildDictionaries(
-                        missing,
-                        dummy,
-                        dummy,
-                        dummy,
-                        tempDir.resolve("out1.txt"),
-                        tempDir.resolve("out2.txt")
-                )
-        );
+        // solutions.txt
+        Files.writeString(config.solutionsWordsPath(), "alpha\nbetha\n");
+
+        // existing past_solutions.txt (should be overwritten)
+        Files.writeString(config.pastSolutionsPath(), "oldword\n");
+
+        DictionaryBuilder.rebuildDictionaries(config);
+
+        List<Word> past = loader.loadWords(config.pastSolutionsPath());
+        assertEquals(2, past.size());
+        assertTrue(past.contains(new Word("alpha")));
+        assertTrue(past.contains(new Word("betha")));
     }
 
     @Test
-    void rebuildDictionaries_ignoresInvalidWords() throws IOException {
-        Path goals = tempDir.resolve("goals.txt");
-        Path allowed = tempDir.resolve("allowed_words.txt");
-        Path solutions = tempDir.resolve("solutions.txt");
-        Path wordlebot = tempDir.resolve("wordlebot.txt");
+    void rebuildDictionaries_handlesEmptyWordlebotFile(@TempDir Path tempDir) throws Exception {
+        DictionaryConfig config = DictionaryConfig.testConfig(tempDir);
+        WordLoader loader = new WordLoader();
 
-        // WordLoader will ignore "sl@te"
-        Files.write(goals, List.of("crane", "sl@te", "trace"));
-        Files.write(allowed, List.of("trace"));
-        Files.write(solutions, List.of("crane"));
-        Files.write(wordlebot, List.of("slate"));
+        Files.writeString(config.goalWordsPath(), "crane\nslate\n");
+        Files.writeString(config.wordlebotPath(), ""); // empty
 
-        Path outGoals = tempDir.resolve("goals_out.txt");
-        Path outPastSolutions = tempDir.resolve("past_solutions_out.txt");
+        Files.writeString(config.solutionsWordsPath(), "dummy\n");
 
-        DictionaryBuilder.rebuildDictionaries(
-                goals,
-                allowed,
-                solutions,
-                wordlebot,
-                outGoals,
-                outPastSolutions
-        );
+        DictionaryBuilder.rebuildDictionaries(config);
 
-        List<Word> goalsOut = readWords(outGoals);
-
-        // "sl@te" should not appear
-        assertFalse(goalsOut.contains(new Word("sl@te")));
-
-        // Valid words should appear
-        assertTrue(goalsOut.contains(new Word("crane")));
-        assertTrue(goalsOut.contains(new Word("trace")));
-        assertTrue(goalsOut.contains(new Word("slate")));
+        List<Word> goals = loader.loadWords(config.goalWordsPath());
+        assertEquals(2, goals.size());
     }
 }
