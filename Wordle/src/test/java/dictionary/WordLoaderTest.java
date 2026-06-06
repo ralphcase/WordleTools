@@ -42,9 +42,9 @@ public class WordLoaderTest {
         );
 
         WordLoader loader = new WordLoader();
-        loader.writeWords(original, Path.of(f.getAbsolutePath()));
+        loader.writeWords(original, f.toPath());
 
-        List<Word> loaded = loader.loadWords(Path.of(f.getAbsolutePath()));
+        List<Word> loaded = loader.loadWords(f.toPath());
 
         Assertions.assertEquals(original, loaded);
     }

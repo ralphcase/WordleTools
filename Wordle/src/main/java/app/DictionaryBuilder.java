@@ -4,20 +4,11 @@ import dictionary.DictionaryConfig;
 import dictionary.WordLoader;
 import word.Word;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class DictionaryBuilder {
-
-	private static final String GOALFILE = "goals.txt";
-	private static final String ALLOWEDFILE = "allowed_words.txt";
-	private static final String SOLUTIONFILE = "solutions.txt";
-	private static final String WORDLEBOT = "wordlebot.txt";
-	private static final String ARCHIVE = "archive_solutions.txt";
-	private static final String PASTSOLUTIONS = "past_solutions.txt";
 
 	public static void main(String[] args) {
 		long startTime = System.currentTimeMillis();

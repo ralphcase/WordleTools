@@ -17,11 +17,7 @@ public class Scenario {
         WordRepository repo = initializer.loadDictionaries();
 
         boolean hard = false;
-//        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
-//        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
-//        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
-
-//        List<Word> goals = repo.goalWords();
+//
         List<Word> goals = new ArrayList<Word>(repo.goalWords());
         goals.removeAll(repo.pastSolutionWords());
 //        Word target = goals.get(ThreadLocalRandom.current().nextInt(goals.size()));

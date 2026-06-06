@@ -13,9 +13,9 @@ public class Solver {
     private final boolean hardmode;
     private List<Word> goalWords;
     private List<Word> allowedWords;
-    private WordRepository wordRepository;
+    private final WordRepository wordRepository;
     private int constraints;
-    private Mode scope;
+    private final Mode scope;
 
     public Solver(WordRepository repository) {
         this(repository, false, Mode.ALL);
