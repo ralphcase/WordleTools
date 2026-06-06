@@ -17,7 +17,6 @@ public class DictionaryInitializerTest {
     void loadsAllowedAndGoalsWithoutPastSolutions(@TempDir Path tempDir) throws Exception {
         // Create allowed_words.txt
         DictionaryConfig config = DictionaryConfig.testConfig(tempDir);
-        System.out.println("Allowed path = " + config.allowedWordsPath());
 
         File allowed = config.allowedWordsPath().toFile();
         try (FileWriter w = new FileWriter(allowed)) {

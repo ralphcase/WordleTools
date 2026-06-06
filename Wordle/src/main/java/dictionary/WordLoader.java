@@ -41,7 +41,7 @@ public final class WordLoader {
             throw new RuntimeException("Error reading dictionary file: " + filePath, e);
         }
 
-        System.out.println(filePath + " has "+result.size() +" words.");
+//        System.out.println(filePath + " has "+result.size() +" words.");
         return result;
     }
 
