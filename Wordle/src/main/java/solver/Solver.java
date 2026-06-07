@@ -2,6 +2,7 @@ package solver;
 
 import constraints.Constraint;
 import dictionary.StarterCache;
+import dictionary.WordLoader;
 import dictionary.WordRepository;
 import feedback.Feedback;
 import word.Word;
@@ -30,7 +31,7 @@ public class Solver {
             throw new IllegalArgumentException("Repository cannot be null");
         }
         switch (archive) {
-            case ARCHIVE -> this.goalWords = repository.pastSolutionWords();
+            case ARCHIVE -> this.goalWords = repository.archiveWords();
             case NEW -> {
                 this.goalWords = new ArrayList<>(repository.goalWords());
                 this.goalWords.removeAll(repository.pastSolutionWords());

@@ -22,7 +22,7 @@ public class SolverTest {
         WordRepository repo = new WordRepository(
                 List.of(new Word("CRANE"), new Word("SLATE"), new Word("BRICK")),
                 List.of(new Word("CRANE"), new Word("SLATE"), new Word("BRICK")),
-                List.of(), null, null);
+                List.of(), List.of());
 
         Solver solver = new Solver(repo);
 
@@ -48,7 +48,7 @@ public class SolverTest {
         WordRepository repo = new WordRepository(
                 List.of(new Word("MISER"), new Word("WISER"), new Word("RISER")),
                 List.of(new Word("MISER"), new Word("WISER"), new Word("RISER")),
-                List.of(), null, null);
+                List.of(), List.of());
 
         Solver solver = new Solver(repo);
 
@@ -68,7 +68,7 @@ public class SolverTest {
         WordRepository repo = new WordRepository(
                 List.of(new Word("PLANT"), new Word("PLANK"), new Word("SLATE")),
                 List.of(new Word("PLANT"), new Word("PLANK"), new Word("SLATE")),
-                List.of());
+                List.of(), List.of());
 
         Solver solver = new Solver(repo);
 
@@ -98,7 +98,7 @@ public class SolverTest {
         WordRepository repo = new WordRepository(
                 List.of(new Word("SLATE"), new Word("PLATE"), new Word("FLARE")),
                 List.of(new Word("SLATE"), new Word("PLATE"), new Word("FLARE")),
-                List.of());
+                List.of(), List.of());
 
         Solver solver = new Solver(repo);
 
@@ -137,7 +137,7 @@ public class SolverTest {
         List<Word> goals = List.of(new Word("CRANE"), new Word("SLATE"), new Word("BRICK"));
         List<Word> past = List.of(new Word("CRANE"), new Word("SLATE"));
 
-        WordRepository repo = new WordRepository(allowed, goals, past);
+        WordRepository repo = new WordRepository(allowed, goals, past, List.of());
 
         // Just verify that ARCHIVE mode constructor doesn't throw
         Solver solver = new Solver(repo, false, Solver.Mode.ARCHIVE);
@@ -150,7 +150,7 @@ public class SolverTest {
         List<Word> goals = List.of(new Word("CRANE"), new Word("SLATE"), new Word("BRICK"));
         List<Word> past = List.of(new Word("CRANE"), new Word("SLATE"));
 
-        WordRepository repo = new WordRepository(allowed, goals, past);
+        WordRepository repo = new WordRepository(allowed, goals, past, List.of());
 
         // Just verify that NEW mode constructor doesn't throw
         Solver solver = new Solver(repo, false, Solver.Mode.NEW);
@@ -163,7 +163,7 @@ public class SolverTest {
         List<Word> goals = List.of(new Word("CRANE"), new Word("SLATE"), new Word("BRICK"));
         List<Word> past = List.of(new Word("CRANE"), new Word("SLATE"));
 
-        WordRepository repo = new WordRepository(allowed, goals, past);
+        WordRepository repo = new WordRepository(allowed, goals, past, List.of());
 
         // Just verify that ALL mode constructor doesn't throw
         Solver solver = new Solver(repo, false, Solver.Mode.ALL);
@@ -176,7 +176,7 @@ public class SolverTest {
         List<Word> goals = List.of(new Word("CRANE"), new Word("SLATE"), new Word("BRICK"));
         List<Word> past = List.of(new Word("CRANE"), new Word("SLATE"));
 
-        WordRepository repo = new WordRepository(allowed, goals, past);
+        WordRepository repo = new WordRepository(allowed, goals, null, past);
         Solver solver = new Solver(repo, false, Solver.Mode.ARCHIVE);
 
         List<Word> candidates = solver.remainingCandidates();
@@ -192,7 +192,7 @@ public class SolverTest {
         List<Word> goals = List.of(new Word("CRANE"), new Word("SLATE"), new Word("BRICK"));
         List<Word> past = List.of(new Word("CRANE"), new Word("SLATE"));
 
-        WordRepository repo = new WordRepository(allowed, goals, past);
+        WordRepository repo = new WordRepository(allowed, goals, past, null);
         Solver solver = new Solver(repo, false, Solver.Mode.NEW);
 
         List<Word> candidates = solver.remainingCandidates();
@@ -206,7 +206,7 @@ public class SolverTest {
         List<Word> goals = List.of(new Word("CRANE"), new Word("SLATE"), new Word("BRICK"));
         List<Word> past = List.of(new Word("CRANE"), new Word("SLATE"));
 
-        WordRepository repo = new WordRepository(allowed, goals, past);
+        WordRepository repo = new WordRepository(allowed, goals, past, null);
         Solver solver = new Solver(repo, false, Solver.Mode.ALL);
 
         List<Word> candidates = solver.remainingCandidates();
@@ -218,7 +218,7 @@ public class SolverTest {
         List<Word> allowed = List.of(new Word("CRANE"));
         List<Word> goals = List.of(new Word("CRANE"));
 
-        WordRepository repo = new WordRepository(allowed, goals, null);
+        WordRepository repo = new WordRepository(allowed, goals, null, null);
 
         assertThrows(UnsupportedOperationException.class, () ->
                 new Solver(repo, false, Solver.Mode.SMART));
@@ -233,7 +233,7 @@ public class SolverTest {
         WordRepository repo = new WordRepository(
                 List.of(new Word("CRANE"), new Word("SLATE"), new Word("BRICK")),
                 List.of(new Word("CRANE"), new Word("SLATE"), new Word("BRICK")),
-                List.of());
+                List.of(), null);
 
         Solver solver = new Solver(repo);
         Word guess = solver.nextGuessSimple();
@@ -246,7 +246,7 @@ public class SolverTest {
         WordRepository repo = new WordRepository(
                 List.of(new Word("CRANE")),
                 List.of(new Word("CRANE")),
-                List.of());
+                List.of(), null);
 
         Solver solver = new Solver(repo);
 
@@ -267,7 +267,7 @@ public class SolverTest {
         List<Word> allowed = List.of(new Word("CRANE"), new Word("SLATE"), new Word("BRICK"), new Word("GAVEL"));
         List<Word> goals = List.of(new Word("CRANE"), new Word("SLATE"), new Word("BRICK"));
 
-        WordRepository repo = new WordRepository(allowed, goals, null);
+        WordRepository repo = new WordRepository(allowed, goals, null, null);
         Solver solver = new Solver(repo, true, Solver.Mode.ALL); // hardmode enabled, use ALL mode
 
         // In hardmode, applyFeedback should also filter allowed words
@@ -289,7 +289,7 @@ public class SolverTest {
         WordRepository repo = new WordRepository(
                 List.of(new Word("CLOTH"), new Word("SLATE"), new Word("BRICK")),
                 List.of(new Word("CLOTH"), new Word("SLATE"), new Word("BRICK")),
-                List.of());
+                List.of(), null);
 
         Solver solver = new Solver(repo);
 
@@ -316,9 +316,7 @@ public class SolverTest {
                 new Word("BRINE")
         );
 
-        WordRepository repo = new WordRepository(
-                allowed, allowed, List.of()
-        );
+        WordRepository repo = new WordRepository(allowed, allowed, List.of(), null);
 
         Solver solver = new Solver(repo, false, Solver.Mode.ALL);
 
@@ -339,9 +337,7 @@ public class SolverTest {
                 new Word("SLATE")
         );
 
-        WordRepository repo = new WordRepository(
-                allowed, possible, List.of()
-        );
+        WordRepository repo = new WordRepository(allowed, possible, List.of(), null);
 
         Solver solver = new Solver(repo, false, Solver.Mode.ALL);
 
@@ -358,9 +354,7 @@ public class SolverTest {
                 new Word("STONE")
         );
 
-        WordRepository repo = new WordRepository(
-                allowed, allowed, List.of()
-        );
+        WordRepository repo = new WordRepository(allowed, allowed, List.of(), null);
 
         Solver solver = new Solver(repo, false, Solver.Mode.ALL);
 
@@ -377,9 +371,7 @@ public class SolverTest {
                 new Word("ABCDF")
         );
 
-        WordRepository repo = new WordRepository(
-                allowed, allowed, List.of()
-        );
+        WordRepository repo = new WordRepository(                allowed, allowed, List.of(), null);
 
         Solver solver = new Solver(repo, false, Solver.Mode.ALL);
 
@@ -396,7 +388,7 @@ public class SolverTest {
         );
 
         WordRepository repo = new WordRepository(
-                allowed, allowed, List.of()
+                allowed, allowed, List.of(), null
         );
 
         Solver solver = new Solver(repo, false, Solver.Mode.ALL);
@@ -421,7 +413,7 @@ public class SolverTest {
                 new Word("STONE")
         );
 
-        WordRepository repo = new WordRepository(allowed, allowed, List.of());
+        WordRepository repo = new WordRepository(allowed, allowed, List.of(), null);
         Solver solver = new Solver(repo, false, Solver.Mode.ALL);
 
         Word guess = new Word("CRANE");
@@ -444,7 +436,7 @@ public class SolverTest {
                 new Word("CROWD")
         );
 
-        WordRepository repo = new WordRepository(allowed, allowed, List.of());
+        WordRepository repo = new WordRepository(allowed, allowed, List.of(), null);
         Solver solver = new Solver(repo, false, Solver.Mode.ALL);
 
         Word guess = new Word("CXXXX");
@@ -469,7 +461,7 @@ public class SolverTest {
                 new Word("REACT")
         );
 
-        WordRepository repo = new WordRepository(allowed, allowed, List.of());
+        WordRepository repo = new WordRepository(allowed, allowed, List.of(), null);
         Solver solver = new Solver(repo, false, Solver.Mode.ALL);
 
         Word guess = new Word("XXNXX");
@@ -496,7 +488,7 @@ public class SolverTest {
                 new Word("TRACE")
         );
 
-        WordRepository repo = new WordRepository(allowed, allowed, List.of());
+        WordRepository repo = new WordRepository(allowed, allowed, List.of(), null);
         Solver solver = new Solver(repo, false, Solver.Mode.ALL);
 
         // First constraint: R is yellow
@@ -525,7 +517,7 @@ public class SolverTest {
                 new Word("FLAME")
         );
 
-        WordRepository repo = new WordRepository(words, words, List.of());
+        WordRepository repo = new WordRepository(words, words, List.of(), null);
         Solver solver = new Solver(repo, false, Solver.Mode.ALL);
 
         Word secret = new Word("FLAME");
@@ -550,7 +542,7 @@ public class SolverTest {
                 new Word("FLAME")
         );
 
-        WordRepository repo = new WordRepository(words, words, List.of());
+        WordRepository repo = new WordRepository(words, words, List.of(), null);
         Solver solver = new Solver(repo, false, Solver.Mode.ALL);
 
         Word secret = new Word("FLAME");
@@ -589,7 +581,7 @@ public class SolverTest {
                 new Word("MAMMA") // guess only
         );
 
-        WordRepository repo = new WordRepository(words, words, List.of());
+        WordRepository repo = new WordRepository(words, words, List.of(), null);
         Solver solver = new Solver(repo, false, Solver.Mode.ALL);
 
         Word secret = new Word("BALMY");
@@ -616,7 +608,7 @@ public class SolverTest {
                 new Word("ALARM")   // guess only
         );
 
-        WordRepository repo = new WordRepository(words, words, List.of());
+        WordRepository repo = new WordRepository(words, words, List.of(), null);
         Solver solver = new Solver(repo, false, Solver.Mode.ALL);
 
         Word secret = new Word("CANOE");
@@ -645,7 +637,7 @@ public class SolverTest {
                 new Word("STONE")
         );
 
-        WordRepository repo = new WordRepository(words, words, List.of());
+        WordRepository repo = new WordRepository(words, words, List.of(), null);
         Solver solver = new Solver(repo, false, Solver.Mode.ALL);
 
         List<GuessScore> top3 = solver.rankedGuesses(3);
@@ -660,7 +652,7 @@ public class SolverTest {
                 new Word("CRANE")
         );
 
-        WordRepository repo = new WordRepository(words, words, List.of());
+        WordRepository repo = new WordRepository(words, words, List.of(), null);
         Solver solver = new Solver(repo);
 
         List<GuessScore> all = solver.rankedGuesses(10);
@@ -677,7 +669,7 @@ public class SolverTest {
                 new Word("STONE")
         );
 
-        WordRepository repo = new WordRepository(words, words, List.of());
+        WordRepository repo = new WordRepository(words, words, List.of(), null);
         Solver solver = new Solver(repo);
 
         List<GuessScore> ranked = solver.rankedGuesses(4);
@@ -698,7 +690,7 @@ public class SolverTest {
                 new Word("BRINE")
         );
 
-        WordRepository repo = new WordRepository(words, words, List.of());
+        WordRepository repo = new WordRepository(words, words, List.of(), null);
         Solver solver = new Solver(repo);
 
         Set<Word> candidates = new HashSet<>(words);

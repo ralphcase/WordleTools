@@ -38,7 +38,7 @@ public final class WordLoader {
             }
             flushWord(buffer, result); // flush last token
         } catch (IOException e) {
-            throw new RuntimeException("Error reading dictionary file: " + filePath, e);
+//            throw new IOException("Error reading dictionary file: " + filePath, e);
         }
 
 //        System.out.println(filePath + " has "+result.size() +" words.");

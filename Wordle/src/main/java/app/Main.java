@@ -21,13 +21,13 @@ public class Main {
         WordRepository repo = initializer.loadDictionaries();
 
         boolean hard = false;
-//        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
-        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
+        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
+//        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
 
-        solver.applyFeedback(new Word("SANER"), Feedback.of(gray, gray, gray, gray, yellow));
-//        solver.applyFeedback(new Word("CROUP"), Feedback.of(gray, yellow, yellow, gray, yellow));
-//        solver.applyFeedback(new Word("PORKY"), Feedback.of(yellow, green, green, gray, gray));
+        solver.applyFeedback(new Word("IRATE"), Feedback.of(gray, gray, gray, gray, green));
+        solver.applyFeedback(new Word("LOUSE"), Feedback.of(gray, green, gray, gray, green));
+//        solver.applyFeedback(new Word("BUTCH"), Feedback.of(yellow, yellow, yellow, gray, yellow));
 //        solver.applyFeedback(new Word("WISER"), Feedback.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT));
 
         // Print remaining candidates

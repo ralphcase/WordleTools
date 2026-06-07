@@ -8,6 +8,7 @@ public record DictionaryConfig(
         String goalWordsFile,
         String pastSolutionsFile,
         String solutionsFile,
+        String archiveFile,
         String starterCacheFile,
         String wordleBotFile
 ) {
@@ -19,10 +20,12 @@ public record DictionaryConfig(
                 "goals.txt",
                 "past_solutions.txt",
                 "solutions.txt",
+                "archive_solutions.txt",
                 "starter_cache.json",
                 "wordlebot.txt"
         );
     }
+
     public static DictionaryConfig defaultConfig() {
         return new DictionaryConfig(
                 Path.of("."),
@@ -30,8 +33,9 @@ public record DictionaryConfig(
                 "goals.txt",
                 "past_solutions.txt",
                 "solutions.txt",
+                "archive_solutions.txt",
                 "starter_cache.json",
-               "wordlebot.txt"
+                "wordlebot.txt"
         );
     }
 
@@ -55,7 +59,7 @@ public record DictionaryConfig(
         return baseDir.resolve(wordleBotFile);
     }
 
-    public Path solutionsWordsPath() {
-        return baseDir.resolve(solutionsFile);
-    }
+    public Path solutionsWordsPath() { return baseDir.resolve(solutionsFile); }
+
+    public Path archiveWordsPath() { return baseDir.resolve(archiveFile); }
 }

@@ -157,6 +157,11 @@ Allow:
 - frequency scoring
 - hybrid heuristics
 
+Dictionary options:
+ALL: goals.txt
+NEW: goals.txt - past_solutions.txt
+ARCHIVE: archive_solutions.txt
+
 
 | Guesses | Prefer Goals | Best words   | Best Words | Prefer Goals |        
 |---------|--------------|--------------|------------|--------------|

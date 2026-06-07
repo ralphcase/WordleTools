@@ -7,17 +7,22 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-public record WordRepository(List<Word> allowedWords, List<Word> goalWords, List<Word> pastSolutionWords,
-                             String dictionaryHash, StarterCache starterCache) {
+public record WordRepository(
+        List<Word> allowedWords,
+        List<Word> goalWords,
+        List<Word> pastSolutionWords,
+        List<Word> archiveWords,
+        String dictionaryHash, StarterCache starterCache) {
 
-    public WordRepository(List<Word> allowedWords, List<Word> goalWords, List<Word> of) {
-        this(allowedWords, goalWords, of, null, null);
+    public WordRepository(List<Word> allowedWords, List<Word> goalWords, List<Word> pastSolutionWords, List<Word> archiveWords) {
+        this(allowedWords, goalWords, pastSolutionWords, archiveWords, null, null);
     }
 
     public WordRepository(
             List<Word> allowedWords,
             List<Word> goalWords,
             List<Word> pastSolutionWords,
+            List<Word> archiveWords,
             String dictionaryHash,
             StarterCache starterCache) {
 
@@ -27,6 +32,7 @@ public record WordRepository(List<Word> allowedWords, List<Word> goalWords, List
         // Defensive copies
         this.allowedWords = List.copyOf(allowedWords);
         this.goalWords = List.copyOf(goalWords);
+        this.archiveWords = List.copyOf(archiveWords == null? List.of() : archiveWords);
         if (pastSolutionWords == null) {
             this.pastSolutionWords = List.of();
         } else {
@@ -43,6 +49,10 @@ public record WordRepository(List<Word> allowedWords, List<Word> goalWords, List
 
         ensureSubset(this.pastSolutionWords, this.goalWords,
                 "pastSolutionWords must be a subset of goalWords");
+        ensureSubset(this.pastSolutionWords, this.goalWords,
+                "pastSolutionWords must be a subset of goalWords");
+        ensureSubset(this.archiveWords, this.allowedWords,
+                "archiveWords must be a subset of allowedWords");
     }
 
     private static void ensureSubset(List<Word> subset, List<Word> superset, String message) {

@@ -2,6 +2,7 @@ package dictionary;
 
 import word.Word;
 
+import java.io.IOException;
 import java.util.List;
 
 public final class DictionaryInitializer {
@@ -19,20 +20,21 @@ public final class DictionaryInitializer {
 
     public WordRepository loadDictionaries() {
 
-        List<Word> allowed = loader.loadWords(config.allowedWordsPath());
-        List<Word> goals = loader.loadWords(config.goalWordsPath());
+            List<Word> allowed = loader.loadWords(config.allowedWordsPath());
 
-        List<Word> pastSolutions = null;
-        if (config.pastSolutionsPath().toFile().exists()) {
-            pastSolutions = loader.loadWords(config.pastSolutionsPath());
-        }
+            List<Word> goals = loader.loadWords(config.goalWordsPath());
+            List<Word> archiveWords = loader.loadWords(config.archiveWordsPath());
 
+            List<Word> pastSolutions = null;
+            if (config.pastSolutionsPath().toFile().exists()) {
+                pastSolutions = loader.loadWords(config.pastSolutionsPath());
+            }
         String dictHash = DictionaryHash.compute(
                 config.allowedWordsPath(),
                 config.goalWordsPath()
         );
         StarterCache cache = new StarterCache(config.starterCachePath().toFile());
 
-        return new WordRepository(allowed, goals, pastSolutions, dictHash, cache);
+        return new WordRepository(allowed, goals, pastSolutions, archiveWords, dictHash, cache);
     }
 }
