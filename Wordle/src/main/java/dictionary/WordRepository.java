@@ -32,12 +32,8 @@ public record WordRepository(
         // Defensive copies
         this.allowedWords = List.copyOf(allowedWords);
         this.goalWords = List.copyOf(goalWords);
-        this.archiveWords = List.copyOf(archiveWords == null? List.of() : archiveWords);
-        if (pastSolutionWords == null) {
-            this.pastSolutionWords = List.of();
-        } else {
-            this.pastSolutionWords = List.copyOf(pastSolutionWords);
-        }
+        this.archiveWords = List.copyOf(archiveWords == null ? List.of() : archiveWords);
+        this.pastSolutionWords = List.copyOf(pastSolutionWords == null ? List.of() : pastSolutionWords);
         this.dictionaryHash = dictionaryHash;
         if (starterCache == null) {
             starterCache = new StarterCache(null);
@@ -46,13 +42,10 @@ public record WordRepository(
         // Enforce invariants
         ensureSubset(this.goalWords, this.allowedWords,
                 "goalWords must be a subset of allowedWords");
-
         ensureSubset(this.pastSolutionWords, this.goalWords,
                 "pastSolutionWords must be a subset of goalWords");
-        ensureSubset(this.pastSolutionWords, this.goalWords,
-                "pastSolutionWords must be a subset of goalWords");
-        ensureSubset(this.archiveWords, this.allowedWords,
-                "archiveWords must be a subset of allowedWords");
+        ensureSubset(this.archiveWords, this.goalWords,
+                "archiveWords must be a subset of goalWords");
     }
 
     private static void ensureSubset(List<Word> subset, List<Word> superset, String message) {

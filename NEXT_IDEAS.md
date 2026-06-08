@@ -163,22 +163,23 @@ NEW: goals.txt - past_solutions.txt
 ARCHIVE: archive_solutions.txt
 
 
-| Guesses | Prefer Goals | Best words   | Best Words | Prefer Goals |        
-|---------|--------------|--------------|------------|--------------|
-|         | ALL          | ALL          | NEW        | NEW          |
-| Starter | **RAISE**    | **ROATE**    | **OATER**  | **SANER**    |
-| 1       | 1            | 0            | 0          | 1            |
-| 2       | 109          | 56           | 56         | 112          |
-| 3       | 1137         | 1224         | 929        | 885          |
-| 4       | 1607         | 1729         | 947        | 863          |
-| 5       | 343          | 200          | 84         | 155          |
-| 6       | 19           | 7            | 5          | 5            |
+| Guesses | Prefer Goals | Best words   | Best Words | Prefer Goals | Prefer Goals | Best Words |           
+|---------|--------------|--------------|------------|--------------|--------------|------------|
+|         | ALL          | ALL          | NEW        | NEW          | ARCHIVE      | ARCHIVE    |
+| Starter | **RAISE**    | **ROATE**    | **OATER**  | **SANER**    | **IRATE**    | **ROATE**  |
+| 1       | 1            | 0            | 0          | 1            |     1        | 0          | 
+| 2       | 109          | 56           | 56         | 112          |   103        | 66         |
+| 3       | 1137         | 1224         | 929        | 885          |   696        | 812        |  
+| 4       | 1607         | 1729         | 947        | 863          |   379        | 317        |
+| 5       | 343          | 200          | 84         | 155          |   16         | 0          |
+| 6       | 19           | 7            | 5          | 5            |   0          | 0          |
 
 Histogram of number of guesses:[0, 1, 109, 1137, 1607, 343, 19, 0, 0, 0]
-Histogram of number of guesses:[0, 0, 56, 1224, 1729, 200, 7, 0, 0, 0
+Histogram of number of guesses:[0, 0, 56, 1224, 1729, 200, 7, 0, 0, 0]
 Histogram of number of guesses:[0, 0, 56, 929, 947, 84, 5, 0, 0, 0]
 Histogram of number of guesses:[0, 1, 112, 885, 863, 155, 5, 0, 0, 0]
-
+Histogram of number of guesses:[0, 1, 103, 696, 379, 16, 0, 0, 0, 0]
+Histogram of number of guesses:[0, 0, 66, 812, 317, 0, 0, 0, 0, 0]
 
 References:
 * https://sonorouschocolate.com/notes/index.php?title=The_best_strategies_for_Wordle

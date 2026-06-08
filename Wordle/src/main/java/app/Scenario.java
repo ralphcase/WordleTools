@@ -18,15 +18,16 @@ public class Scenario {
 
         boolean hard = false;
 //
-        List<Word> goals = new ArrayList<Word>(repo.goalWords());
-        goals.removeAll(repo.pastSolutionWords());
+        List<Word> goals = new ArrayList<Word>(repo.archiveWords());
+//        List<Word> goals = new ArrayList<Word>(repo.goalWords());
+//        goals.removeAll(repo.pastSolutionWords());
 //        Word target = goals.get(ThreadLocalRandom.current().nextInt(goals.size()));
         int[] histogram = new int[10];
 //        for (Word target : goals.subList(0, 50)) {
         for (Word target : goals) {
             System.out.println("Target: " + target);
 
-            ScenarioTester st = new ScenarioTester(new Solver(repo, hard, Solver.Mode.NEW), target);
+            ScenarioTester st = new ScenarioTester(new Solver(repo, hard, Solver.Mode.ARCHIVE), target);
             int num = st.run();
             histogram[num]++;
         }

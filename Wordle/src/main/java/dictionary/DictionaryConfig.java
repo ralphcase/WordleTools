@@ -21,7 +21,7 @@ public record DictionaryConfig(
                 "past_solutions.txt",
                 "solutions.txt",
                 "archive_solutions.txt",
-                "starter_cache.json",
+                "starter-cache.json",
                 "wordlebot.txt"
         );
     }
@@ -34,7 +34,7 @@ public record DictionaryConfig(
                 "past_solutions.txt",
                 "solutions.txt",
                 "archive_solutions.txt",
-                "starter_cache.json",
+                "starter-cache.json",
                 "wordlebot.txt"
         );
     }
