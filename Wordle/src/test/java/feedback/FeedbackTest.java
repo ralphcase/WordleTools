@@ -176,5 +176,49 @@ class FeedbackTest {
         assertNotEquals(f, new Object());    // arbitrary object
         assertNotEquals(f,null);            // null check
     }
+    @Test
+    void isSolvedReturnsTrueWhenAllMarksAreCorrect() {
+        Feedback fb = Feedback.of(
+                Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT, Mark.CORRECT
+        );
+        assertTrue(fb.isSolved());
+    }
+
+    @Test
+    void isSolvedReturnsFalseWhenAnyMarkIsNotCorrect() {
+        Feedback fb = Feedback.of(
+                Mark.CORRECT, Mark.PRESENT, Mark.CORRECT, Mark.ABSENT, Mark.CORRECT
+        );
+        assertFalse(fb.isSolved());
+    }
+
+    @Test
+    void isSolvedReturnsFalseWhenNoMarksAreCorrect() {
+        Feedback fb = Feedback.of(
+                Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT, Mark.ABSENT
+        );
+        assertFalse(fb.isSolved());
+    }
+    @Test
+    void toStringIncludesAnsiColoring() {
+        Feedback fb = Feedback.of(
+                Mark.ABSENT,
+                Mark.PRESENT,
+                Mark.CORRECT,
+                Mark.ABSENT,
+                Mark.CORRECT
+        );
+
+        String expected =
+                "[" +
+                        Feedback.COLOR_MAP.get(Mark.ABSENT)   + "ABSENT"  + Feedback.ANSI_RESET + ", " +
+                        Feedback.COLOR_MAP.get(Mark.PRESENT)  + "PRESENT" + Feedback.ANSI_RESET + ", " +
+                        Feedback.COLOR_MAP.get(Mark.CORRECT)  + "CORRECT" + Feedback.ANSI_RESET + ", " +
+                        Feedback.COLOR_MAP.get(Mark.ABSENT)   + "ABSENT"  + Feedback.ANSI_RESET + ", " +
+                        Feedback.COLOR_MAP.get(Mark.CORRECT)  + "CORRECT" + Feedback.ANSI_RESET +
+                        "]";
+
+        assertEquals(expected, fb.toString());
+    }
 
 }

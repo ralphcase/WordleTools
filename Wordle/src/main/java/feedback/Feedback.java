@@ -8,11 +8,11 @@ import java.util.Objects;
 
 public final class Feedback {
     public static final int LENGTH = 5;
-    private static final String ANSI_RESET = "\u001B[0m";
+    static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_GREEN = "\u001B[32m";
     private static final String ANSI_YELLOW = "\u001B[33m";
     private static final String ANSI_GRAY = "\u001B[90m";
-    private static final Map<Mark, String> COLOR_MAP = Map.of(
+    static final Map<Mark, String> COLOR_MAP = Map.of(
             Mark.ABSENT, ANSI_GRAY,
             Mark.PRESENT, ANSI_YELLOW,
             Mark.CORRECT, ANSI_GREEN
