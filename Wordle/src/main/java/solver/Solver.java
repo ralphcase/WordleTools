@@ -2,7 +2,6 @@ package solver;
 
 import constraints.Constraint;
 import dictionary.StarterCache;
-import dictionary.WordLoader;
 import dictionary.WordRepository;
 import feedback.Feedback;
 import word.Word;
@@ -12,11 +11,11 @@ import java.util.*;
 public class Solver {
 
     private final boolean hardmode;
+    private final WordRepository wordRepository;
+    private final Mode scope;
     private List<Word> goalWords;
     private List<Word> allowedWords;
-    private final WordRepository wordRepository;
     private int constraints;
-    private final Mode scope;
 
     public Solver(WordRepository repository) {
         this(repository, false, Mode.ALL);
@@ -89,7 +88,7 @@ public class Solver {
      * most goal words, on average.
      */
     public Word nextGuess() {
-        if (constraints ==0) {
+        if (constraints == 0) {
 
             StarterCache cache = wordRepository.getStarterCache();
             String dictHash = wordRepository.getDictionaryHash();
@@ -139,8 +138,10 @@ public class Solver {
             }
         }
         // Prefer words that could be the solution over other possible guesses.
-        if (!goalWords.contains(w)) {
-            score *= (double) (constraints + 2) / (constraints + 1);
+        if (this.scope == Mode.NEW) {
+            if (!goalWords.contains(w)) {
+                score *= (double) (constraints + 2) / (constraints + 1);
+            }
         }
         return score;
     }

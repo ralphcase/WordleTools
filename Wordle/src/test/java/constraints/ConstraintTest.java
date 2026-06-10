@@ -1,6 +1,7 @@
 package constraints;
 
 import feedback.Feedback;
+import feedback.Mark;
 import org.junit.jupiter.api.Test;
 import word.Word;
 
@@ -225,6 +226,24 @@ public class ConstraintTest {
 
         assertTrue(c.allows(new Word("ABCDE")));
         assertFalse(c.allows(new Word("ABCDF")));
+    }
+
+    @Test
+    void toStringReturnsGuessTabFeedback() {
+        Word guess = new Word("ABCDE");
+        Feedback feedback = Feedback.of(
+                Mark.ABSENT,
+                Mark.PRESENT,
+                Mark.CORRECT,
+                Mark.ABSENT,
+                Mark.CORRECT
+        );
+
+        Constraint c = new Constraint(guess, feedback);
+
+        String expected = guess.toString() + "\t" + feedback.toString();
+
+        assertEquals(expected, c.toString());
     }
 
 }
