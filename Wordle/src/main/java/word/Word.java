@@ -5,7 +5,7 @@ import java.util.Arrays;
 public final class Word {
 
     public static final int LENGTH = 5;
-    private final char[] letters;
+    private char[] letters;
 
     private int[] counts; // lazily initialized
 
