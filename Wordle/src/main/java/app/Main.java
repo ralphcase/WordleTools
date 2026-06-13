@@ -25,10 +25,12 @@ public class Main {
         Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
 
-        solver.applyFeedback(new Word("SANER"), Feedback.of(yellow, gray, gray, yellow, gray));
-        solver.applyFeedback(new Word("PULSE"), Feedback.of(gray, gray, gray, yellow, yellow));
-//        solver.applyFeedback(new Word("GLOVE"), Feedback.of(gray, green, green, gray, green));
-//        solver.applyFeedback(new Word("WISER"), Feedback.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT));
+        solver.applyFeedback(new Word("SANER"), Feedback.of(gray, gray, gray, yellow, gray));
+        solver.applyFeedback(new Word("LIEGE"), Feedback.of(yellow, gray, green, gray, gray));
+        solver.applyFeedback(new Word("FLECK"), Feedback.of(gray, yellow, green, gray, gray));
+//        solver.applyFeedback(new Word("FREAK"), Feedback.of(gray, green, green, green, green));
+//      solver.applyFeedback(new Word("WATCH"), Feedback.of(gray, yellow, gray, gray, gray));
+//        solver.applyFeedback(new Word("FREAK"), Feedback.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT));
 
         // Print remaining candidates
         List<Word> candidates = solver.remainingCandidates();
