@@ -12,30 +12,38 @@ public record DictionaryConfig(
         String starterCacheFile,
         String wordleBotFile
 ) {
+    // File name constants
+    private static final String ALLOWED_WORDS =     "allowed_words.txt";
+    private static final String GOAL_WORDS =        "goals.txt";
+    private static final String PAST_SOLUTIONS =    "past_solutions.txt";
+    private static final String SOLUTIONS =         "solutions.txt";
+    private static final String ARCHIVE_SOLUTIONS = "archive_solutions.txt";
+    private static final String STARTER_CACHE =     "starter-cache.json";
+    private static final String WORDLEBOT =         "wordlebot.txt";
 
     public static DictionaryConfig testConfig(Path baseDir) {
         return new DictionaryConfig(
                 baseDir,
-                "allowed_words.txt",
-                "goals.txt",
-                "past_solutions.txt",
-                "solutions.txt",
-                "archive_solutions.txt",
-                "starter-cache.json",
-                "wordlebot.txt"
+                ALLOWED_WORDS,
+                GOAL_WORDS,
+                PAST_SOLUTIONS,
+                SOLUTIONS,
+                ARCHIVE_SOLUTIONS,
+                STARTER_CACHE,
+                WORDLEBOT
         );
     }
 
     public static DictionaryConfig defaultConfig() {
         return new DictionaryConfig(
                 Path.of("."),
-                "allowed_words.txt",
-                "goals.txt",
-                "past_solutions.txt",
-                "solutions.txt",
-                "archive_solutions.txt",
-                "starter-cache.json",
-                "wordlebot.txt"
+                ALLOWED_WORDS,
+                GOAL_WORDS,
+                PAST_SOLUTIONS,
+                SOLUTIONS,
+                ARCHIVE_SOLUTIONS,
+                STARTER_CACHE,
+                WORDLEBOT
         );
     }
 
@@ -59,7 +67,7 @@ public record DictionaryConfig(
         return baseDir.resolve(wordleBotFile);
     }
 
-    public Path solutionsWordsPath() { return baseDir.resolve(solutionsFile); }
+    public Path solutionsWordsPath() { return baseDir.resolve(solutionsFile);}
 
     public Path archiveWordsPath() { return baseDir.resolve(archiveFile); }
 }
