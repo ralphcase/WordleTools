@@ -25,9 +25,9 @@ public class Main {
         Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
 
-        solver.applyFeedback(new Word("SANER"), Feedback.of(gray, gray, yellow, yellow, yellow));
-        solver.applyFeedback(new Word("INURE"), Feedback.of(gray, green, gray, green, yellow));
-//        solver.applyFeedback(new Word("HAWMS"), Feedback.of(yellow, green, yellow, gray, gray));
+        solver.applyFeedback(new Word("SANER"), Feedback.of(gray, gray, gray, yellow, gray));
+        solver.applyFeedback(new Word("LIEGE"), Feedback.of(gray, yellow, yellow, gray, gray));
+        solver.applyFeedback(new Word("EVICT"), Feedback.of(green, gray, yellow, gray, gray));
 //        solver.applyFeedback(new Word("FREAK"), Feedback.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT));
 
         // Print remaining candidates
