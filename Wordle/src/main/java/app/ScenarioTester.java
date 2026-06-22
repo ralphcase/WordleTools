@@ -21,8 +21,12 @@ public class ScenarioTester {
     public int run() {
         int step = 1;
 
+        Word prevGuess = null;
         while (true) {
             Word guess = solver.nextGuess();
+            if (prevGuess != null && prevGuess.equals(guess)) {
+                throw new RuntimeException("Duplicate guess detected. Solver seems stuck.");
+            }
             Feedback report = Feedback.from(guess, goal);
 
             System.out.printf("%d. %s → %s%n", step, guess, report);
@@ -32,6 +36,7 @@ public class ScenarioTester {
                 return step;
             }
 
+            prevGuess = guess;
             solver.applyFeedback(guess, report);
             step++;
         }

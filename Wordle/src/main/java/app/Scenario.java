@@ -18,10 +18,13 @@ public class Scenario {
 
         boolean hard = false;
 //
-        List<Word> goals = new ArrayList<Word>(repo.archiveWords());
-//        List<Word> goals = new ArrayList<Word>(repo.goalWords());
-//        goals.removeAll(repo.pastSolutionWords());
+//        List<Word> goals = new ArrayList<Word>(repo.archiveWords());
+
+        List<Word> goals = new ArrayList<Word>(repo.goalWords());
+        goals.removeAll(repo.pastSolutionWords());
+
 //        Word target = goals.get(ThreadLocalRandom.current().nextInt(goals.size()));
+
         int[] histogram = new int[10];
 //        for (Word target : goals.subList(0, 50)) {
         for (Word target : goals) {
