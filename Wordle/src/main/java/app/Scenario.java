@@ -30,7 +30,7 @@ public class Scenario {
         for (Word target : goals) {
             System.out.println("Target: " + target);
 
-            ScenarioTester st = new ScenarioTester(new Solver(repo, hard, Solver.Mode.ARCHIVE), target);
+            ScenarioTester st = new ScenarioTester(new Solver(repo, hard, Solver.Mode.NEW), target);
             int num = st.run();
             histogram[num]++;
         }
