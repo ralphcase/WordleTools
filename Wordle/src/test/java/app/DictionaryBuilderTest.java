@@ -111,4 +111,134 @@ class DictionaryBuilderTest {
         List<Word> goals = loader.loadWords(config.goalWordsPath());
         assertEquals(2, goals.size());
     }
+
+    @Test
+    void rebuildDictionaries_removesWordsNoLongerInWordlebot(@TempDir Path tempDir) throws Exception {
+        DictionaryConfig config = DictionaryConfig.testConfig(tempDir);
+        WordLoader loader = new WordLoader();
+
+        Files.writeString(config.goalWordsPath(), "crane\nslate\nblock\n");
+        Files.writeString(config.wordlebotPath(), "crane\ntrace\n");
+        Files.writeString(config.predictedPath(), "slate\nblock\nfruit\n");
+        Files.writeString(config.solutionsWordsPath(), "dummy\n");
+
+        DictionaryBuilder.rebuildDictionaries(config);
+
+        List<Word> goals = loader.loadWords(config.goalWordsPath());
+        assertEquals(2, goals.size());
+        assertTrue(goals.contains(new Word("crane")));
+        assertTrue(goals.contains(new Word("trace")));
+        assertFalse(goals.contains(new Word("slate")));
+        assertFalse(goals.contains(new Word("block")));
+    }
+
+    @Test
+    void rebuildDictionaries_handlesEmptyPredictedFile(@TempDir Path tempDir) throws Exception {
+        DictionaryConfig config = DictionaryConfig.testConfig(tempDir);
+        WordLoader loader = new WordLoader();
+
+        Files.writeString(config.goalWordsPath(), "crane\nslate\n");
+        Files.writeString(config.wordlebotPath(), "trace\n");
+        Files.writeString(config.predictedPath(), "");
+        Files.writeString(config.solutionsWordsPath(), "dummy\n");
+
+        DictionaryBuilder.rebuildDictionaries(config);
+
+        List<Word> goals = loader.loadWords(config.goalWordsPath());
+        assertEquals(3, goals.size());
+        assertTrue(goals.contains(new Word("crane")));
+        assertTrue(goals.contains(new Word("slate")));
+        assertTrue(goals.contains(new Word("trace")));
+    }
+
+    @Test
+    void rebuildDictionaries_keepsPredictedWordsStillInWordlebot(@TempDir Path tempDir) throws Exception {
+        DictionaryConfig config = DictionaryConfig.testConfig(tempDir);
+        WordLoader loader = new WordLoader();
+
+        Files.writeString(config.goalWordsPath(), "crane\n");
+        Files.writeString(config.wordlebotPath(), "trace\nslate\n");
+        Files.writeString(config.predictedPath(), "slate\nblock\n");
+        Files.writeString(config.solutionsWordsPath(), "dummy\n");
+
+        DictionaryBuilder.rebuildDictionaries(config);
+
+        List<Word> goals = loader.loadWords(config.goalWordsPath());
+        assertEquals(3, goals.size());
+        assertTrue(goals.contains(new Word("crane")));
+        assertTrue(goals.contains(new Word("trace")));
+        assertTrue(goals.contains(new Word("slate")));
+        assertFalse(goals.contains(new Word("block")));
+    }
+
+    @Test
+    void rebuildDictionaries_removesAllGoalsWhenNoneInWordlebot(@TempDir Path tempDir) throws Exception {
+        DictionaryConfig config = DictionaryConfig.testConfig(tempDir);
+        WordLoader loader = new WordLoader();
+
+        Files.writeString(config.goalWordsPath(), "slate\nblock\n");
+        Files.writeString(config.wordlebotPath(), "trace\n");
+        Files.writeString(config.predictedPath(), "slate\nblock\n");
+        Files.writeString(config.solutionsWordsPath(), "dummy\n");
+
+        DictionaryBuilder.rebuildDictionaries(config);
+
+        List<Word> goals = loader.loadWords(config.goalWordsPath());
+        assertEquals(1, goals.size());
+        assertTrue(goals.contains(new Word("trace")));
+        assertFalse(goals.contains(new Word("slate")));
+        assertFalse(goals.contains(new Word("block")));
+    }
+
+    @Test
+    void rebuildDictionaries_handlesMissingPredictedFile(@TempDir Path tempDir) throws Exception {
+        DictionaryConfig config = DictionaryConfig.testConfig(tempDir);
+        WordLoader loader = new WordLoader();
+
+        Files.writeString(config.goalWordsPath(), "crane\nslate\n");
+        Files.writeString(config.wordlebotPath(), "trace\n");
+        Files.writeString(config.solutionsWordsPath(), "dummy\n");
+
+        DictionaryBuilder.rebuildDictionaries(config);
+
+        List<Word> goals = loader.loadWords(config.goalWordsPath());
+        assertEquals(3, goals.size());
+        assertTrue(goals.contains(new Word("crane")));
+        assertTrue(goals.contains(new Word("slate")));
+        assertTrue(goals.contains(new Word("trace")));
+    }
+
+    @Test
+    void predictWordlbot_writesPredictedWordsToCorrectFile() throws Exception {
+        WordLoader loader = new WordLoader();
+        Path predictedPath = DictionaryConfig.defaultConfig().predictedPath();
+
+        List<Word> wordsToPredict = List.of(new Word("crane"), new Word("slate"), new Word("trace"));
+
+        DictionaryBuilder.predictWordlbot(wordsToPredict);
+
+        List<Word> predicted = loader.loadWords(predictedPath);
+        assertEquals(3, predicted.size());
+        assertTrue(predicted.contains(new Word("crane")));
+        assertTrue(predicted.contains(new Word("slate")));
+        assertTrue(predicted.contains(new Word("trace")));
+    }
+
+    @Test
+    void predictWordlbot_overwritesPreviousPredictions() throws Exception {
+        WordLoader loader = new WordLoader();
+        Path predictedPath = DictionaryConfig.defaultConfig().predictedPath();
+
+        // First prediction
+        DictionaryBuilder.predictWordlbot(List.of(new Word("alpha"), new Word("gamma")));
+        List<Word> first = loader.loadWords(predictedPath);
+        assertEquals(2, first.size());
+
+        // Second prediction should overwrite
+        DictionaryBuilder.predictWordlbot(List.of(new Word("gamma")));
+        List<Word> second = loader.loadWords(predictedPath);
+        assertEquals(1, second.size());
+        assertTrue(second.contains(new Word("gamma")));
+        assertFalse(second.contains(new Word("alpha")));
+    }
 }
