@@ -180,6 +180,7 @@ Histogram of number of guesses:[0, 0, 56, 929, 947, 84, 5, 0, 0, 0]
 Histogram of number of guesses:[0, 1, 112, 885, 863, 155, 5, 0, 0, 0]
 Histogram of number of guesses:[0, 1, 103, 696, 379, 16, 0, 0, 0, 0]
 Histogram of number of guesses:[0, 0, 66, 812, 317, 0, 0, 0, 0, 0]
+NEW SANER [0, 1, 100, 691, 527, 86, 2, 0, 0, 0]
 
 References:
 * https://sonorouschocolate.com/notes/index.php?title=The_best_strategies_for_Wordle

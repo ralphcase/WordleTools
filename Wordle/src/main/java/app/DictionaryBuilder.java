@@ -6,6 +6,7 @@ import word.Word;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class DictionaryBuilder {
@@ -27,14 +28,31 @@ public class DictionaryBuilder {
 
 		WordLoader loader = new WordLoader();
 
-		// Build new goals list: union of goals + wordlebot
-		Set<Word> aset = new HashSet<>(loader.loadWords(config.goalWordsPath()));
-		aset.addAll(loader.loadWords(config.wordlebotPath()));
-		loader.writeWords(new ArrayList<>(aset), config.goalWordsPath());
+		Set<Word> goalWords = new HashSet<>(loader.loadWords(config.goalWordsPath()));
+		Set<Word> wordlebotWords = new HashSet<>(loader.loadWords(config.wordlebotPath()));
+		// Union of existing goals and current wordlebot words
+		goalWords.addAll(wordlebotWords);
+
+		// Remove goals that were expected (predicted) but are no longer in wordlebot
+		Set<Word> predicted = new HashSet<>(loader.loadWords(config.predictedPath()));
+		predicted.removeAll(wordlebotWords);
+		if (!predicted.isEmpty()) {
+			System.out.println("Words that are no longer goals: " + predicted);
+			goalWords.removeAll(predicted);
+		}
+		loader.writeWords(new ArrayList<>(goalWords), config.goalWordsPath());
 
 		// Build past solutions list: unique solutions
-		aset = new HashSet<>(loader.loadWords(config.solutionsWordsPath()));
-		loader.writeWords(new ArrayList<>(aset), config.pastSolutionsPath());
+		goalWords = new HashSet<>(loader.loadWords(config.solutionsWordsPath()));
+		loader.writeWords(new ArrayList<>(goalWords), config.pastSolutionsPath());
 
+	}
+
+	/**
+	 * Record words predicted to be returned by wordlebot.
+	 */
+	public static void predictWordlbot(List<Word> words) {
+		WordLoader loader = new WordLoader();
+		loader.writeWords(words, DictionaryConfig.defaultConfig().predictedPath());
 	}
 }

@@ -10,7 +10,8 @@ public record DictionaryConfig(
         String solutionsFile,
         String archiveFile,
         String starterCacheFile,
-        String wordleBotFile
+        String wordleBotFile,
+        String predictFie
 ) {
     // File name constants
     private static final String ALLOWED_WORDS =     "allowed_words.txt";
@@ -20,6 +21,7 @@ public record DictionaryConfig(
     private static final String ARCHIVE_SOLUTIONS = "archive_solutions.txt";
     private static final String STARTER_CACHE =     "starter-cache.json";
     private static final String WORDLEBOT =         "wordlebot.txt";
+    private static final String PREDICT =           "predicted.txt";
 
     public static DictionaryConfig testConfig(Path baseDir) {
         return new DictionaryConfig(
@@ -30,7 +32,8 @@ public record DictionaryConfig(
                 SOLUTIONS,
                 ARCHIVE_SOLUTIONS,
                 STARTER_CACHE,
-                WORDLEBOT
+                WORDLEBOT,
+                PREDICT
         );
     }
 
@@ -43,7 +46,8 @@ public record DictionaryConfig(
                 SOLUTIONS,
                 ARCHIVE_SOLUTIONS,
                 STARTER_CACHE,
-                WORDLEBOT
+                WORDLEBOT,
+                PREDICT
         );
     }
 
@@ -70,4 +74,6 @@ public record DictionaryConfig(
     public Path solutionsWordsPath() { return baseDir.resolve(solutionsFile);}
 
     public Path archiveWordsPath() { return baseDir.resolve(archiveFile); }
+
+    public Path predictedPath() { return baseDir.resolve(predictFie); }
 }
