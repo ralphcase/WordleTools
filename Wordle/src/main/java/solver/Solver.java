@@ -36,8 +36,8 @@ public class Solver {
                 this.goalWords.removeAll(repository.pastSolutionWords());
             }
             case ALL -> this.goalWords = repository.goalWords();
-            case SMART ->
-                    throw new UnsupportedOperationException("SMART selection of next word is not yet implemented.");
+            case SMART -> throw new UnsupportedOperationException(
+                    "SMART selection of next word is not yet implemented.");
         }
 
         this.allowedWords = repository.allowedWords();
@@ -100,14 +100,14 @@ public class Solver {
                 return cached.get().word();
             }
 
-            GuessScore best = rankedGuesses(1).get(0);
+            GuessScore best = rankedGuesses(1).getFirst();
 
             cache.save(scope.name(), dictHash, best);
 
             return best.word();
         }
 
-        return rankedGuesses(1).get(0).word();
+        return rankedGuesses(1).getFirst().word();
     }
 
     public List<GuessScore> rankedGuesses(int top) {
