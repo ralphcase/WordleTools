@@ -25,9 +25,9 @@ public class Main {
         Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
 
-        solver.applyFeedback(new Word("SANER"), Feedback.of(gray, gray, gray, green, green));
+        solver.applyFeedback(new Word("SANER"), Feedback.of(gray, gray, yellow, gray, gray));
         DictionaryBuilder.predictWordlbot(solver.remainingCandidates());
-        solver.applyFeedback(new Word("DOILT"), Feedback.of(gray, gray, gray, gray, gray));
+        solver.applyFeedback(new Word("FOUNT"), Feedback.of(gray, gray, yellow, yellow, yellow));
 //        solver.applyFeedback(new Word("CURER"), Feedback.of(gray, green, gray, green, green));
 //        solver.applyFeedback(new Word("FREAK"), Feedback.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT));
 
