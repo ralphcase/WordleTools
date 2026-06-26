@@ -2,7 +2,6 @@ package dictionary;
 
 import word.Word;
 
-import java.io.IOException;
 import java.util.List;
 
 public final class DictionaryInitializer {

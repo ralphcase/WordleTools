@@ -9,11 +9,21 @@ import word.Word;
 
 import java.util.List;
 
+/**
+ * Solve a wordle game.
+ */
 public class Main {
   static final Mark green = Mark.CORRECT;
   static final Mark yellow = Mark.PRESENT;
   static final Mark gray = Mark.ABSENT;
 
+  /**
+   * Entry point for the WordleTools application.
+   * Take input as code changes about what "mode" to use and what hints are shown by the Worldle
+   * app at https://www.nytimes.com/games/wordle/index.html.
+   *
+   * @param args command-line arguments (not used)
+   */
   public static void main(String[] args) {
     long startTime = System.currentTimeMillis();
 
