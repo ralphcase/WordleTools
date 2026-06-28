@@ -19,15 +19,15 @@ public final class DictionaryInitializer {
 
     public WordRepository loadDictionaries() {
 
-            List<Word> allowed = loader.loadWords(config.allowedWordsPath());
+        List<Word> allowed = loader.loadWords(config.allowedWordsPath());
 
-            List<Word> goals = loader.loadWords(config.goalWordsPath());
-            List<Word> archiveWords = loader.loadWords(config.archiveWordsPath());
+        List<Word> goals = loader.loadWords(config.goalWordsPath());
+        List<Word> archiveWords = loader.loadWords(config.archiveWordsPath());
 
-            List<Word> pastSolutions = null;
-            if (config.pastSolutionsPath().toFile().exists()) {
-                pastSolutions = loader.loadWords(config.pastSolutionsPath());
-            }
+        List<Word> pastSolutions = null;
+        if (config.pastSolutionsPath().toFile().exists()) {
+            pastSolutions = loader.loadWords(config.pastSolutionsPath());
+        }
         String dictHash = DictionaryHash.compute(
                 config.allowedWordsPath(),
                 config.goalWordsPath()

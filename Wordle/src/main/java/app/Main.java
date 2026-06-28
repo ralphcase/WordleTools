@@ -13,43 +13,43 @@ import java.util.List;
  * Solve a wordle game.
  */
 public class Main {
-  static final Mark green = Mark.CORRECT;
-  static final Mark yellow = Mark.PRESENT;
-  static final Mark gray = Mark.ABSENT;
+    static final Mark green = Mark.CORRECT;
+    static final Mark yellow = Mark.PRESENT;
+    static final Mark gray = Mark.ABSENT;
 
-  /**
-   * Entry point for the WordleTools application.
-   * Take input as code changes about what "mode" to use and what hints are shown by the Worldle
-   * app at https://www.nytimes.com/games/wordle/index.html.
-   *
-   * @param args command-line arguments (not used)
-   */
-  public static void main(String[] args) {
-    long startTime = System.currentTimeMillis();
+    /**
+     * Entry point for the WordleTools application.
+     * Take input as code changes about what "mode" to use and what hints are shown by the Worldle
+     * app at https://www.nytimes.com/games/wordle/index.html.
+     *
+     * @param args command-line arguments (not used)
+     */
+    public static void main(String[] args) {
+        long startTime = System.currentTimeMillis();
 
-    DictionaryInitializer initializer = new DictionaryInitializer();
-    WordRepository repo = initializer.loadDictionaries();
+        DictionaryInitializer initializer = new DictionaryInitializer();
+        WordRepository repo = initializer.loadDictionaries();
 
-    boolean hard = false;
-//    Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
-//    Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
-    Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
+        boolean hard = false;
+//        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
+        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
+//        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
 
-    solver.applyFeedback(new Word("SANER"), Feedback.of(gray, yellow, gray, yellow, gray));
-    DictionaryBuilder.predictWordlbot(solver.remainingCandidates());
+        solver.applyFeedback(new Word("SANER"), Feedback.of(gray, gray, gray, green, gray));
+        DictionaryBuilder.predictWordlbot(solver.remainingCandidates());
 
-    solver.applyFeedback(new Word("CLEAT"), Feedback.of(yellow, gray, yellow, yellow, yellow));
-    solver.applyFeedback(new Word("TEACH"), Feedback.of(yellow, yellow, yellow, yellow, gray));
-//    solver.applyFeedback(new Word("FREAK"), Feedback.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT));
+        solver.applyFeedback(new Word("DOILT"), Feedback.of(gray, gray, gray, gray, gray));
+        solver.applyFeedback(new Word("CHEEP"), Feedback.of(yellow, gray, yellow, green, gray));
+//        solver.applyFeedback(new Word("FREAK"), Feedback.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT));
 
-    // Print remaining candidates
-    List<Word> candidates = solver.remainingCandidates();
-    System.out.println(candidates.size() + " Remaining candidates: " + candidates);
+        // Print remaining candidates
+        List<Word> candidates = solver.remainingCandidates();
+        System.out.println(candidates.size() + " Remaining candidates: " + candidates);
 
-    System.out.println("Next Guess: " + solver.nextGuess());
-//    System.out.println("Next Guess: " + solver.rankedGuesses(10));
+//        System.out.println("Next Guess: " + solver.nextGuess());
+        System.out.println("Next Guess: " + solver.rankedGuesses(10));
 
-    long endTime = System.currentTimeMillis();
-    System.out.println("It took " + (endTime - startTime) / 1000.0 + " seconds.");
-  }
+        long endTime = System.currentTimeMillis();
+        System.out.println("It took " + (endTime - startTime) / 1000.0 + " seconds.");
+    }
 }

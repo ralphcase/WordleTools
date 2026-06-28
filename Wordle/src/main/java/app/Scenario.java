@@ -13,32 +13,32 @@ import java.util.List;
  * Evaluate a solution scenario against all possible goals.
  */
 public class Scenario {
-  public static void main(String[] args) {
-    long startTime = System.currentTimeMillis();
+    public static void main(String[] args) {
+        long startTime = System.currentTimeMillis();
 
-    DictionaryInitializer initializer = new DictionaryInitializer();
-    WordRepository repo = initializer.loadDictionaries();
+        DictionaryInitializer initializer = new DictionaryInitializer();
+        WordRepository repo = initializer.loadDictionaries();
 
-    boolean hard = false;
+        boolean hard = false;
 
-//    List<Word> goals = new ArrayList<Word>(repo.archiveWords());
+//        List<Word> goals = new ArrayList<Word>(repo.archiveWords());
 
-    List<Word> goals = new ArrayList<Word>(repo.goalWords());
-    goals.removeAll(repo.pastSolutionWords());
+        List<Word> goals = new ArrayList<Word>(repo.goalWords());
+        goals.removeAll(repo.pastSolutionWords());
 
-//    Word target = goals.get(ThreadLocalRandom.current().nextInt(goals.size()));
+//        Word target = goals.get(ThreadLocalRandom.current().nextInt(goals.size()));
 
-    int[] histogram = new int[10];
-    for (Word target : goals) {
-      System.out.println("Target: " + target);
+        int[] histogram = new int[10];
+        for (Word target : goals) {
+            System.out.println("Target: " + target);
 
-      ScenarioTester st = new ScenarioTester(new Solver(repo, hard, Solver.Mode.NEW), target);
-      int num = st.run();
-      histogram[num]++;
+            ScenarioTester st = new ScenarioTester(new Solver(repo, hard, Solver.Mode.NEW), target);
+            int num = st.run();
+            histogram[num]++;
+        }
+        System.out.println("Histogram of number of guesses:" + Arrays.toString(histogram));
+
+        long endTime = System.currentTimeMillis();
+        System.out.println("It took " + (endTime - startTime) / 1000.0 + " seconds.");
     }
-    System.out.println("Histogram of number of guesses:" + Arrays.toString(histogram));
-
-    long endTime = System.currentTimeMillis();
-    System.out.println("It took " + (endTime - startTime) / 1000.0 + " seconds.");
-  }
 }
