@@ -93,8 +93,7 @@ public class Solver {
             StarterCache cache = wordRepository.getStarterCache();
             String dictHash = wordRepository.getDictionaryHash();
 
-            Optional<GuessScore> cached =
-                    cache.load(scope.name(), dictHash);
+            Optional<GuessScore> cached = cache.load(scope.name(), dictHash);
 
             if (cached.isPresent()) {
                 return cached.get().word();
@@ -111,8 +110,7 @@ public class Solver {
     }
 
     public List<GuessScore> rankedGuesses(int top) {
-        PriorityQueue<GuessScore> pq =
-                new PriorityQueue<>(Comparator.comparingDouble(GuessScore::score));
+        PriorityQueue<GuessScore> pq = new PriorityQueue<>(Comparator.comparingDouble(GuessScore::score));
 
         for (Word w : allowedWords) {
             pq.add(new GuessScore(w, scoreWord(w)));
