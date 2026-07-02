@@ -31,14 +31,14 @@ public class Main {
         WordRepository repo = initializer.loadDictionaries();
 
         boolean hard = false;
-        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
-//        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
+//        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
+        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
 
-        solver.applyFeedback(new Word("ROATE"), Feedback.of(gray, gray, gray, yellow, green));
+        solver.applyFeedback(new Word("SANER"), Feedback.of(gray, green, yellow, green, gray));
         DictionaryBuilder.predictWordlbot(solver.remainingCandidates());
 
-//        solver.applyFeedback(new Word("FEMUR"), Feedback.of(gray, green, green, green, green));
+        solver.applyFeedback(new Word("WAKEN"), Feedback.of(gray, green, gray, green, green));
 //        solver.applyFeedback(new Word("THUMB"), Feedback.of(gray, gray, yellow, gray, gray));
 //        solver.applyFeedback(new Word("FREAK"), Feedback.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT));
 
