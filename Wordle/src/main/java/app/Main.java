@@ -32,14 +32,14 @@ public class Main {
 
         boolean hard = false;
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);
-        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
-//        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
+//        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
+        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
 
-        solver.applyFeedback(new Word("SANER"), Feedback.of(gray, green, green, gray, gray));
+        solver.applyFeedback(new Word("SANER"), Feedback.of(gray, yellow, yellow, gray, gray));
         DictionaryBuilder.predictWordlbot(solver.remainingCandidates());
 
-        solver.applyFeedback(new Word("LYMPH"), Feedback.of(yellow, gray, gray, gray, gray));
-//        solver.applyFeedback(new Word("MYALL"), Feedback.of(gray, yellow, gray, gray, gray));
+        solver.applyFeedback(new Word("APING"), Feedback.of(green, gray, green, yellow, gray));
+        solver.applyFeedback(new Word("ANIMA"), Feedback.of(green, yellow, green, gray, yellow));
 //        solver.applyFeedback(new Word("FREAK"), Feedback.of(ABSENT, CORRECT, CORRECT, CORRECT, CORRECT));
 
         // Print remaining candidates
