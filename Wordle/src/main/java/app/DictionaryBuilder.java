@@ -59,7 +59,7 @@ public class DictionaryBuilder {
     /**
      * Record words predicted to be returned by wordlebot.
      */
-    public static void predictWordlbot(List<Word> words) {
+    public static void predictWordlebot(List<Word> words) {
         WordLoader loader = new WordLoader();
         loader.writeWords(words, DictionaryConfig.defaultConfig().predictedPath());
     }

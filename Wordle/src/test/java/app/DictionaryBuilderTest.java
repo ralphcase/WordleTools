@@ -209,13 +209,13 @@ class DictionaryBuilderTest {
     }
 
     @Test
-    void predictWordlbot_writesPredictedWordsToCorrectFile() throws Exception {
+    void predictWordlebot_writesPredictedWordsToCorrectFile() throws Exception {
         WordLoader loader = new WordLoader();
         Path predictedPath = DictionaryConfig.defaultConfig().predictedPath();
 
         List<Word> wordsToPredict = List.of(new Word("crane"), new Word("slate"), new Word("trace"));
 
-        DictionaryBuilder.predictWordlbot(wordsToPredict);
+        DictionaryBuilder.predictWordlebot(wordsToPredict);
 
         List<Word> predicted = loader.loadWords(predictedPath);
         assertEquals(3, predicted.size());
@@ -225,17 +225,17 @@ class DictionaryBuilderTest {
     }
 
     @Test
-    void predictWordlbot_overwritesPreviousPredictions() throws Exception {
+    void predictWordlebot_overwritesPreviousPredictions() throws Exception {
         WordLoader loader = new WordLoader();
         Path predictedPath = DictionaryConfig.defaultConfig().predictedPath();
 
         // First prediction
-        DictionaryBuilder.predictWordlbot(List.of(new Word("alpha"), new Word("gamma")));
+        DictionaryBuilder.predictWordlebot(List.of(new Word("alpha"), new Word("gamma")));
         List<Word> first = loader.loadWords(predictedPath);
         assertEquals(2, first.size());
 
         // Second prediction should overwrite
-        DictionaryBuilder.predictWordlbot(List.of(new Word("gamma")));
+        DictionaryBuilder.predictWordlebot(List.of(new Word("gamma")));
         List<Word> second = loader.loadWords(predictedPath);
         assertEquals(1, second.size());
         assertTrue(second.contains(new Word("gamma")));

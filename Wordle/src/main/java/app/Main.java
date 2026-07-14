@@ -36,7 +36,7 @@ public class Main {
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
 
         solver.applyFeedback(new Word("SANER"), Feedback.of(green, yellow, gray, yellow, gray));
-        DictionaryBuilder.predictWordlbot(solver.remainingCandidates());
+        DictionaryBuilder.predictWordlebot(solver.remainingCandidates());
 
         solver.applyFeedback(new Word("SHALE"), Feedback.of(green, gray, yellow, gray, yellow));
 //        solver.applyFeedback(new Word("SOFTY"), Feedback.of(green, yellow, gray, yellow, gray));
