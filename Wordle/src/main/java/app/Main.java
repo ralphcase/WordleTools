@@ -19,7 +19,7 @@ public class Main {
 
     /**
      * Entry point for the WordleTools application.
-     * Take input as code changes about what "mode" to use and what hints are shown by the Worldle
+     * Take input as code changes about what "mode" to use and what hints are shown by the Wordle
      * app at https://www.nytimes.com/games/wordle/index.html.
      *
      * @param args command-line arguments (not used)
@@ -35,11 +35,11 @@ public class Main {
         Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
 
-        solver.applyFeedback(new Word("SANER"), Feedback.of(green, yellow, gray, yellow, gray));
+        solver.applyFeedback(new Word("SANER"), Feedback.of(gray, gray, gray, yellow, gray));
         DictionaryBuilder.predictWordlebot(solver.remainingCandidates());
 
-        solver.applyFeedback(new Word("SHALE"), Feedback.of(green, gray, yellow, gray, yellow));
-//        solver.applyFeedback(new Word("SOFTY"), Feedback.of(green, yellow, gray, yellow, gray));
+        solver.applyFeedback(new Word("LIEGE"), Feedback.of(gray, gray, gray, gray, green));
+        solver.applyFeedback(new Word("COUPE"), Feedback.of(gray, gray, yellow, gray, green));
 //        solver.applyFeedback(new Word("PUDIC"), Feedback.of(gray, yellow, gray, gray, gray));
 
         // Print remaining candidates
