@@ -35,11 +35,11 @@ public class Main {
         Solver solver = new Solver(repo, hard, Solver.Mode.NEW);
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
 
-        solver.applyFeedback(new Word("SANER"), Feedback.of(gray, yellow, gray, yellow, gray));
+        solver.applyFeedback(new Word("SANER"), Feedback.of(gray, gray, gray, gray, gray));
         DictionaryBuilder.predictWordlebot(solver.remainingCandidates());
 
-        solver.applyFeedback(new Word("CLEAT"), Feedback.of(gray, yellow, yellow, green, gray));
-//        solver.applyFeedback(new Word("COUPE"), Feedback.of(gray, gray, yellow, gray, green));
+        solver.applyFeedback(new Word("DOILY"), Feedback.of(gray, green, gray, gray, gray));
+        solver.applyFeedback(new Word("COUTH"), Feedback.of(gray, green, gray, green, green));
 //        solver.applyFeedback(new Word("PUDIC"), Feedback.of(gray, yellow, gray, gray, gray));
 
         // Print remaining candidates
