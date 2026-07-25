@@ -38,7 +38,7 @@ public class Main {
         solver.applyFeedback(new Word("ROATE"), Feedback.of(gray, gray, yellow, yellow, yellow));
         DictionaryBuilder.predictWordlebot(solver.remainingCandidates());
 
-        solver.applyFeedback(new Word("SMELT"), Feedback.of(yellow, gray, yellow, gray, green));
+//        solver.applyFeedback(new Word("SMELT"), Feedback.of(yellow, gray, yellow, gray, green));
 //        solver.applyFeedback(new Word("CONIC"), Feedback.of(yellow, green, gray, gray, gray));
 //        solver.applyFeedback(new Word("PUDIC"), Feedback.of(gray, yellow, gray, gray, gray));
 
