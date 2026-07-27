@@ -23,7 +23,7 @@ public class BestStarter {
         boolean hard = false;
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ARCHIVE);    // ROATE
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);    // RAISE
-        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);  // SANER
+        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);  // SANER: 65812.000
 
         System.out.println("Best Starting guess: " + solver.rankedGuesses(100));
 
