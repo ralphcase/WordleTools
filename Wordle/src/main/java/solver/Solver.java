@@ -112,14 +112,18 @@ public class Solver {
     public List<GuessScore> rankedGuesses(int top) {
         PriorityQueue<GuessScore> pq = new PriorityQueue<>(Comparator.comparingDouble(GuessScore::score));
 
+        double maxScore = 0;
         for (Word w : allowedWords) {
-            pq.add(new GuessScore(w, scoreWord(w)));
+            double score = scoreWord(w);
+            pq.add(new GuessScore(w, score));
+            maxScore = Math.max(maxScore, score);
         }
 
         List<GuessScore> result = new ArrayList<>(pq.size());
         while (!pq.isEmpty() && top > 0) {
             top--;
-            result.add(pq.poll());   // poll returns lowest score first
+            GuessScore g = pq.poll();      // poll returns lowest score first
+            result.add(new GuessScore(g.word(), g.score() / maxScore));
         }
 
         return result;
