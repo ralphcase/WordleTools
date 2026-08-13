@@ -16,6 +16,7 @@ public class Solver {
     private List<Word> goalWords;
     private List<Word> allowedWords;
     private int constraints;
+    private Solver newSolver;
 
     public Solver(WordRepository repository) {
         this(repository, false, Mode.ALL);
@@ -36,8 +37,10 @@ public class Solver {
                 this.goalWords.removeAll(repository.pastSolutionWords());
             }
             case ALL -> this.goalWords = repository.goalWords();
-            case SMART -> throw new UnsupportedOperationException(
-                    "SMART selection of next word is not yet implemented.");
+            case SMART -> {
+                this.goalWords = repository.goalWords();
+                newSolver = new Solver(repository, hardmode, Mode.NEW);
+            }
         }
 
         this.allowedWords = repository.allowedWords();
@@ -72,6 +75,9 @@ public class Solver {
             System.out.print(allowedWords.size() + " allowed words filtered to ");
             allowedWords = allowedWords.stream().filter(constraint::allows).toList();
             System.out.println(allowedWords.size() + ".");
+        }
+        if (newSolver != null) {
+            newSolver.applyFeedback(guess, feedback);
         }
     }
 
@@ -109,10 +115,16 @@ public class Solver {
         return rankedGuesses(1).getFirst().word();
     }
 
+    public List<GuessScore> rankedGuesses() {
+        return rankedGuesses(allowedWords.size());
+    }
+
     public List<GuessScore> rankedGuesses(int top) {
         PriorityQueue<GuessScore> pq = new PriorityQueue<>(Comparator.comparingDouble(GuessScore::score));
 
         double maxScore = 0;
+        System.out.println("Scoring " + allowedWords.size() + " allowed words against " + goalWords.size() + " goal words.");
+
         for (Word w : allowedWords) {
             double score = scoreWord(w);
             pq.add(new GuessScore(w, score));
@@ -124,6 +136,38 @@ public class Solver {
             top--;
             GuessScore g = pq.poll();      // poll returns lowest score first
             result.add(new GuessScore(g.word(), g.score() / maxScore));
+        }
+        for (int i = 0; i < Math.min(10, result.size()); i++) {
+            System.out.print(result.get(i)+" ");
+        }
+        System.out.println(" ...");
+        if (newSolver != null) {
+            List<GuessScore> newSolverGuesses = newSolver.rankedGuesses(top);
+//            System.out.println(newSolverGuesses);
+//            System.out.println(result);
+            // Create a weighted average of the scores from this solver and the newSolver.
+            double newFactor = (2 * wordRepository.pastSolutionWords().size() - wordRepository.goalWords().size()) / (double) wordRepository.goalWords().size();
+            HashMap<Word, Double> accum = new HashMap<>();
+            for  (GuessScore g : result) {
+                accum.put(g.word(), 1 / g.score());
+            }
+            for  (GuessScore g : newSolverGuesses) {
+                accum.put(g.word(), accum.get(g.word()) + newFactor / g.score());
+            }
+            pq = new PriorityQueue<>(Comparator.comparingDouble(GuessScore::score));
+
+            maxScore = 0;
+            for (Map.Entry<Word, Double> entry : accum.entrySet()) {
+                pq.add(new GuessScore(entry.getKey(), 1 / entry.getValue()));
+                maxScore = Math.max(maxScore, 1 / entry.getValue());
+            }
+
+            result = new ArrayList<>(pq.size());
+            while (!pq.isEmpty() && top > 0) {
+                top--;
+                GuessScore g = pq.poll();      // poll returns lowest score first
+                result.add(new GuessScore(g.word(), g.score() / maxScore));
+            }
         }
 
         return result;
