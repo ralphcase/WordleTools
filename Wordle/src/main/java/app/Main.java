@@ -38,8 +38,8 @@ public class Main {
         solver.applyFeedback(new Word("SANER"), Feedback.of(gray, gray, gray, gray, yellow));
         DictionaryBuilder.predictWordlebot(solver.remainingCandidates());
 
-        solver.applyFeedback(new Word("PRICY"), Feedback.of(gray, green, green, gray, gray));
-//        solver.applyFeedback(new Word("BUMPH"), Feedback.of(gray, gray, green, green, gray));
+        solver.applyFeedback(new Word("CROUP"), Feedback.of(gray, yellow, gray, yellow, gray));
+        solver.applyFeedback(new Word("FURRY"), Feedback.of(gray, green, green, gray, green));
 //        solver.applyFeedback(new Word("UMPTY"), Feedback.of(yellow, yellow, gray, gray, gray));
 
         // Print remaining candidates
