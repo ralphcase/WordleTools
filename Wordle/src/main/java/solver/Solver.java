@@ -132,8 +132,9 @@ public class Solver {
         }
 
         List<GuessScore> result = new ArrayList<>(pq.size());
-        while (!pq.isEmpty() && top > 0) {
-            top--;
+        int count = top;
+        while (!pq.isEmpty() && count > 0) {
+            count--;
             GuessScore g = pq.poll();      // poll returns lowest score first
             result.add(new GuessScore(g.word(), g.score() / maxScore));
         }

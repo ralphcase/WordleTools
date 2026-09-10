@@ -214,19 +214,20 @@ public class SolverTest {
     }
 
     @Test
-    void modeSmartThrowsUnsupported() {
-        List<Word> allowed = List.of(new Word("CRANE"));
-        List<Word> goals = List.of(new Word("CRANE"));
+    void modeSmartAppliesFeedbackToRemainingCandidates() {
+        List<Word> allowed = List.of(new Word("CRANE"), new Word("SLATE"), new Word("BRICK"));
+        List<Word> goals = List.of(new Word("CRANE"), new Word("SLATE"), new Word("BRICK"));
+        List<Word> past = List.of(new Word("CRANE"), new Word("SLATE"));
 
-        WordRepository repo = new WordRepository(allowed, goals, null, null);
+        WordRepository repo = new WordRepository(allowed, goals, past, null);
+        Solver solver = new Solver(repo, false, Solver.Mode.SMART);
 
-        assertThrows(UnsupportedOperationException.class, () ->
-                new Solver(repo, false, Solver.Mode.SMART));
+        solver.applyFeedback(new Word("CRANE"),
+                Feedback.of(CORRECT, CORRECT, CORRECT, CORRECT, CORRECT));
+
+        List<Word> candidates = solver.remainingCandidates();
+        assertEquals(List.of(new Word("CRANE")), candidates);
     }
-
-    // ============================================================
-    // NEW TESTS: nextGuessSimple()
-    // ============================================================
 
     @Test
     void nextGuessSimpleReturnsFirstCandidate() {
@@ -257,10 +258,6 @@ public class SolverTest {
         Word guess = solver.nextGuessSimple();
         assertNull(guess);
     }
-
-    // ============================================================
-    // NEW TESTS: Hardmode behavior
-    // ============================================================
 
     @Test
     void hardmodeFiltersAllowedWords() {
