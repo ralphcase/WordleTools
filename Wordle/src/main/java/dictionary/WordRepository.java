@@ -42,8 +42,9 @@ public record WordRepository(
         // Enforce invariants
         ensureSubset(this.goalWords, this.allowedWords,
                 "goalWords must be a subset of allowedWords");
-        ensureSubset(this.pastSolutionWords, this.goalWords,
-                "pastSolutionWords must be a subset of goalWords");
+// Since goalWords can change, it's no longer true that pastSolutionWords is a subset of goalWords. It is only a subset of allowedWords.
+//        ensureSubset(this.pastSolutionWords, this.goalWords,
+//                "pastSolutionWords must be a subset of goalWords");
         ensureSubset(this.archiveWords, this.goalWords,
                 "archiveWords must be a subset of goalWords");
     }
