@@ -36,11 +36,11 @@ public class Main {
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
         Solver solver = new Solver(repo, hard, Solver.Mode.SMART);
 
-        solver.applyFeedback(new Word("SANER"), Feedback.of(yellow, yellow, gray, green, green));
+        solver.applyFeedback(new Word("ORATE"), Feedback.of(gray, green, gray, gray, gray));
         DictionaryBuilder.predictWordlebot(solver.remainingCandidates());
 
-        solver.applyFeedback(new Word("ASKER"), Feedback.of(green, green, gray, green, green));
-//        solver.applyFeedback(new Word("BUMPH"), Feedback.of(gray, gray, green, green, gray));
+//        solver.applyFeedback(new Word("BLUDY"), Feedback.of(gray, gray, yellow, gray, gray));
+//        solver.applyFeedback(new Word("HOCUS"), Feedback.of(gray, green, green, green, green));
 //        solver.applyFeedback(new Word("UMPTY"), Feedback.of(yellow, yellow, gray, gray, gray));
 
         // Print remaining candidates
@@ -48,7 +48,7 @@ public class Main {
         System.out.println(candidates.size() + " Remaining candidates: " + candidates);
 
 //        System.out.println("Next Guess: " + solver.nextGuess());
-        System.out.println("Next Guess: " + solver.rankedGuesses());
+        System.out.println("Next Guess: " + solver.rankedGuesses(10));
 
         long endTime = System.currentTimeMillis();
         System.out.println("It took " + (endTime - startTime) / 1000.0 + " seconds.");
