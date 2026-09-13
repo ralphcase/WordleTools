@@ -10,6 +10,7 @@ import java.util.*;
 
 public class Solver {
 
+    private static final double EPSILON = 1e-9;
     private final boolean hardmode;
     private final WordRepository wordRepository;
     private final Mode scope;
@@ -152,8 +153,12 @@ public class Solver {
             for  (GuessScore g : result) {
                 accum.put(g.word(), 1 / g.score());
             }
+            System.out.println(newSolverGuesses);
             for  (GuessScore g : newSolverGuesses) {
-                accum.put(g.word(), accum.get(g.word()) + newFactor / g.score());
+                Double a = accum.get(g.word());
+                if ( a != null) {
+                    accum.put(g.word(), a + newFactor / g.score());
+                }
             }
             pq = new PriorityQueue<>(Comparator.comparingDouble(GuessScore::score));
 
@@ -189,6 +194,9 @@ public class Solver {
             if (!goalWords.contains(w)) {
                 score *= (double) (constraints + 2) / (constraints + 1);
             }
+        }
+        if (score == 0) {
+            score = EPSILON; // Avoid division by zero
         }
         return score;
     }
