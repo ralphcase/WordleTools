@@ -142,6 +142,7 @@ public class Solver {
         for (int i = 0; i < Math.min(10, result.size()); i++) {
             System.out.print(result.get(i)+" ");
         }
+        System.out.println("... ");
         if (newSolver != null) {
             List<GuessScore> newSolverGuesses = newSolver.rankedGuesses(top);
             // Create a weighted average of the scores from this solver and the newSolver.
