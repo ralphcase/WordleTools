@@ -142,18 +142,14 @@ public class Solver {
         for (int i = 0; i < Math.min(10, result.size()); i++) {
             System.out.print(result.get(i)+" ");
         }
-        System.out.println(" ...");
         if (newSolver != null) {
             List<GuessScore> newSolverGuesses = newSolver.rankedGuesses(top);
-//            System.out.println(newSolverGuesses);
-//            System.out.println(result);
             // Create a weighted average of the scores from this solver and the newSolver.
             double newFactor = (2 * wordRepository.pastSolutionWords().size() - wordRepository.goalWords().size()) / (double) wordRepository.goalWords().size();
             HashMap<Word, Double> accum = new HashMap<>();
             for  (GuessScore g : result) {
                 accum.put(g.word(), 1 / g.score());
             }
-            System.out.println(newSolverGuesses);
             for  (GuessScore g : newSolverGuesses) {
                 Double a = accum.get(g.word());
                 if ( a != null) {
@@ -204,4 +200,5 @@ public class Solver {
     public enum Mode {
         ARCHIVE, NEW, ALL, SMART
     }
+
 }
