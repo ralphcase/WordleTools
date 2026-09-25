@@ -26,7 +26,7 @@ public class BestStarter {
 //        Solver solver = new Solver(repo, hard, Solver.Mode.NEW);  // SANER
         Solver solver = new Solver(repo, hard, Solver.Mode.SMART);  //  ORATE
 
-        System.out.println("Best Starting guess: " + solver.rankedGuesses(100));
+        System.out.println("Best Starting guess: " + solver.rankedGuesses(10));
 
         long endTime = System.currentTimeMillis();
         System.out.println("It took " + (endTime - startTime) / 1000.0 + " seconds.");

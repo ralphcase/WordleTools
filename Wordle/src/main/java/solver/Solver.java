@@ -139,10 +139,7 @@ public class Solver {
             GuessScore g = pq.poll();      // poll returns lowest score first
             result.add(new GuessScore(g.word(), g.score() / maxScore));
         }
-        for (int i = 0; i < Math.min(10, result.size()); i++) {
-            System.out.print(result.get(i)+" ");
-        }
-        System.out.println("... ");
+        System.out.println(result.subList(0, 10));
         if (newSolver != null) {
             List<GuessScore> newSolverGuesses = newSolver.rankedGuesses(top);
             // Create a weighted average of the scores from this solver and the newSolver.
