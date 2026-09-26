@@ -124,7 +124,7 @@ public class Solver {
         PriorityQueue<GuessScore> pq = new PriorityQueue<>(Comparator.comparingDouble(GuessScore::score));
 
         double maxScore = 0;
-        System.out.println("Scoring " + allowedWords.size() + " allowed words against " + goalWords.size() + " goal words.");
+        System.out.println("Scoring " + allowedWords.size() + " allowed words against " + goalWords.size() + " goal words (" + this.scope + ").");
 
         for (Word w : allowedWords) {
             double score = scoreWord(w);
