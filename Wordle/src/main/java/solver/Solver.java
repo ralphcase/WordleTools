@@ -40,7 +40,7 @@ public class Solver {
             case ALL -> this.goalWords = repository.goalWords();
             case SMART -> {
                 this.goalWords = repository.goalWords();
-                newSolver = new Solver(repository, hardmode, Mode.NEW);
+                this.newSolver = new Solver(repository, hardmode, Mode.NEW);
             }
         }
 
@@ -70,7 +70,6 @@ public class Solver {
     public void applyFeedback(Word guess, Feedback feedback) {
         Constraint constraint = new Constraint(guess, feedback);
         constraints++;
-//        System.out.println(constraint);
         goalWords = goalWords.stream().filter(constraint::allows).toList();
         if (hardmode) {
             System.out.print(allowedWords.size() + " allowed words filtered to ");
@@ -132,45 +131,42 @@ public class Solver {
             maxScore = Math.max(maxScore, score);
         }
 
+        // Normalize the scores to be between 0 and 1, and convert the queue to a sorted list. The lowest score is the best guess.
         List<GuessScore> result = new ArrayList<>(pq.size());
-        int count = top;
-        while (!pq.isEmpty() && count > 0) {
-            count--;
+        while (!pq.isEmpty()) {
             GuessScore g = pq.poll();      // poll returns lowest score first
             result.add(new GuessScore(g.word(), g.score() / maxScore));
         }
         System.out.println(result.subList(0, 10));
-        if (newSolver != null) {
-            List<GuessScore> newSolverGuesses = newSolver.rankedGuesses(top);
-            // Create a weighted average of the scores from this solver and the newSolver.
-            double newFactor = (2 * wordRepository.pastSolutionWords().size() - wordRepository.goalWords().size()) / (double) wordRepository.goalWords().size();
-            HashMap<Word, Double> accum = new HashMap<>();
-            for  (GuessScore g : result) {
-                accum.put(g.word(), 1 / g.score());
-            }
-            for  (GuessScore g : newSolverGuesses) {
-                Double a = accum.get(g.word());
-                if ( a != null) {
-                    accum.put(g.word(), a + newFactor / g.score());
-                }
-            }
-            pq = new PriorityQueue<>(Comparator.comparingDouble(GuessScore::score));
 
-            maxScore = 0;
-            for (Map.Entry<Word, Double> entry : accum.entrySet()) {
-                pq.add(new GuessScore(entry.getKey(), 1 / entry.getValue()));
-                maxScore = Math.max(maxScore, 1 / entry.getValue());
+        if (newSolver != null) {
+            // Create a weighted average of the scores from this solver and the newSolver.
+
+            Map<Word, Double> newScores = new HashMap<>();
+            for  (GuessScore g : newSolver.rankedGuesses()) {
+                newScores.put(g.word(), g.score());
+            }
+
+            double newWeight = 2 - 2 * wordRepository.pastSolutionWords().size() / (double) wordRepository.goalWords().size();
+            System.out.println("Weighting new solver scores at " + newWeight + " based on " + wordRepository.pastSolutionWords().size() + " past solutions and " + wordRepository.goalWords().size() + " goal words.");
+            pq = new PriorityQueue<>(Comparator.comparingDouble(GuessScore::score));
+            for (GuessScore g : result) {
+                double newScore = newScores.getOrDefault(g.word(), 1.0);
+                double combinedScore = (g.score() * (1 - newWeight)) + (newScore * newWeight);
+                pq.add(new GuessScore(g.word(), combinedScore));
             }
 
             result = new ArrayList<>(pq.size());
-            while (!pq.isEmpty() && top > 0) {
-                top--;
+            while (!pq.isEmpty()) {
                 GuessScore g = pq.poll();      // poll returns lowest score first
-                result.add(new GuessScore(g.word(), g.score() / maxScore));
+//                if (g.score() == 1.0) {
+//                    break;  // Don't include words that are not possible given the constraints.
+//                }
+                result.add(new GuessScore(g.word(), g.score()));
             }
         }
 
-        return result;
+        return result.subList(0, Math.min(top, result.size()));
     }
 
     private double scoreWord(Word w) {
