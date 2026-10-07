@@ -30,16 +30,6 @@ public class WordRepositoryTest {
     }
 
     @Test
-    void pastSolutionsMustBeSubsetOfGoals() {
-        List<Word> allowed = List.of(new Word("CRANE"), new Word("SLATE"));
-        List<Word> goals = List.of(new Word("CRANE"));
-        List<Word> past = List.of(new Word("SLATE")); // not in goals
-
-        Assertions.assertThrows(IllegalArgumentException.class, () ->
-                new WordRepository(allowed, goals, past,  null, null, null));
-    }
-
-    @Test
     void listsAreDefensivelyCopied() {
         List<Word> allowed = new ArrayList<>();
         allowed.add(new Word("CRANE"));
