@@ -137,8 +137,10 @@ public class Solver {
             GuessScore g = pq.poll();      // poll returns lowest score first
             result.add(new GuessScore(g.word(), g.score() / maxScore));
         }
-        System.out.println(result.subList(0, Math.min(Math.min(top, 25), result.size())));
-
+        System.out.println(result.stream()
+                .filter(g -> g.score() != 1.0)
+                .limit(Math.min(Math.min(top, 25), result.size()))
+                .toList());
         if (newSolver != null) {
             // Create a weighted average of the scores from this solver and the newSolver.
 
@@ -159,9 +161,9 @@ public class Solver {
             result = new ArrayList<>(pq.size());
             while (!pq.isEmpty()) {
                 GuessScore g = pq.poll();      // poll returns lowest score first
-//                if (g.score() == 1.0) {
-//                    break;  // Don't include words that are not possible given the constraints.
-//                }
+                if (g.score() == 1.0) {
+                    break;  // Don't include words that are not possible given the constraints.
+                }
                 result.add(new GuessScore(g.word(), g.score()));
             }
         }
