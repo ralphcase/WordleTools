@@ -32,8 +32,8 @@ public final class Word {
   /**
    * Does this word contain a given character?
    *
-   * @param target the chacter to search for
-   * @return true if this word contains the given char.
+   * @param target the character to search for
+   * @return true if this word contains the given character.
    */
   public boolean contains(char target) {
     target = Character.toUpperCase(target);

@@ -6,6 +6,7 @@ import dictionary.WordRepository;
 import feedback.Feedback;
 import word.Word;
 
+import java.text.MessageFormat;
 import java.util.*;
 
 public class Solver {
@@ -126,7 +127,7 @@ public class Solver {
         System.out.println("Scoring " + allowedWords.size() + " allowed words against " + goalWords.size() + " goal words (" + this.scope + ").");
 
         for (Word w : allowedWords) {
-            double score = scoreWord(w);
+            double score = scoreWord(w, (this.scope == Mode.NEW || this.scope == Mode.SMART));
             pq.add(new GuessScore(w, score));
             maxScore = Math.max(maxScore, score);
         }
@@ -139,7 +140,7 @@ public class Solver {
         }
         System.out.println(result.stream()
                 .filter(g -> g.score() != 1.0)
-                .limit(Math.min(top, Math.max(10, (int) Math.sqrt(result.size()))))
+                .limit(Math.min(top, Math.max(10, (int) Math.cbrt(result.size()))))
                 .toList());
         if (newSolver != null) {
             // Create a weighted average of the scores from this solver and the newSolver.
@@ -150,7 +151,12 @@ public class Solver {
             }
 
             double newWeight = 2 - 2 * wordRepository.pastSolutionWords().size() / (double) wordRepository.goalWords().size();
-            System.out.println("Weighting new solver scores at " + newWeight + " based on " + wordRepository.pastSolutionWords().size() + " past solutions and " + wordRepository.goalWords().size() + " goal words.");
+
+            System.out.println(MessageFormat.format("Weighting new solver scores at {0} based on {1} past solutions and {2} goal words.",
+                    newWeight,
+                    wordRepository.pastSolutionWords().size(),
+                    wordRepository.goalWords().size()));
+
             pq = new PriorityQueue<>(Comparator.comparingDouble(GuessScore::score));
             for (GuessScore g : result) {
                 double newScore = newScores.getOrDefault(g.word(), 1.0);
@@ -171,7 +177,7 @@ public class Solver {
         return result.subList(0, Math.min(top, result.size()));
     }
 
-    private double scoreWord(Word w) {
+    private double scoreWord(Word w, boolean preferGoalWords) {
         double score = 0;
         for (Word target : goalWords) {
             if (!target.equals(w)) {
@@ -182,7 +188,7 @@ public class Solver {
             }
         }
         // Prefer words that could be the solution over other possible guesses.
-        if (this.scope == Mode.NEW) {
+        if (preferGoalWords) {
             if (!goalWords.contains(w)) {
                 score *= (double) (constraints + 2) / (constraints + 1);
             }
