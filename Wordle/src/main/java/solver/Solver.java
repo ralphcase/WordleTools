@@ -139,7 +139,7 @@ public class Solver {
         }
         System.out.println(result.stream()
                 .filter(g -> g.score() != 1.0)
-                .limit(Math.min(Math.min(top, 25), result.size()))
+                .limit(Math.min(top, Math.max(10, (int) Math.sqrt(result.size()))))
                 .toList());
         if (newSolver != null) {
             // Create a weighted average of the scores from this solver and the newSolver.
