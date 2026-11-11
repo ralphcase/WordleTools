@@ -36,10 +36,10 @@ public class Main {
 //        Solver solver = new Solver(repo, hard, Solver.Mode.ALL);
         Solver solver = new Solver(repo, hard, Solver.Mode.SMART);
 
-        solver.applyFeedback(new Word("TASER"), Feedback.of(green, gray, gray, yellow, yellow));
+        solver.applyFeedback(new Word("TASER"), Feedback.of(gray, gray, yellow, yellow, gray));
         DictionaryBuilder.predictWordlebot(solver.remainingCandidates());
 
-        solver.applyFeedback(new Word("TRIKE"), Feedback.of(green, green, gray, gray, green));
+        solver.applyFeedback(new Word("PULSE"), Feedback.of(gray, gray, yellow, green, yellow));
 //        solver.applyFeedback(new Word("WRIST"), Feedback.of(gray, yellow, yellow, green, green));
 //        solver.applyFeedback(new Word("LAYUP"), Feedback.of(gray, green, yellow, gray, gray));
 //        solver.applyFeedback(new Word("GROPE"), Feedback.of(gray, green, green, yellow, green));
